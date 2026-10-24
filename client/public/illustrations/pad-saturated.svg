@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 200" fill="none">
+  <!-- Pad body -->
+  <rect x="25" y="10" width="70" height="180" rx="35" fill="#FFFFFF" stroke="#6B2D5C" stroke-width="2.5" stroke-opacity="0.3"/>
+  <!-- Wings with soak seepage -->
+  <path d="M25 75 C10 75 10 125 25 125" fill="#E4735A" fill-opacity="0.6" stroke="#6B2D5C" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M95 75 C110 75 110 125 95 125" fill="#E4735A" fill-opacity="0.6" stroke="#6B2D5C" stroke-width="2" stroke-opacity="0.2"/>
+  <!-- Completely saturated absorption zone (20 points) -->
+  <rect x="28" y="15" width="64" height="170" rx="32" fill="#B3261E" fill-opacity="0.85"/>
+  <ellipse cx="60" cy="100" rx="22" ry="60" fill="#6B2D5C" fill-opacity="0.4"/>
+</svg>

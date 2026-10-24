@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cream: #FBF7F4;
+  --color-plum: #6B2D5C;
+  --color-plum-soft: #F5ECF3;
+  --color-teal: #1F6F6B;
+  --color-coral: #E4735A;
+  --color-amber: #B7791F;
+  --color-red: #B3261E;
+  --color-ink: #241B22;
+
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+  --min-tap: 48px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  /* Accessible tap targets */
+  button, a, input, select {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Smooth transitions */
+  * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Care Thread Signature Design */
+.care-thread-container {
+  position: relative;
+}
+
+.care-thread-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 2px;
+  background: linear-gradient(180deg, #6B2D5C 0%, #1F6F6B 100%);
+  opacity: 0.35;
+  z-index: 0;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

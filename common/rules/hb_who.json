@@ -1,0 +1,22 @@
+{
+  "id": "hb_who",
+  "version": "1.0",
+  "title": "WHO Haemoglobin Anaemia Thresholds",
+  "source": "World Health Organization 2011 (WHO/NMH/NHD/MNM/11.1)",
+  "unit": "g/dL",
+  "groups": {
+    "non_pregnant": {
+      "normal_min": 12.0,
+      "mild": [11.0, 11.9],
+      "moderate": [8.0, 10.9],
+      "severe_below": 8.0
+    },
+    "pregnant": {
+      "normal_min": 11.0,
+      "mild": [10.0, 10.9],
+      "moderate": [7.0, 9.9],
+      "severe_below": 7.0
+    }
+  },
+  "clinical_review_status": "Standard international clinical reference cut-offs."
+}

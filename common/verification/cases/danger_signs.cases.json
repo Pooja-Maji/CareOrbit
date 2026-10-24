@@ -1,0 +1,20 @@
+[
+  {
+    "description": "No danger signs selected",
+    "selectedSigns": [],
+    "expectedEmergencyTrigger": false,
+    "expectedFlagLevel": null
+  },
+  {
+    "description": "Severe soaking rate danger sign selected",
+    "selectedSigns": ["danger_soaking_rate"],
+    "expectedEmergencyTrigger": true,
+    "expectedFlagLevel": "urgent"
+  },
+  {
+    "description": "Severe pain and fainting danger signs selected",
+    "selectedSigns": ["danger_severe_abdominal_pain", "danger_fainting_dizziness"],
+    "expectedEmergencyTrigger": true,
+    "expectedFlagLevel": "urgent"
+  }
+]

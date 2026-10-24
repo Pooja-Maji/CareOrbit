@@ -1,0 +1,30 @@
+{
+  "id": "screening",
+  "version": "1.0",
+  "title": "Preventive Cancer and Well-Woman Screening Schedules",
+  "source": "Operational Framework for Management of Common Cancers (MoHFW India) & WHO Guidelines",
+  "guidelines": [
+    {
+      "id": "cervical_screening_due",
+      "target_age_min": 30,
+      "target_age_max": 65,
+      "interval_years": 5,
+      "level": "info",
+      "title": "Routine Cervical Cancer Screening Recommendation",
+      "why": "National guidelines recommend cervical screening (VIA or HPV-DNA) every 5 years for women aged 30-65 to detect cell changes early.",
+      "source": "MoHFW India NP-CDCS Guidelines",
+      "nextStep": "Ask your nearest Primary Health Centre (PHC) or gynaecologist about free or low-cost cervical screening."
+    },
+    {
+      "id": "clinical_breast_exam_due",
+      "target_age_min": 30,
+      "interval_years": 1,
+      "level": "info",
+      "title": "Annual Clinical Breast Examination (CBE)",
+      "why": "Women aged 30 and older are recommended to receive an annual clinical breast exam by a trained healthcare professional.",
+      "source": "MoHFW India Common Cancers Guidelines",
+      "nextStep": "Ask your doctor or trained health worker for a routine clinical breast exam during your next visit."
+    }
+  ],
+  "clinical_review_status": "Reviewed against MoHFW operational guidelines."
+}

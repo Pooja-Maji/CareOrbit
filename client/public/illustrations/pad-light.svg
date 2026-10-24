@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 200" fill="none">
+  <!-- Pad body -->
+  <rect x="25" y="10" width="70" height="180" rx="35" fill="#FFFFFF" stroke="#6B2D5C" stroke-width="2.5" stroke-opacity="0.3"/>
+  <!-- Wings -->
+  <path d="M25 75 C10 75 10 125 25 125" fill="#FFFFFF" stroke="#6B2D5C" stroke-width="2" stroke-opacity="0.2"/>
+  <path d="M95 75 C110 75 110 125 95 125" fill="#FFFFFF" stroke="#6B2D5C" stroke-width="2" stroke-opacity="0.2"/>
+  <!-- Light stain (1 point) -->
+  <ellipse cx="60" cy="100" rx="12" ry="20" fill="#E4735A" fill-opacity="0.6"/>
+  <!-- Embossed pattern lines -->
+  <line x1="60" y1="35" x2="60" y2="65" stroke="#6B2D5C" stroke-width="1" stroke-opacity="0.15" stroke-dasharray="3 3"/>
+  <line x1="60" y1="135" x2="60" y2="165" stroke="#6B2D5C" stroke-width="1" stroke-opacity="0.15" stroke-dasharray="3 3"/>
+</svg>

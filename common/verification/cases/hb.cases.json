@@ -1,0 +1,58 @@
+[
+  {
+    "description": "Non-pregnant normal haemoglobin",
+    "isPregnant": false,
+    "hbValue": 13.2,
+    "expectedCategory": "normal",
+    "expectedFlagLevel": null
+  },
+  {
+    "description": "Non-pregnant boundary at normal threshold 12.0",
+    "isPregnant": false,
+    "hbValue": 12.0,
+    "expectedCategory": "normal",
+    "expectedFlagLevel": null
+  },
+  {
+    "description": "Non-pregnant mild anaemia",
+    "isPregnant": false,
+    "hbValue": 11.4,
+    "expectedCategory": "mild",
+    "expectedFlagLevel": "discuss"
+  },
+  {
+    "description": "Non-pregnant moderate anaemia (e.g. project plan example 9.8)",
+    "isPregnant": false,
+    "hbValue": 9.8,
+    "expectedCategory": "moderate",
+    "expectedFlagLevel": "discuss"
+  },
+  {
+    "description": "Non-pregnant severe anaemia below 8.0",
+    "isPregnant": false,
+    "hbValue": 7.4,
+    "expectedCategory": "severe",
+    "expectedFlagLevel": "urgent"
+  },
+  {
+    "description": "Pregnant normal at 11.5",
+    "isPregnant": true,
+    "hbValue": 11.5,
+    "expectedCategory": "normal",
+    "expectedFlagLevel": null
+  },
+  {
+    "description": "Pregnant moderate anaemia at 8.5",
+    "isPregnant": true,
+    "hbValue": 8.5,
+    "expectedCategory": "moderate",
+    "expectedFlagLevel": "discuss"
+  },
+  {
+    "description": "Pregnant severe anaemia below 7.0",
+    "isPregnant": true,
+    "hbValue": 6.8,
+    "expectedCategory": "severe",
+    "expectedFlagLevel": "urgent"
+  }
+]

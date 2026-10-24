@@ -1,0 +1,39 @@
+{
+  "id": "escalation",
+  "version": "1.0",
+  "title": "Persistent Symptoms and Referral Escalation Rules",
+  "source": "NICE Guidelines NG88 (Heavy Menstrual Bleeding) & Endometriosis Society Guidelines",
+  "rules": [
+    {
+      "id": "escalate_recurrent_heavy_bleeding",
+      "condition": "pbac_cycles_gte_3",
+      "threshold_cycles": 3,
+      "level": "discuss",
+      "title": "Recurrent Heavy Periods Over Multiple Cycles",
+      "why": "Heavy bleeding that continues across 3 or more cycles can deplete iron reserves and may warrant pelvic investigation.",
+      "source": "NICE Guidelines NG88",
+      "nextStep": "Ask your doctor if a pelvic ultrasound or complete blood count with serum ferritin is recommended."
+    },
+    {
+      "id": "escalate_disruptive_pelvic_pain",
+      "condition": "disruptive_pain_cycles_gte_3",
+      "threshold_cycles": 3,
+      "pain_level_min": 7,
+      "level": "discuss",
+      "title": "Recurrent Severe Menstrual Pain",
+      "why": "Severe period pain causing missed school, work, or daily activities across multiple cycles is not something you have to endure and deserves clinical evaluation.",
+      "source": "Shree IVF / Endometriosis Diagnostic Delay Studies",
+      "nextStep": "Ask a gynaecologist for a comprehensive evaluation, including whether a pelvic scan is appropriate."
+    },
+    {
+      "id": "escalate_bleeding_and_anaemia_connected",
+      "condition": "pbac_high_and_anaemic",
+      "level": "discuss",
+      "title": "Connected Finding: Heavy Menstrual Bleeding and Anaemia",
+      "why": "Your heavy bleeding score and recorded haemoglobin level suggest heavy bleeding may be contributing to low iron levels.",
+      "source": "WHO Haemoglobin Guidelines & Higham et al. 1990",
+      "nextStep": "Please discuss this with a doctor: ask about a ferritin test and evaluating the underlying cause of heavy bleeding."
+    }
+  ],
+  "clinical_review_status": "Awaiting local specialist clinical review."
+}

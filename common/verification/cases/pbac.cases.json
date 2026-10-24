@@ -1,0 +1,46 @@
+[
+  {
+    "description": "Normal light-to-moderate cycle well below threshold",
+    "input": {
+      "pad": { "light": 4, "moderate": 2, "saturated": 0 },
+      "tampon": { "light": 0, "moderate": 0, "saturated": 0 },
+      "clot": { "small": 0, "large": 0 },
+      "flooding": 0
+    },
+    "expectedScore": 14,
+    "expectedFlagLevel": null
+  },
+  {
+    "description": "Boundary just below threshold of 100",
+    "input": {
+      "pad": { "light": 4, "moderate": 3, "saturated": 4 },
+      "tampon": { "light": 0, "moderate": 0, "saturated": 0 },
+      "clot": { "small": 0, "large": 0 },
+      "flooding": 0
+    },
+    "expectedScore": 99,
+    "expectedFlagLevel": null
+  },
+  {
+    "description": "Boundary exactly at threshold of 100",
+    "input": {
+      "pad": { "light": 0, "moderate": 0, "saturated": 5 },
+      "tampon": { "light": 0, "moderate": 0, "saturated": 0 },
+      "clot": { "small": 0, "large": 0 },
+      "flooding": 0
+    },
+    "expectedScore": 100,
+    "expectedFlagLevel": "discuss"
+  },
+  {
+    "description": "Heavy cycle with flooding and large clots",
+    "input": {
+      "pad": { "light": 2, "moderate": 4, "saturated": 6 },
+      "tampon": { "light": 0, "moderate": 0, "saturated": 0 },
+      "clot": { "small": 3, "large": 2 },
+      "flooding": 2
+    },
+    "expectedScore": 165,
+    "expectedFlagLevel": "discuss"
+  }
+]

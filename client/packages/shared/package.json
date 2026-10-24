@@ -1,0 +1,14 @@
+{
+  "name": "@sthreecare/shared",
+  "version": "0.1.0",
+  "description": "Shared types and constants between Person A and Person B",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}

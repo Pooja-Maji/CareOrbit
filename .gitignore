@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+.cache/
+*.log
+.env
+.env.local
+.DS_Store
+Thumbs.db
+coverage/
+.turbo/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/

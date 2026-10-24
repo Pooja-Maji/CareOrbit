@@ -1,0 +1,6 @@
+packages:
+  - 'client'
+  - 'client/packages/*'
+
+allowBuilds:
+  esbuild: true

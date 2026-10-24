@@ -1,0 +1,25 @@
+{
+  "id": "pbac",
+  "version": "1.0",
+  "title": "Pictorial Blood Assessment Chart (PBAC)",
+  "threshold": 100,
+  "items": {
+    "pad": {
+      "light": 1,
+      "moderate": 5,
+      "saturated": 20
+    },
+    "tampon": {
+      "light": 1,
+      "moderate": 5,
+      "saturated": 10
+    },
+    "clot": {
+      "small": 1,
+      "large": 5
+    },
+    "flooding": 5
+  },
+  "source": "Higham et al., BJOG 1990",
+  "clinical_review_status": "Threshold 100 points indicates menorrhagia (~80 mL blood loss). Awaiting local clinician verification."
+}

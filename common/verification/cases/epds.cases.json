@@ -1,0 +1,37 @@
+[
+  {
+    "description": "Normal low mood score without distress",
+    "answers": [0, 1, 0, 1, 0, 0, 1, 0, 0, 0],
+    "expectedScore": 3,
+    "expectedFlagLevel": null,
+    "expectedSelfHarmTrigger": false
+  },
+  {
+    "description": "Boundary just below threshold of 13",
+    "answers": [1, 2, 1, 2, 1, 1, 2, 1, 1, 0],
+    "expectedScore": 12,
+    "expectedFlagLevel": null,
+    "expectedSelfHarmTrigger": false
+  },
+  {
+    "description": "Boundary exactly at threshold of 13",
+    "answers": [1, 2, 1, 2, 1, 2, 2, 1, 1, 0],
+    "expectedScore": 13,
+    "expectedFlagLevel": "discuss",
+    "expectedSelfHarmTrigger": false
+  },
+  {
+    "description": "Positive self-harm question (item 10) with overall score low",
+    "answers": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    "expectedScore": 1,
+    "expectedFlagLevel": "urgent",
+    "expectedSelfHarmTrigger": true
+  },
+  {
+    "description": "Severe postpartum distress with elevated score and self-harm trigger",
+    "answers": [3, 2, 3, 2, 3, 2, 3, 2, 2, 2],
+    "expectedScore": 24,
+    "expectedFlagLevel": "urgent",
+    "expectedSelfHarmTrigger": true
+  }
+]

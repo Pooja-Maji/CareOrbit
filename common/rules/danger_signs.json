@@ -1,0 +1,41 @@
+{
+  "id": "danger_signs",
+  "version": "1.0",
+  "title": "Emergency Danger Signs Intercept",
+  "source": "MoHFW / WHO Maternal & Gynaecological Emergency Guidelines",
+  "helpline": "108",
+  "mental_health_helpline": "14416",
+  "items": [
+    {
+      "id": "danger_soaking_rate",
+      "text": "Soaking through more than 2 large pads or tampons every hour for 2 or more consecutive hours",
+      "level": "urgent",
+      "action": "Immediate emergency care / Call 108"
+    },
+    {
+      "id": "danger_fainting_dizziness",
+      "text": "Severe dizziness, fainting, clammy cold skin, or breathlessness while bleeding",
+      "level": "urgent",
+      "action": "Immediate emergency care / Call 108"
+    },
+    {
+      "id": "danger_severe_abdominal_pain",
+      "text": "Sudden, excruciating or sharp lower abdominal / pelvic pain unable to stand upright",
+      "level": "urgent",
+      "action": "Immediate emergency care / Call 108"
+    },
+    {
+      "id": "danger_fever_pelvic",
+      "text": "High fever (> 101°F / 38.5°C) combined with severe pelvic pain or foul-smelling discharge",
+      "level": "urgent",
+      "action": "Immediate emergency care / Call 108"
+    },
+    {
+      "id": "danger_self_harm",
+      "text": "Active thoughts of harming yourself or your baby",
+      "level": "urgent",
+      "action": "Immediate crisis support / Tele-MANAS 14416 or 108"
+    }
+  ],
+  "clinical_review_status": "Checked against national emergency referral guidelines."
+}

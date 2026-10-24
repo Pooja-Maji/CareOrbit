@@ -1,0 +1,15 @@
+{
+  "name": "sthreecare-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SthreeCare: Life-Stage Health Compass monorepo",
+  "scripts": {
+    "dev": "pnpm --filter client dev",
+    "test": "pnpm --filter @sthreecare/compass test",
+    "build": "pnpm --filter @sthreecare/shared build && pnpm --filter @sthreecare/compass build && pnpm --filter client build",
+    "typecheck": "pnpm -r --parallel typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}

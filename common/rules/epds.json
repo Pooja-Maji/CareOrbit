@@ -1,0 +1,10 @@
+{
+  "id": "epds",
+  "version": "1.0",
+  "title": "Edinburgh Postnatal Depression Scale (EPDS)",
+  "threshold": 13,
+  "self_harm_item": 10,
+  "on_self_harm_positive": "show_support_screen",
+  "source": "Cox JL et al. 1987; Indian validation Fernandes et al. BMC Psychiatry 2021",
+  "clinical_review_status": "Validated for depression screening (pooled sensitivity 88.9%, specificity 93.4% at >=13). Not validated for standalone anxiety."
+}
