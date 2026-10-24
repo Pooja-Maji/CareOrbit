@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running SthreeCare pre-commit checks..."
+python server/scripts/check_no_health_imports.py
+python server/scripts/export_openapi.py

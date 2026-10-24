@@ -1,0 +1,105 @@
+/**
+ * SthreeCare - Facilities API
+ * Owner: Person B
+ */
+
+import { apiClient } from './client';
+import type { Facility } from '@sthreecare/shared';
+
+// Rich fallback seed data matching Karnataka / India public health tiers
+export const DEMO_FACILITIES: Facility[] = [
+  {
+    id: 'fac_1',
+    name: 'Surathkal Primary Health Centre (PHC)',
+    type: 'phc',
+    services: ['General Outpatient', 'Maternal Antenatal Checkup', 'Free Iron Folic Acid Supplementation', 'Basic Blood Tests'],
+    lat: 13.0083,
+    lng: 74.7944,
+    availability: 'Mon-Sat 9:00 AM - 4:30 PM (Simulated)',
+    phone: '+91 824 2475001',
+    address: 'Near Surathkal Bus Stand, Surathkal, Karnataka 575014',
+    distanceKm: 0.8,
+  },
+  {
+    id: 'fac_2',
+    name: 'Padubidri Community Health Centre (CHC)',
+    type: 'chc',
+    services: ['Gynaecologist on Duty', 'Ultrasonography', 'Haemoglobin & Ferritin Lab', '24/7 Delivery Care'],
+    lat: 13.1328,
+    lng: 74.7816,
+    availability: 'Open 24 Hours, OPD 9:00 AM - 1:00 PM (Simulated)',
+    phone: '+91 820 2568222',
+    address: 'National Highway 66, Padubidri, Udupi District 574111',
+    distanceKm: 3.2,
+  },
+  {
+    id: 'fac_3',
+    name: 'District Government Wenlock Hospital',
+    type: 'district_hospital',
+    services: ['Specialist Gynaecology & Endometriosis Clinic', 'Advanced Diagnostic Imaging', 'Comprehensive Women Wellness Centre', 'Mental Health Support Unit'],
+    lat: 12.8687,
+    lng: 74.8436,
+    availability: 'Mon-Sat 8:30 AM - 5:00 PM, Emergency 24/7 (Simulated)',
+    phone: '+91 824 2444533',
+    address: 'Hampankatta, Mangaluru, Karnataka 575001',
+    distanceKm: 14.5,
+  },
+  {
+    id: 'fac_4',
+    name: 'Sthree Diagnostic Blood & Pathology Lab',
+    type: 'diagnostic_lab',
+    services: ['Complete Blood Count (CBC)', 'Serum Ferritin', 'Thyroid Profile (TSH)', 'Free Home Blood Sample Collection'],
+    lat: 13.0021,
+    lng: 74.7912,
+    availability: 'Daily 7:00 AM - 8:00 PM (Simulated)',
+    phone: '+91 824 2981144',
+    address: 'Main Road, Surathkal 575014',
+    distanceKm: 1.1,
+  },
+  {
+    id: 'fac_5',
+    name: 'National Teleconsultation eSanjeevani Care',
+    type: 'teleconsult',
+    services: ['Video Consultation with Lady Doctor', 'Digital Prescription', 'Kannada, Tulu, Hindi, English Support'],
+    lat: 13.0,
+    lng: 74.8,
+    availability: 'Mon-Sun 8:00 AM - 8:00 PM (Simulated)',
+    phone: '1800-11-2525 (Toll-Free)',
+    address: 'Government of India Digital Health Teleconsultation Network',
+    distanceKm: 0.0,
+  },
+];
+
+export async function getNearbyFacilities(params?: {
+  lat?: number;
+  lng?: number;
+  service?: string;
+  type?: string;
+}): Promise<Facility[]> {
+  const query = new URLSearchParams();
+  if (params?.lat) query.set('lat', params.lat.toString());
+  if (params?.lng) query.set('lng', params.lng.toString());
+  if (params?.service) query.set('service', params.service);
+  if (params?.type) query.set('type', params.type);
+
+  const qs = query.toString() ? `?${query.toString()}` : '';
+  const res = await apiClient<Facility[]>(`/facilities${qs}`);
+
+  if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+    return res.data;
+  }
+
+  // Filter fallback demo data if query specified
+  let facilities = [...DEMO_FACILITIES];
+  if (params?.type && params.type !== 'all') {
+    facilities = facilities.filter((f) => f.type === params.type);
+  }
+  if (params?.service) {
+    const s = params.service.toLowerCase();
+    facilities = facilities.filter((f) =>
+      f.services.some((serv) => serv.toLowerCase().includes(s))
+    );
+  }
+
+  return facilities;
+}

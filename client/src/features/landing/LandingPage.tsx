@@ -71,10 +71,10 @@ export const LandingPage: React.FC = () => {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => navigate('/assess')}
+            onClick={() => navigate('/dashboard')}
             className="w-full sm:w-auto"
           >
-            Explore Compass Demo Directly
+            Open Dashboard & Timeline
           </Button>
         </div>
       </section>

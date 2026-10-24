@@ -12,6 +12,8 @@ import { Button } from '../../design/ui/Button';
 import { Card } from '../../design/ui/Card';
 import { Shield, FileText, ArrowRight, Activity, Heart, Sparkles } from '../../design/ui/Icon';
 
+import { saveResultToDb } from '../../db/historyRepo';
+
 export const ResultScreen: React.FC = () => {
   const navigate = useNavigate();
   const { result, profile } = useAppStore();
@@ -19,6 +21,12 @@ export const ResultScreen: React.FC = () => {
   const [selectedFlagForWhy, setSelectedFlagForWhy] = useState<Flag | null>(null);
   const [isWhyDrawerOpen, setIsWhyDrawerOpen] = useState(false);
   const [isDoctorSheetOpen, setIsDoctorSheetOpen] = useState(false);
+
+  React.useEffect(() => {
+    if (result) {
+      saveResultToDb(result);
+    }
+  }, [result]);
 
   // If no result is present yet, encourage starting an assessment
   if (!result) {
@@ -167,13 +175,23 @@ export const ResultScreen: React.FC = () => {
           </p>
         </div>
 
-        <Link
-          to="/profile"
-          className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-plum-soft text-plum hover:bg-plum/10 text-xs font-semibold transition-colors flex-shrink-0"
-        >
-          <span>Update Life-Stage Profile</span>
-          <ArrowRight className="w-3.5 h-3.5 ml-1" />
-        </Link>
+        <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
+          <Link
+            to="/support"
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-teal text-white hover:bg-teal/90 text-xs font-semibold transition-colors shadow-soft"
+          >
+            <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+            <span>Request Volunteer (Time Bank)</span>
+          </Link>
+
+          <Link
+            to="/history"
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-plum-soft text-plum hover:bg-plum/10 text-xs font-semibold transition-colors"
+          >
+            <span>Care Thread Timeline</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Link>
+        </div>
       </div>
 
       {/* Why Modal Sheet */}

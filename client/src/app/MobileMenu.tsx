@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Activity, User, FileText, Heart } from '../design/ui/Icon';
+import { Activity, User, FileText, Heart, Sparkles } from '../design/ui/Icon';
 
 export const MobileMenu: React.FC = () => {
   const navItems = [
-    { to: '/', label: 'Home', icon: <Heart className="w-5 h-5" /> },
-    { to: '/assess', label: 'Assess', icon: <Activity className="w-5 h-5" /> },
-    { to: '/result', label: 'Results', icon: <FileText className="w-5 h-5" /> },
-    { to: '/profile', label: 'Profile', icon: <User className="w-5 h-5" /> },
+    { to: '/dashboard', label: 'Dashboard', icon: <Heart className="w-4 h-4" /> },
+    { to: '/assess', label: 'Assess', icon: <Activity className="w-4 h-4" /> },
+    { to: '/history', label: 'Timeline', icon: <FileText className="w-4 h-4" /> },
+    { to: '/find-care', label: 'Find Care', icon: <Sparkles className="w-4 h-4" /> },
+    { to: '/profile', label: 'Profile', icon: <User className="w-4 h-4" /> },
   ];
 
   return (

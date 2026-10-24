@@ -18,5 +18,7 @@ export {
   FileText,
   Clock,
   ExternalLink,
-  Volume2
+  Volume2,
+  Search,
+  MapPin,
 } from 'lucide-react';

@@ -34,6 +34,40 @@ export const Header: React.FC = () => {
           </div>
         </Link>
 
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <Link
+            to="/dashboard"
+            className="px-3 py-1.5 text-xs font-semibold text-ink-muted hover:text-plum hover:bg-plum-soft/40 rounded-lg transition-colors"
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/assess"
+            className="px-3 py-1.5 text-xs font-semibold text-ink-muted hover:text-plum hover:bg-plum-soft/40 rounded-lg transition-colors"
+          >
+            Assess
+          </Link>
+          <Link
+            to="/history"
+            className="px-3 py-1.5 text-xs font-semibold text-ink-muted hover:text-plum hover:bg-plum-soft/40 rounded-lg transition-colors"
+          >
+            Care Thread
+          </Link>
+          <Link
+            to="/find-care"
+            className="px-3 py-1.5 text-xs font-semibold text-ink-muted hover:text-plum hover:bg-plum-soft/40 rounded-lg transition-colors"
+          >
+            Find Care
+          </Link>
+          <Link
+            to="/time-bank"
+            className="px-3 py-1.5 text-xs font-semibold text-ink-muted hover:text-plum hover:bg-plum-soft/40 rounded-lg transition-colors"
+          >
+            Time Bank
+          </Link>
+        </nav>
+
         {/* Life-stage & Emergency Quick Actions */}
         <div className="flex items-center gap-3">
           {/* Current Life Stage Badge */}
