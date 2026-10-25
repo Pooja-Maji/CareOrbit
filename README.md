@@ -141,43 +141,9 @@ The first working version is one connected path, which is the demo:
 ---
 
 ## 8. Architectural Flow Diagram
+<img width="1148" height="3630" alt="mermaid-diagram-2026-10-25-193155" src="https://github.com/user-attachments/assets/758458a6-3b4b-41ad-a67d-5a7887f6f560" />
 
-```mermaid
-flowchart TD
-    A([User opens Care Orbit]) --> B[/Login and consent/]
-    B --> C[Set life stage and history]
-    C --> D[/Enter check: periods, Hb, mood/]
-    D --> E{Warning sign?}
-    E -- Yes --> F{{Emergency screen: call 108}}
-    E -- No --> G[[Compass engine: rules and scoring]]
-    R[(Rule files)] -.-> G
-    G --> H[Result: flags, source, doctor script]
-    H --> I[(On-device history)]
-    I --> J{Need help?}
-    J -- Yes --> K[Request volunteer via API]
-    K <--> L[(Server DB: tasks, credits)]
-    K --> M((Follow-up))
-    J -- No --> M
-    M --> N([Dashboard and timeline])
-    N -. new check .-> D
 
-    classDef start fill:#C9A0DC,stroke:#2D0A3D,stroke-width:3px,color:#000
-    classDef input fill:#FFF3A3,stroke:#5C4300,stroke-width:3px,color:#000
-    classDef process fill:#FFB4A2,stroke:#7A1F0A,stroke-width:3px,color:#000
-    classDef decision fill:#FFA94D,stroke:#6B3F00,stroke-width:3px,color:#000
-    classDef engine fill:#7FD8CF,stroke:#05403B,stroke-width:3px,color:#000
-    classDef store fill:#9DB8FF,stroke:#10256B,stroke-width:3px,color:#000
-    classDef danger fill:#FF6B6B,stroke:#4A0000,stroke-width:3px,color:#000
-    classDef finish fill:#A5E887,stroke:#1B4D0A,stroke-width:3px,color:#000
-
-    class A,N start
-    class B,D input
-    class C,H,K process
-    class E,J decision
-    class G engine
-    class R,I,L store
-    class F danger
-    class M finish
 ```
 
 **Reading the diagram**
