@@ -145,8 +145,7 @@ The first working version is one connected path, which is the demo:
 ---
 
 ## 8. Architectural Flow Diagram
-<img width="1148" height="3630" alt="mermaid-diagram-2026-10-25-193155" src="https://github.com/user-attachments/assets/758458a6-3b4b-41ad-a67d-5a7887f6f560" />
-
+<img width="2286" height="1314" alt="sthree-process-flow-tech-stack" src="https://github.com/user-attachments/assets/df6428c9-819b-4a5a-aba4-1979400ef74a" />
 
 
 
