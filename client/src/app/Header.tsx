@@ -1,506 +1,209 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppStore } from '../lib/store';
 import {
-  PhoneCall,
-  Shield,
+  Heart,
   Menu,
   X,
-  User,
-  Activity,
-  FileText,
-  Heart,
-  Sparkles,
-  MapPin,
-  Clock,
   LogOut,
-  ChevronRight,
+  PhoneCall,
+  Shield,
+  Sparkles,
   Info,
-  Calendar,
-  AlertTriangle,
-  QrCode,
-  Download,
+  ArrowRight,
 } from '../design/ui/Icon';
+import { NAV_ITEMS } from './navItems';
 import { COPY } from '../copy';
+
+const TONE_BG: Record<string, string> = {
+  plum: 'bg-plum-soft text-plum',
+  teal: 'bg-teal-soft text-teal',
+  coral: 'bg-coral-soft text-coral-dark',
+  amber: 'bg-amber-soft text-amber-dark',
+};
 
 export const Header: React.FC = () => {
   const { profile, currentUser, logout, history } = useAppStore();
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const lifeStageLabel = COPY.lifeStages[profile.lifeStage]?.label || 'General';
-  const realName = currentUser?.name || profile.name || 'Patient';
-  const realPhone = currentUser?.phoneNumber || profile.phoneNumber || '';
-  const userInitials = realName.trim() ? realName.trim().slice(0, 2).toUpperCase() : 'SC';
+  const name = currentUser?.name || profile.name || 'Patient';
+  const initials = name.trim().slice(0, 2).toUpperCase() || 'SC';
+  const stage = COPY.lifeStages[profile.lifeStage]?.label || 'General';
 
-  const handleLogout = () => {
-    setIsMenuOpen(false);
-    logout();
-    navigate('/login');
-  };
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
-  const closeMenuAndNavigate = (to: string) => {
-    setIsMenuOpen(false);
+  const go = (to: string) => {
+    setOpen(false);
     navigate(to);
   };
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#FBF7F4]/90 backdrop-blur-md border-b border-[#6B2D5C]/10 shadow-xs">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-18 py-3 flex items-center justify-between">
-          {/* Brand Logo & Title */}
-          <Link to="/" className="flex items-center gap-3 group select-none">
-            <div className="relative">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B2D5C] via-[#883A76] to-[#511F45] flex items-center justify-center text-white shadow-soft group-hover:scale-105 transition-all">
-                <Heart className="w-5 h-5 text-white" />
-              </div>
-              <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-[#1F6F6B] rounded-full border-2 border-[#FBF7F4] animate-pulse" />
+      {/* Full-width header: brand left · nav next to it · actions pinned right */}
+      <header className="bar-surface sticky top-0 z-40 border-b border-white/10">
+        <div className="h-full w-full px-4 sm:px-6 lg:px-10 flex items-center gap-4 lg:gap-8">
+          <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
+            <div className="relative w-10 h-10 rounded-2xl bg-white text-plum flex items-center justify-center shadow-lifted group-hover:rotate-[-8deg] group-hover:scale-110 transition-transform duration-300">
+              <Heart className="w-5 h-5 fill-plum/20" />
+              <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#5ee0d6] border-2 border-plum animate-pulse" />
             </div>
-
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-heading font-bold text-xl text-[#241B22] tracking-tight group-hover:text-[#6B2D5C] transition-colors">
-                  SthreeCare
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#F5ECF3] text-[#6B2D5C] border border-[#6B2D5C]/20">
-                  Compass
-                </span>
-              </div>
-              <p className="hidden sm:block text-[11px] text-[#8C7F89] font-medium">
-                Women's Life-Stage Health
-              </p>
+            <div className="leading-tight">
+              <div className="font-heading font-bold text-xl tracking-tight">SthreeCare</div>
+              <div className="hidden sm:block text-[11px] text-white/70 font-medium">Life-stage health compass</div>
             </div>
           </Link>
 
-          {/* Top Quick Links (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-1 bg-white/80 p-1.5 rounded-full border border-[#6B2D5C]/10 shadow-xs">
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                `px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all ${
-                  isActive
-                    ? 'bg-[#6B2D5C] text-white shadow-soft'
-                    : 'text-[#61555E] hover:text-[#6B2D5C] hover:bg-[#F5ECF3]/50'
-                }`
-              }
-            >
-              Home
-            </NavLink>
-
-            <NavLink
-              to="/assess"
-              className={({ isActive }) =>
-                `px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                  isActive
-                    ? 'bg-[#6B2D5C] text-white shadow-soft'
-                    : 'text-[#61555E] hover:text-[#6B2D5C] hover:bg-[#F5ECF3]/50'
-                }`
-              }
-            >
-              <Activity className="w-3.5 h-3.5" />
-              <span>Health Checks</span>
-            </NavLink>
-
-            <NavLink
-              to="/profile"
-              className={({ isActive }) =>
-                `px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                  isActive
-                    ? 'bg-[#6B2D5C] text-white shadow-soft'
-                    : 'text-[#61555E] hover:text-[#6B2D5C] hover:bg-[#F5ECF3]/50'
-                }`
-              }
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>Saved Reports</span>
-            </NavLink>
-
-            <NavLink
-              to="/history"
-              className={({ isActive }) =>
-                `px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
-                  isActive
-                    ? 'bg-[#6B2D5C] text-white shadow-soft'
-                    : 'text-[#61555E] hover:text-[#6B2D5C] hover:bg-[#F5ECF3]/50'
-                }`
-              }
-            >
-              <Clock className="w-3.5 h-3.5" />
-              <span>Timeline</span>
-            </NavLink>
-
-            <NavLink
-              to="/time-bank"
-              className={({ isActive }) =>
-                `px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1 ${
-                  isActive
-                    ? 'bg-[#1F6F6B] text-white shadow-soft'
-                    : 'text-[#1F6F6B] hover:bg-[#E8F4F3]'
-                }`
-              }
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Time Bank</span>
-            </NavLink>
+          {/* Primary nav, left-aligned next to the logo */}
+          <nav aria-label="Primary" className="hidden md:flex items-center gap-1 flex-1 min-w-0">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                title={item.hint}
+                className={({ isActive }) => `bar-link ${isActive ? 'active' : ''}`}
+              >
+                {({ isActive }) => (
+                  <>
+                    <item.icon className="w-4 h-4" />
+                    <span className={isActive ? 'inline' : 'hidden 2xl:inline'}>{item.label}</span>
+                  </>
+                )}
+              </NavLink>
+            ))}
           </nav>
 
-          {/* Right Header Actions */}
-          <div className="flex items-center gap-2.5">
-            {/* User Profile Pill */}
+          <div className="flex items-center gap-2 ml-auto flex-shrink-0">
             <Link
               to="/profile"
-              className="flex items-center gap-2 py-1.5 px-3 rounded-full bg-white border border-[#6B2D5C]/15 hover:border-[#6B2D5C]/40 text-xs font-semibold text-[#241B22] shadow-xs hover-lift transition-all"
-              title="Open My Profile & Saved Reports"
+              title="My profile & reports"
+              className="hidden sm:flex items-center gap-2 h-10 pl-1.5 pr-1.5 2xl:pr-4 rounded-full bg-white/12 hover:bg-white/22 border border-white/15 transition-colors"
             >
-              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#6B2D5C] to-[#1F6F6B] text-white flex items-center justify-center text-[10px] font-bold">
-                {userInitials}
-              </div>
-              <span className="hidden sm:inline-block max-w-[120px] truncate">{realName}</span>
-              <span className="hidden md:inline-block px-2 py-0.5 rounded-full text-[10px] bg-[#F5ECF3] text-[#6B2D5C] capitalize">
-                {profile.lifeStage}
+              <span className="w-7 h-7 rounded-full bg-white text-plum text-[11px] font-bold flex items-center justify-center">
+                {initials}
               </span>
+              <span className="hidden 2xl:inline text-sm font-semibold max-w-[110px] truncate">{name}</span>
             </Link>
 
-            {/* Emergency 108 Action Button */}
             <button
               type="button"
               onClick={() => navigate('/emergency')}
-              className="px-3.5 py-1.5 rounded-full bg-[#B3261E] hover:bg-[#8C1D18] text-white text-xs font-bold shadow-soft flex items-center gap-1.5 transition-transform active:scale-95 animate-pulse-glow"
-              title="Immediate Emergency Screen (Calls 108)"
+              title="Emergency help"
+              className="h-10 px-4 rounded-full bg-white text-emergency text-sm font-bold flex items-center gap-1.5 animate-ring hover:scale-105 active:scale-95 transition-transform"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>108</span>
+              <PhoneCall className="w-4 h-4" />
+              108
             </button>
 
-            {/* Hamburger Menu Button */}
             <button
               type="button"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2.5 rounded-2xl border border-[#6B2D5C]/20 bg-white text-[#241B22] hover:bg-[#F5ECF3] hover:text-[#6B2D5C] transition-all shadow-xs flex items-center justify-center gap-1.5 group"
-              aria-label="Open Features Menu"
-              title="Open SthreeCare Features Directory"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className="h-10 px-3 sm:px-4 rounded-full bg-white/12 hover:bg-white/22 border border-white/15 flex items-center gap-2 text-sm font-semibold transition-colors"
             >
-              <Menu className="w-5 h-5 text-[#6B2D5C] group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline-block text-xs font-bold text-[#6B2D5C]">
-                Features
-              </span>
+              <Menu className="w-5 h-5" />
+              <span className="hidden sm:inline">Menu</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* COMPREHENSIVE FEATURES DRAWER (HAMBURGER MENU) */}
-      {isMenuOpen && (
+      {/* Menu drawer */}
+      {open && (
         <div className="fixed inset-0 z-50 flex justify-end">
-          {/* Backdrop blur */}
-          <div
-            className="fixed inset-0 bg-[#241B22]/40 backdrop-blur-sm transition-opacity animate-fade-in"
-            onClick={() => setIsMenuOpen(false)}
-          />
-
-          {/* Drawer Panel */}
-          <div className="relative w-full max-w-md h-full bg-[#FBF7F4] border-l border-[#6B2D5C]/15 shadow-2xl flex flex-col z-10 animate-slide-in-right overflow-y-auto">
-            {/* Drawer Header */}
-            <div className="p-5 border-b border-[#6B2D5C]/10 flex items-center justify-between bg-white sticky top-0 z-20">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B2D5C] to-[#1F6F6B] text-white flex items-center justify-center font-bold text-sm shadow-soft">
-                  {userInitials}
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-base text-[#241B22] leading-tight">
-                    {realName}
-                  </h3>
-                  <p className="text-xs text-[#61555E]">
-                    {realPhone ? `+91 ${realPhone} • ` : ''}{lifeStageLabel} Stage
-                  </p>
+          <div className="absolute inset-0 bg-ink/45 backdrop-blur-sm animate-fade-in" onClick={() => setOpen(false)} />
+          <aside className="relative w-full max-w-md h-full bg-cream shadow-2xl flex flex-col animate-slide-in-right">
+            <div className="bar-surface flex items-center justify-between px-5 flex-shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="w-10 h-10 rounded-2xl bg-white text-plum font-bold flex items-center justify-center">
+                  {initials}
+                </span>
+                <div className="min-w-0 leading-tight">
+                  <div className="font-heading font-bold truncate">{name}</div>
+                  <div className="text-xs text-white/75 truncate">{stage}</div>
                 </div>
               </div>
-
               <button
                 type="button"
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-xl text-[#8C7F89] hover:text-[#241B22] hover:bg-[#F5ECF3] transition-colors"
+                onClick={() => setOpen(false)}
                 aria-label="Close menu"
+                className="w-10 h-10 rounded-full hover:bg-white/15 flex items-center justify-center transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Drawer Body: All Platform Features Categorized */}
-            <div className="p-5 space-y-6 flex-1">
-              {/* Category 1: Clinical Health Checks */}
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#6B2D5C] flex items-center gap-1.5">
-                    <Activity className="w-3.5 h-3.5 text-[#6B2D5C]" />
-                    <span>Screening & Health Checks</span>
-                  </span>
-                  <span className="text-[10px] text-[#8C7F89] bg-[#F5ECF3] px-2 py-0.5 rounded-full font-semibold">
-                    Deterministic
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/assess')}
-                    className="p-3.5 rounded-2xl bg-white border border-[#6B2D5C]/10 hover:border-[#6B2D5C]/30 text-left transition-all hover-lift shadow-xs flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-[#F5ECF3] flex items-center justify-center text-[#6B2D5C] group-hover:scale-105 transition-transform">
-                        <Activity className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#241B22] group-hover:text-[#6B2D5C]">
-                          Start Comprehensive Health Check
-                        </h4>
-                        <p className="text-xs text-[#61555E]">
-                          Runs PBAC flow, WHO anaemia & mood check
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-[#8C7F89] group-hover:text-[#6B2D5C]" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/assess')}
-                    className="p-3 rounded-xl bg-white/70 border border-[#6B2D5C]/10 hover:bg-white text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#6B2D5C]" />
-                      <div>
-                        <span className="text-xs font-bold text-[#241B22] block">PBAC Menstrual Pad Calculator</span>
-                        <span className="text-[11px] text-[#8C7F89]">Validated 100-point menorrhagia threshold</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/assess')}
-                    className="p-3 rounded-xl bg-white/70 border border-[#6B2D5C]/10 hover:bg-white text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#1F6F6B]" />
-                      <div>
-                        <span className="text-xs font-bold text-[#241B22] block">WHO Haemoglobin & Anaemia Test</span>
-                        <span className="text-[11px] text-[#8C7F89]">Lab report lookup (mild/moderate/severe)</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/assess')}
-                    className="p-3 rounded-xl bg-white/70 border border-[#6B2D5C]/10 hover:bg-white text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#E4735A]" />
-                      <div>
-                        <span className="text-xs font-bold text-[#241B22] block">EPDS Mood & Postpartum Screening</span>
-                        <span className="text-[11px] text-[#8C7F89]">10-item validated emotional wellbeing scale</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Category 2: Saved Health Dossier & Records */}
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#6B2D5C] flex items-center gap-1.5">
-                    <FileText className="w-3.5 h-3.5 text-[#6B2D5C]" />
-                    <span>My Health Dossier & Records</span>
-                  </span>
-                  <span className="text-[10px] text-[#1F6F6B] bg-[#E8F4F3] px-2 py-0.5 rounded-full font-semibold">
-                    {history.length} Saved
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/profile')}
-                    className="p-3.5 rounded-2xl bg-white border border-[#6B2D5C]/10 hover:border-[#6B2D5C]/30 text-left transition-all hover-lift shadow-xs flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-[#E8F4F3] flex items-center justify-center text-[#1F6F6B] group-hover:scale-105 transition-transform">
-                        <FileText className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#241B22] group-hover:text-[#6B2D5C]">
-                          Saved Reports Dossier
-                        </h4>
-                        <p className="text-xs text-[#61555E]">
-                          Review past checks, scores & doctor sheets
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-[#8C7F89] group-hover:text-[#6B2D5C]" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/history')}
-                    className="p-3.5 rounded-2xl bg-white border border-[#6B2D5C]/10 hover:border-[#6B2D5C]/30 text-left transition-all hover-lift shadow-xs flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-[#F5ECF3] flex items-center justify-center text-[#6B2D5C] group-hover:scale-105 transition-transform">
-                        <Clock className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#241B22] group-hover:text-[#6B2D5C]">
-                          Care Thread Timeline
-                        </h4>
-                        <p className="text-xs text-[#61555E]">
-                          Longitudinal trajectory across months & cycles
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-[#8C7F89] group-hover:text-[#6B2D5C]" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Category 3: Community Care & Support */}
-              <div className="space-y-2.5">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#6B2D5C] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#1F6F6B]" />
-                  <span>Support & Care Navigation</span>
+            <div className="flex-1 overflow-y-auto p-5 space-y-5">
+              <button
+                type="button"
+                onClick={() => go('/assess')}
+                className="shine w-full flex items-center justify-between p-4 rounded-2xl bg-plum text-white font-bold shadow-lifted hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              >
+                <span className="flex items-center gap-3">
+                  <Sparkles className="w-5 h-5" /> Start a health check
                 </span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
 
-                <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-2 gap-3 stagger">
+                {[...NAV_ITEMS.filter((n) => n.to !== '/assess')].map((item) => (
                   <button
+                    key={item.to}
                     type="button"
-                    onClick={() => closeMenuAndNavigate('/time-bank')}
-                    className="p-3.5 rounded-2xl bg-white border border-[#6B2D5C]/10 hover:border-[#1F6F6B]/30 text-left transition-all hover-lift shadow-xs flex items-center justify-between group"
+                    onClick={() => go(item.to)}
+                    className="tile text-left p-4 rounded-2xl bg-white border border-plum-soft/70 shadow-soft"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-[#E8F4F3] flex items-center justify-center text-[#1F6F6B] group-hover:scale-105 transition-transform">
-                        <Sparkles className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#241B22] group-hover:text-[#1F6F6B]">
-                          Healthcare Time Bank
-                        </h4>
-                        <p className="text-xs text-[#61555E]">
-                          Community credits, volunteer matching
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-[#8C7F89] group-hover:text-[#1F6F6B]" />
+                    <span className={`tile-icon w-10 h-10 rounded-xl flex items-center justify-center ${TONE_BG[item.tone]}`}>
+                      <item.icon className="w-5 h-5" />
+                    </span>
+                    <div className="mt-3 text-sm font-bold text-ink">{item.label}</div>
+                    <div className="text-xs text-ink-muted">{item.hint}</div>
                   </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/support')}
-                    className="p-3 rounded-xl bg-white/70 border border-[#6B2D5C]/10 hover:bg-white text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Heart className="w-4 h-4 text-[#1F6F6B]" />
-                      <div>
-                        <span className="text-xs font-bold text-[#241B22] block">Request Volunteer Help</span>
-                        <span className="text-[11px] text-[#8C7F89]">Booking, hospital accompaniment & language</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/find-care')}
-                    className="p-3 rounded-xl bg-white/70 border border-[#6B2D5C]/10 hover:bg-white text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <MapPin className="w-4 h-4 text-[#6B2D5C]" />
-                      <div>
-                        <span className="text-xs font-bold text-[#241B22] block">Find Nearby Care Facilities</span>
-                        <span className="text-[11px] text-[#8C7F89]">Government PHCs, hospitals & diagnostic labs</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => closeMenuAndNavigate('/follow-up')}
-                    className="p-3 rounded-xl bg-white/70 border border-[#6B2D5C]/10 hover:bg-white text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Calendar className="w-4 h-4 text-[#B7791F]" />
-                      <div>
-                        <span className="text-xs font-bold text-[#241B22] block">Follow-up Care Gap Tracker</span>
-                        <span className="text-[11px] text-[#8C7F89]">Never miss a clinician-recommended test</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Category 4: Emergency Assistance */}
-              <div className="p-4 rounded-2xl bg-[#FDECEB] border border-[#B3261E]/20 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#B3261E] uppercase tracking-wider flex items-center gap-1.5">
-                    <PhoneCall className="w-3.5 h-3.5" />
-                    <span>Emergency Intercept</span>
-                  </span>
-                  <span className="text-[10px] font-bold bg-[#B3261E] text-white px-2 py-0.5 rounded-full">
-                    Toll-Free 108
-                  </span>
-                </div>
-                <p className="text-xs text-[#241B22]">
-                  Experiencing heavy sudden haemorrhage, severe pelvic pain, or pregnancy red flags?
-                </p>
+                ))}
                 <button
                   type="button"
-                  onClick={() => closeMenuAndNavigate('/emergency')}
-                  className="w-full py-2.5 rounded-xl bg-[#B3261E] hover:bg-[#8C1D18] text-white text-xs font-bold transition-all shadow-soft flex items-center justify-center gap-2"
+                  onClick={() => go('/time-bank')}
+                  className="tile text-left p-4 rounded-2xl bg-white border border-plum-soft/70 shadow-soft"
                 >
-                  <PhoneCall className="w-4 h-4" />
-                  <span>Open Emergency 108 Screen</span>
+                  <span className={`tile-icon w-10 h-10 rounded-xl flex items-center justify-center ${TONE_BG.teal}`}>
+                    <Sparkles className="w-5 h-5" />
+                  </span>
+                  <div className="mt-3 text-sm font-bold text-ink">Time Bank</div>
+                  <div className="text-xs text-ink-muted">Earn & use credits</div>
                 </button>
               </div>
 
-              {/* Category 5: About & Sources */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() => closeMenuAndNavigate('/about')}
-                  className="w-full p-3 rounded-xl bg-white border border-[#6B2D5C]/10 text-xs text-[#61555E] hover:text-[#241B22] flex items-center justify-between transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <Info className="w-4 h-4 text-[#1F6F6B]" />
-                    <span>Scientific Sources, Guidelines & Disclaimer</span>
-                  </div>
-                  <ChevronRight className="w-3.5 h-3.5 text-[#8C7F89]" />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => go('/about')}
+                className="w-full flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-plum-soft/70 text-sm font-semibold text-ink-muted hover:text-plum hover:border-plum/40 transition-colors"
+              >
+                <Info className="w-4 h-4 text-teal" /> Sources & limits
+              </button>
             </div>
 
-            {/* Drawer Footer */}
-            <div className="p-5 border-t border-[#6B2D5C]/10 bg-white sticky bottom-0 z-20 space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-xs text-[#1F6F6B] font-semibold">
-                  <Shield className="w-4 h-4" />
-                  <span>On-Device Encrypted Vault</span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="text-xs font-bold text-[#B3261E] hover:underline flex items-center gap-1"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span>Sign Out</span>
-                </button>
+            <div className="flex-shrink-0 p-4 border-t border-plum-soft bg-white flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs font-semibold text-teal">
+                <Shield className="w-4 h-4" /> {history.length} saved · stays on this device
               </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  logout();
+                  navigate('/login');
+                }}
+                className="text-sm font-bold text-emergency hover:underline flex items-center gap-1.5"
+              >
+                <LogOut className="w-4 h-4" /> Sign out
+              </button>
             </div>
-          </div>
+          </aside>
         </div>
       )}
     </>

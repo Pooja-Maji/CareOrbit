@@ -6,6 +6,8 @@
  * provides gentle care-gap nudges, and returns back to the dashboard.
  */
 
+import { PageHeader } from '../../design/ui/PageHeader';
+import { CalendarCheck as HdrIcon } from '../../design/ui/Icon';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CareGapNudge } from './CareGapNudge';
@@ -70,35 +72,18 @@ export const FollowUpScreen: React.FC = () => {
   const nudgeTarget = followUps.find((f) => f.status === 'open');
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto py-4">
+    <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-plum bg-plum-soft px-2.5 py-0.5 rounded-full border border-plum/20">
-              Stage 12 • Continuity of Care
-            </span>
-            <span className="text-xs text-ink-subtle">
-              Closing the Loop
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink mt-1">
-            Follow-Up Action Tracker
-          </h1>
-          <p className="text-xs sm:text-sm text-ink-muted">
-            Track clinician recommendations, lab tests, and ultrasound referrals recommended by the Compass engine.
-          </p>
-        </div>
-
+      <PageHeader icon={<HdrIcon className="w-7 h-7" />} title="Follow-ups" subtitle="Tests and visits to complete" tone="amber" actions={<>
         <Button
           variant="primary"
           size="sm"
           onClick={() => navigate('/dashboard')}
           className="text-xs self-start sm:self-center"
         >
-          Return to Dashboard
+          Home
         </Button>
-      </div>
+      </>} />
 
       {/* Gentle Care Gap Nudge */}
       {nudgeTarget && (

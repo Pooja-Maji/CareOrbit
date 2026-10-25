@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export interface ThresholdGaugeProps {
   score: number;
@@ -8,6 +8,8 @@ export interface ThresholdGaugeProps {
   source: string;
   unit?: string;
   level?: 'normal' | 'discuss' | 'urgent';
+  /** True for measures like haemoglobin, where a LOW value is the concern. */
+  lowIsConcern?: boolean;
 }
 
 export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
@@ -18,20 +20,27 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
   source,
   unit = 'pts',
   level = 'discuss',
+  lowIsConcern = false,
 }) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 80);
+    return () => clearTimeout(t);
+  }, []);
+
   // Clamp score percentage for arc display between 0% and 100%
   const pct = Math.min(100, Math.max(0, (score / maxScore) * 100));
   const thresholdPct = Math.min(100, Math.max(0, (threshold / maxScore) * 100));
 
-  const isCrossed = score >= threshold;
+  const isCrossed = lowIsConcern ? score < threshold : score >= threshold;
 
   const strokeColor = isCrossed ? '#E4735A' : '#1F6F6B';
   const radius = 70;
   const circumference = Math.PI * radius; // Half circle
-  const strokeDashoffset = circumference - (pct / 100) * circumference;
+  const strokeDashoffset = mounted ? circumference - (pct / 100) * circumference : circumference;
 
   return (
-    <div className="flex flex-col items-center p-4 bg-white rounded-card border border-plum-soft shadow-soft text-center">
+    <div className="tile flex flex-col items-center p-4 bg-white rounded-card border border-plum-soft shadow-soft text-center">
       <div className="w-full flex justify-between items-center text-xs text-ink-subtle mb-1">
         <span className="font-semibold uppercase tracking-wider">{title}</span>
         <span className="px-2 py-0.5 rounded-full bg-cream text-plum font-semibold border border-plum/10">
@@ -60,7 +69,7 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
-            className="transition-all duration-700 ease-out"
+            className="transition-all duration-1000 ease-out"
           />
 
           {/* Threshold Marker Indicator */}
@@ -81,7 +90,7 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
             <span className="text-xs font-normal text-ink-subtle ml-1">{unit}</span>
           </span>
           <span className="text-[10px] text-ink-muted">
-            Threshold: {threshold} {unit}
+            Cut-off {threshold} {unit}
           </span>
         </div>
       </div>
@@ -95,7 +104,13 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
               : 'bg-teal-soft text-teal-dark border border-teal/30'
           }`}
         >
-          {isCrossed ? `Meets Screening Threshold (≥ ${threshold})` : `Below Threshold (< ${threshold})`}
+          {lowIsConcern
+            ? isCrossed
+              ? `Low · under ${threshold}`
+              : `Healthy · ${threshold}+`
+            : isCrossed
+            ? `High · ${threshold}+`
+            : `Under ${threshold}`}
         </span>
       </div>
     </div>

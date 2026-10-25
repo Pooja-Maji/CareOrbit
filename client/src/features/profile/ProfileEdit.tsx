@@ -7,6 +7,7 @@ import { LifeStageChips } from './LifeStageChips';
 import { HistoryIntake } from './HistoryIntake';
 import { ResultDetail } from '../history/ResultDetail';
 import { DoctorSummarySheet } from '../summary/DoctorSummarySheet';
+import { PdfReportButton } from '../summary/ReportPdf';
 import { getAllResultsFromDb } from '../../db/historyRepo';
 import { seedDemoPersonaIfEmpty } from '../../lib/seedDemo';
 import { useUiStore } from '../../state/uiStore';
@@ -140,7 +141,7 @@ export const ProfileEdit: React.FC = () => {
   const displayEmergency = profile.emergencyContact?.name || emergencyName ? `Emergency: ${profile.emergencyContact?.name || emergencyName}` : 'No emergency contact set';
 
   return (
-    <div className="max-w-5xl mx-auto py-6 px-4 space-y-6 animate-fade-in">
+    <div className="space-y-6">
       {/* Patient Profile Header Card */}
       <div className="p-6 rounded-[24px] bg-gradient-to-br from-white via-[#FAF3F8] to-white border border-plum-soft shadow-lifted">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -296,10 +297,10 @@ export const ProfileEdit: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 className="text-xl font-heading font-bold text-ink">
-                Saved Health Reports & Longitudinal Record
+                Saved Reports
               </h2>
               <p className="text-xs text-ink-muted">
-                Each completed check is timestamped and recorded here for consultation with healthcare providers.
+                Tap a report to open it. Download any as PDF.
               </p>
             </div>
 
@@ -311,7 +312,7 @@ export const ProfileEdit: React.FC = () => {
                 icon={<Download className="w-3.5 h-3.5" />}
                 className="text-xs shadow-soft"
               >
-                Export Dossier
+                Backup
               </Button>
             </div>
           </div>
@@ -323,10 +324,10 @@ export const ProfileEdit: React.FC = () => {
               </div>
               <div className="max-w-md mx-auto space-y-1">
                 <h3 className="text-lg font-heading font-bold text-ink">
-                  No Saved Assessment Reports Yet
+                  No reports yet
                 </h3>
                 <p className="text-xs text-ink-muted">
-                  Run a menstrual bleeding check, haemoglobin evaluation, or mood screening to generate your first clinical report.
+                  Do a health check to create your first report.
                 </p>
               </div>
               <div className="flex justify-center gap-3 pt-2">
@@ -349,7 +350,7 @@ export const ProfileEdit: React.FC = () => {
                 return (
                   <div
                     key={item.id || idx}
-                    className="p-5 rounded-card bg-white border border-plum-soft shadow-soft hover-lift transition-all space-y-4 cursor-pointer"
+                    className="tile p-5 rounded-card bg-white border border-plum-soft shadow-soft space-y-4 cursor-pointer"
                     onClick={() => {
                       setSelectedResult(item);
                       setIsDetailOpen(true);
@@ -363,7 +364,7 @@ export const ProfileEdit: React.FC = () => {
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="font-heading font-bold text-sm text-ink">
-                              Clinical Screening Dossier
+                              Health report
                             </span>
                             <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-plum-soft text-plum uppercase">
                               {item.stage} Stage
@@ -390,8 +391,15 @@ export const ProfileEdit: React.FC = () => {
                           icon={<QrCode className="w-3.5 h-3.5" />}
                           className="!py-1 !px-3 text-xs"
                         >
-                          Doctor QR
+                          QR
                         </Button>
+                        <PdfReportButton
+                          result={item}
+                          profile={profile}
+                          label="PDF"
+                          size="sm"
+                          className="!py-1 !px-3 text-xs"
+                        />
                         <Button
                           variant="outline"
                           size="sm"
@@ -401,7 +409,7 @@ export const ProfileEdit: React.FC = () => {
                           }}
                           className="!py-1 !px-3 text-xs"
                         >
-                          View Details
+                          Details
                         </Button>
                         <button
                           type="button"
@@ -423,13 +431,13 @@ export const ProfileEdit: React.FC = () => {
                             : 'bg-cream border-plum-soft text-ink'
                         }`}>
                           <div>
-                            <span className="font-semibold block">Menstrual PBAC Flow</span>
+                            <span className="font-semibold block">Period flow</span>
                             <span className="text-[10px] text-ink-subtle">Cut-off: 100 pts</span>
                           </div>
                           <div className="text-right">
                             <span className="font-bold text-sm block">{pbacScore} pts</span>
                             <span className="text-[10px] font-semibold">
-                              {pbacScore >= 100 ? '⚠️ High Bleeding' : '✓ Normal'}
+                              {pbacScore >= 100 ? 'High' : 'In range'}
                             </span>
                           </div>
                         </div>
@@ -448,7 +456,7 @@ export const ProfileEdit: React.FC = () => {
                           <div className="text-right">
                             <span className="font-bold text-sm block">{hbScore} g/dL</span>
                             <span className="text-[10px] font-semibold">
-                              {hbScore < 12.0 ? '⚠️ Anaemic Range' : '✓ Normal Range'}
+                              {hbScore < 12.0 ? 'Low' : 'In range'}
                             </span>
                           </div>
                         </div>
@@ -461,13 +469,13 @@ export const ProfileEdit: React.FC = () => {
                             : 'bg-cream border-plum-soft text-ink'
                         }`}>
                           <div>
-                            <span className="font-semibold block">Mood EPDS Score</span>
+                            <span className="font-semibold block">Mood</span>
                             <span className="text-[10px] text-ink-subtle">Threshold: 13 pts</span>
                           </div>
                           <div className="text-right">
                             <span className="font-bold text-sm block">{epdsScore} / 30</span>
                             <span className="text-[10px] font-semibold">
-                              {epdsScore >= 13 ? 'Elevated Distress' : 'Standard'}
+                              {epdsScore >= 13 ? 'High' : 'In range'}
                             </span>
                           </div>
                         </div>

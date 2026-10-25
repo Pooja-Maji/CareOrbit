@@ -279,7 +279,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
         <div className="p-3 rounded-lg bg-plum-soft/40 border border-plum/20 flex items-start gap-2 text-xs text-ink leading-relaxed">
           <Info className="w-4 h-4 text-plum flex-shrink-0 mt-0.5" />
           <p>
-            <strong>Compass Engine Correlation:</strong> Repeated monthly PBAC scores &gt;100 combined with low haemoglobin indicate chronic blood loss is the probable contributing factor to iron deficiency. Bring this chart to your clinician.
+            <strong>Pattern:</strong> Heavy periods + low Hb often go together. Show this chart to your doctor.
           </p>
         </div>
       )}

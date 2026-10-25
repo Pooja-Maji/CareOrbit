@@ -132,3 +132,89 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   v2 DESIGN LAYER — shared bars, motion, flashcards, print
+   ============================================================ */
+:root { --bar-h: 64px; }
+
+/* Header + Footer share one surface so they always match */
+.bar-surface {
+  background: linear-gradient(100deg, #511F45 0%, #6B2D5C 55%, #7A3466 100%);
+  color: #fff;
+  height: var(--bar-h);
+  box-shadow: 0 0 30px -6px rgba(81, 31, 69, 0.45);
+}
+.bar-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 14px; height: 40px; border-radius: 9999px;
+  font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.82);
+  transition: background .2s, color .2s, transform .2s;
+  white-space: nowrap;
+}
+.bar-link:hover { background: rgba(255,255,255,0.14); color: #fff; transform: translateY(-1px); }
+.bar-link.active { background: #fff; color: #511F45; box-shadow: 0 6px 16px -6px rgba(0,0,0,.35); }
+
+/* Page-level staggered reveal: children fade up one after another */
+.stagger > * { animation: slideUpIn .55s cubic-bezier(.16,1,.3,1) both; }
+.stagger > *:nth-child(1) { animation-delay: .00s; }
+.stagger > *:nth-child(2) { animation-delay: .06s; }
+.stagger > *:nth-child(3) { animation-delay: .12s; }
+.stagger > *:nth-child(4) { animation-delay: .18s; }
+.stagger > *:nth-child(5) { animation-delay: .24s; }
+.stagger > *:nth-child(6) { animation-delay: .30s; }
+.stagger > *:nth-child(n+7) { animation-delay: .36s; }
+@keyframes slideUpIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Tile hover: lift + glow + icon wiggle */
+.tile { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s, border-color .3s; }
+.tile:hover { transform: translateY(-5px); box-shadow: 0 18px 36px -10px rgba(107,45,92,.28); }
+.tile .tile-icon { transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+.tile:hover .tile-icon { transform: scale(1.18) rotate(-6deg); }
+.tile:active { transform: translateY(-1px) scale(.98); }
+
+/* Animated gradient hero */
+.hero-gradient {
+  background: linear-gradient(120deg, #511F45, #6B2D5C 40%, #1F6F6B 100%);
+  background-size: 200% 200%;
+  animation: heroShift 14s ease-in-out infinite;
+}
+@keyframes heroShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* Shimmer text/button highlight */
+.shine { position: relative; overflow: hidden; }
+.shine::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform .7s;
+}
+.shine:hover::after { transform: translateX(120%); }
+
+/* 3D flip flashcards */
+.flip { perspective: 1000px; }
+.flip-inner { position: relative; width: 100%; height: 100%; transition: transform .7s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
+.flip:hover .flip-inner, .flip:focus-visible .flip-inner, .flip.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 20px; }
+.flip-back { transform: rotateY(180deg); }
+
+/* Pause marquee on hover */
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+.marquee-mask { mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+
+/* Draw-in progress bars */
+.bar-grow { transform-origin: left; animation: barGrow .9s cubic-bezier(.16,1,.3,1) both; }
+@keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ============================================================
+   PDF / PRINT REPORT
+   ============================================================ */
+.print-root { display: none; }
+@media print {
+  @page { size: A4; margin: 14mm; }
+  html, body { background: #fff !important; }
+  #root { display: none !important; }
+  .print-root { display: block !important; color: #241B22; font-family: 'Inter', system-ui, sans-serif; }
+  .print-root * { animation: none !important; transition: none !important; }
+  .print-avoid-break { break-inside: avoid; page-break-inside: avoid; }
+  .print-root { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

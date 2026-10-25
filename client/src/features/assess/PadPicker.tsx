@@ -83,14 +83,14 @@ export const PadPicker: React.FC<PadPickerProps> = ({ value, onChange }) => {
         <div className="space-y-1 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">
-              Live PBAC Menstrual Score
+              Your score
             </span>
             <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-white border border-plum/10 text-plum">
-              Higham (1990)
+              PBAC
             </span>
           </div>
           <p className="text-xs text-ink-muted">
-            Published threshold is <strong className="text-ink">100 points</strong> (corresponds to &gt;80 mL blood loss per cycle).
+            Heavy flow starts at <strong className="text-ink">100 pts</strong>.
           </p>
         </div>
 
@@ -117,10 +117,10 @@ export const PadPicker: React.FC<PadPickerProps> = ({ value, onChange }) => {
       {/* Visual Pad Selector Grid */}
       <div>
         <h3 className="text-base font-semibold text-ink mb-1">
-          1. Sanitary Pads Used During Heaviest Cycle
+          1 · Pads used
         </h3>
         <p className="text-xs text-ink-muted mb-4">
-          Tap + or - to record how many pads of each saturation level you used throughout your period.
+          Tap + / − for each type.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -171,10 +171,10 @@ export const PadPicker: React.FC<PadPickerProps> = ({ value, onChange }) => {
       <div className="p-4 rounded-card border border-plum-soft bg-white space-y-4">
         <div>
           <h3 className="text-base font-semibold text-ink">
-            2. Blood Clots and Flooding Episodes
+            2 · Clots & flooding
           </h3>
           <p className="text-xs text-ink-muted">
-            Passing clots or sudden flooding through clothes adds to clinical assessment.
+            Count what you noticed.
           </p>
         </div>
 
@@ -263,7 +263,7 @@ export const PadPicker: React.FC<PadPickerProps> = ({ value, onChange }) => {
       <div className="p-3.5 rounded-xl bg-plum-soft/30 border border-plum/10 text-xs text-ink-muted flex items-start gap-2.5">
         <Info className="w-4 h-4 text-plum flex-shrink-0 mt-0.5" />
         <p>
-          Higham et al. (1990) established the PBAC chart. A score of 100+ shows 86% sensitivity and 89% specificity for menstrual blood loss exceeding 80 mL. This is a non-diagnostic screening score intended to be discussed with a doctor.
+          100+ means &gt;80 mL loss (Higham 1990). A screening aid only.
         </p>
       </div>
     </div>

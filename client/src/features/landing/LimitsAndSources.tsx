@@ -31,13 +31,13 @@ export const LimitsAndSources: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto py-6 space-y-6">
+    <div className="space-y-6">
       <div className="space-y-1">
         <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink">
-          Clinical Sources, Rules & Limitations
+          Sources & Limits
         </h1>
         <p className="text-xs sm:text-sm text-ink-muted">
-          SthreeCare prioritises medical transparency, deterministic explainability, and patient safety above all else.
+          Where our rules come from, and what they can't do.
         </p>
       </div>
 
@@ -45,19 +45,19 @@ export const LimitsAndSources: React.FC = () => {
       <Card variant="default" padding="lg" className="border-plum/20 bg-cream space-y-3">
         <div className="flex items-center gap-2 text-plum font-bold text-sm">
           <Shield className="w-5 h-5 text-teal" />
-          <span>Core Accuracy & Safety Principles</span>
+          <span>Our promises</span>
         </div>
         <ul className="text-xs text-ink-muted space-y-2 list-disc list-inside leading-relaxed">
-          <li><strong>No Machine Learning Diagnosis:</strong> The Compass uses deterministic, versioned rule files with published clinical thresholds.</li>
-          <li><strong>Cautious Wording:</strong> The app never asserts "You have disease X"; it presents screening observations to be discussed with a qualified clinician.</li>
-          <li><strong>Zero Data Transmission:</strong> Personal health entries and scores stay strictly inside your browser's local storage.</li>
+          <li><strong>No AI diagnosis.</strong> Fixed, published clinical rules.</li>
+          <li><strong>Careful wording.</strong> We flag, a doctor decides.</li>
+          <li><strong>Private.</strong> Your data stays on this device.</li>
         </ul>
       </Card>
 
       {/* Published Literature Sources */}
       <div className="space-y-4">
         <h2 className="text-lg font-heading font-semibold text-ink">
-          Validated Instruments & Published Thresholds
+          Sources
         </h2>
 
         {sources.map((s, i) => (

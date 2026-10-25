@@ -5,6 +5,8 @@
  * Enables practical community assistance without compromising health privacy.
  */
 
+import { PageHeader } from '../../design/ui/PageHeader';
+import { HandHeart as HdrIcon } from '../../design/ui/Icon';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TaskStepper } from './TaskStepper';
@@ -84,45 +86,28 @@ export const RequestSupportScreen: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto py-4">
+    <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-teal bg-teal-soft px-2.5 py-0.5 rounded-full border border-teal/20">
-              Stage 11 • Practical Assistance
-            </span>
-            <span className="text-xs text-ink-subtle">
-              Healthcare Time Bank
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink mt-1">
-            Request Volunteer Help
-          </h1>
-          <p className="text-xs sm:text-sm text-ink-muted">
-            Overcome practical barriers like hospital queues, OPD registration, or language translation with a verified companion.
-          </p>
-        </div>
-
+      <PageHeader icon={<HdrIcon className="w-7 h-7" />} title="Get Help" subtitle="A volunteer can go with you" tone="coral" actions={<>
         <Button
           variant="secondary"
           size="sm"
           onClick={() => navigate('/time-bank')}
           className="text-xs self-start sm:self-center"
         >
-          View Time Bank Credits
+          My credits
         </Button>
-      </div>
+      </>} />
 
       {/* Privacy Guarantee Banner */}
       <div className="p-4 rounded-xl bg-teal-soft/40 border border-teal/30 flex items-start gap-3">
         <Shield className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
         <div className="text-xs text-ink space-y-1">
           <p className="font-bold text-teal-dark">
-            Zero Health Data Shared With Volunteers
+            Your health data stays private
           </p>
           <p className="text-ink-muted leading-relaxed">
-            Your medical records and screening scores NEVER leave your device. The volunteer only receives logistics info (meeting point, time, and language) under your anonymous ID: <code className="bg-white/80 px-1.5 py-0.5 rounded text-plum font-mono">{anonRef}</code>.
+            Volunteers only see meeting point, time and language. Your ID: <code className="bg-white/80 px-1.5 py-0.5 rounded text-plum font-mono">{anonRef}</code>.
           </p>
         </div>
       </div>

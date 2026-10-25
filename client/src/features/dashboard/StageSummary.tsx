@@ -66,11 +66,11 @@ export const StageSummary: React.FC<StageSummaryProps> = ({ profile }) => {
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-teal" />
             <h3 className="font-heading font-bold text-lg text-ink">
-              {stageInfo.label} Care Compass
+              {stageInfo.label}
             </h3>
           </div>
           <p className="text-xs text-ink-muted mt-0.5">
-            Age Band: <strong>{profile.ageBand} years</strong> • {stageInfo.desc}
+            Age {profile.ageBand}
           </p>
         </div>
 
@@ -80,20 +80,20 @@ export const StageSummary: React.FC<StageSummaryProps> = ({ profile }) => {
           onClick={() => navigate('/profile')}
           className="text-xs self-start sm:self-center"
         >
-          Change Life Stage
+          Change stage
         </Button>
       </div>
 
       <div className="space-y-2.5">
         <span className="text-[11px] font-bold uppercase tracking-wider text-plum block">
-          National Preventive Guidelines Checklist
+          Screenings to keep up with
         </span>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-1 gap-3">
           {guidanceItems.map((item, idx) => (
             <div
               key={idx}
-              className="p-3 rounded-xl bg-plum-soft/30 border border-plum-soft flex flex-col justify-between space-y-2"
+              className="tile p-3 rounded-xl bg-plum-soft/30 border border-plum-soft flex flex-col justify-between space-y-2"
             >
               <div>
                 <div className="flex items-center justify-between">
@@ -104,7 +104,7 @@ export const StageSummary: React.FC<StageSummaryProps> = ({ profile }) => {
                     {item.interval}
                   </span>
                 </div>
-                <p className="text-[11px] text-ink-muted mt-1 leading-snug">
+                <p className="text-[11px] text-ink-muted mt-1 leading-snug line-clamp-2">
                   {item.rationale}
                 </p>
               </div>
@@ -115,7 +115,7 @@ export const StageSummary: React.FC<StageSummaryProps> = ({ profile }) => {
                   onClick={() => navigate('/assess')}
                   className="text-[11px] font-semibold text-plum hover:underline inline-flex items-center gap-1"
                 >
-                  <span>Check Status</span>
+                  <span>Check now</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
               </div>

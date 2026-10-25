@@ -1,31 +1,64 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { COPY } from '../copy';
+import { Link, NavLink } from 'react-router-dom';
+import { Info, PhoneCall, HeartPulse, Shield } from '../design/ui/Icon';
+import { NAV_ITEMS, MOBILE_TABS } from './navItems';
 
+/**
+ * Fixed footer: same surface + same height as the header (see .bar-surface).
+ * Desktop → safety info + helplines. Mobile → the 5 main tabs.
+ */
 export const Footer: React.FC = () => {
-  return (
-    <footer className="mt-16 border-t border-plum-soft bg-white/60 py-8 px-4 text-center">
-      <div className="max-w-4xl mx-auto space-y-4">
-        {/* Clinician & Safety Disclaimer */}
-        <p className="text-xs text-ink-muted leading-relaxed max-w-2xl mx-auto">
-          <strong className="text-ink font-semibold">Important Notice: </strong>
-          {COPY.nonDiagnosticDisclaimer}
-        </p>
+  const tabs = NAV_ITEMS.filter((n) => MOBILE_TABS.includes(n.to));
 
-        <div className="flex flex-wrap justify-center items-center gap-4 text-xs font-medium text-plum">
-          <Link to="/about" className="hover:underline">Clinical Sources & Limits</Link>
-          <span>•</span>
-          <Link to="/emergency" className="text-emergency hover:underline font-semibold">Emergency Danger Signs</Link>
-          <span>•</span>
-          <a href="tel:108" className="hover:underline">Ambulance: 108</a>
-          <span>•</span>
-          <a href="tel:14416" className="hover:underline">Mental Health: 14416</a>
+  return (
+    <footer className="bar-surface fixed bottom-0 inset-x-0 z-40 border-t border-white/10">
+      {/* Desktop */}
+      <div className="hidden md:flex h-full items-center justify-between gap-6 px-4 sm:px-6 lg:px-10">
+        <div className="flex items-center gap-3 text-sm text-white/85 min-w-0">
+          <Shield className="w-4 h-4 text-white flex-shrink-0" />
+          <span className="truncate">Screening aid, not a diagnosis. Always confirm with a doctor.</span>
         </div>
 
-        <p className="text-[11px] text-ink-subtle">
-          SthreeCare Prototype • recHERsion'26 PS1 Women's Healthcare • Person A: Assess
-        </p>
+        <div className="flex items-center gap-1">
+          <Link to="/about" className="bar-link">
+            <Info className="w-4 h-4" /> Sources
+          </Link>
+          <Link to="/emergency" className="bar-link">
+            <HeartPulse className="w-4 h-4" /> Danger signs
+          </Link>
+          <a href="tel:14416" className="bar-link">
+            <PhoneCall className="w-4 h-4" /> Mind 14416
+          </a>
+          <a
+            href="tel:108"
+            className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-white text-emergency text-sm font-bold hover:scale-105 transition-transform"
+          >
+            <PhoneCall className="w-4 h-4" /> Ambulance 108
+          </a>
+        </div>
       </div>
+
+      {/* Mobile tabs */}
+      <nav aria-label="Main" className="md:hidden h-full grid grid-cols-5">
+        {tabs.map((t) => (
+          <NavLink
+            key={t.to}
+            to={t.to}
+            className={({ isActive }) =>
+              `flex flex-col items-center justify-center gap-0.5 text-[11px] font-semibold transition-all ${
+                isActive ? 'text-white bg-white/15' : 'text-white/70 active:scale-90'
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <t.icon className={`w-5 h-5 transition-transform ${isActive ? '-translate-y-0.5 scale-110' : ''}`} />
+                <span>{t.label}</span>
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
     </footer>
   );
 };

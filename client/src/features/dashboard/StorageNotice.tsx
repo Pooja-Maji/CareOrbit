@@ -66,10 +66,10 @@ export const StorageNotice: React.FC = () => {
           </div>
           <div>
             <h4 className="text-xs font-semibold text-ink">
-              Privacy Architecture: Zero Cloud Health Sync
+              Private by design
             </h4>
             <p className="text-[11px] text-ink-muted">
-              Data storage: <strong>Local IndexedDB</strong> • Persistent: {storageStatus?.isPersisted ? '✓ Active' : 'Standard'}
+              Stored on this device only
             </p>
           </div>
         </div>

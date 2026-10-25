@@ -3,6 +3,8 @@
  * Owner: Person B (Stages 8-9)
  */
 
+import { PageHeader } from '../../design/ui/PageHeader';
+import { Clock as HdrIcon } from '../../design/ui/Icon';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../lib/store';
@@ -66,26 +68,9 @@ export const HistoryScreen: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto py-4">
+    <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-plum bg-plum-soft px-2.5 py-0.5 rounded-full border border-plum/20">
-              Stages 8 & 9 • Care Thread
-            </span>
-            <span className="text-xs text-ink-subtle">
-              On-Device Longitudinal Record
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink mt-1">
-            Your Care Thread Timeline
-          </h1>
-          <p className="text-xs sm:text-sm text-ink-muted">
-            An unbroken thread connecting every check, clinical flag, and follow-up consultation.
-          </p>
-        </div>
-
+      <PageHeader icon={<HdrIcon className="w-7 h-7" />} title="Care Timeline" subtitle="Every check, in one thread" tone="coral" actions={<>
         <div className="flex items-center gap-2 self-start sm:self-center">
           {dbResults.length >= 2 && (
             <div className="flex bg-cream p-1 rounded-xl border border-plum-soft">
@@ -109,12 +94,10 @@ export const HistoryScreen: React.FC = () => {
                     : 'text-ink-muted hover:text-ink'
                 }`}
               >
-                Compare Cycles
+                Compare
               </button>
             </div>
           )}
-
-
           <Button
             variant="primary"
             size="sm"
@@ -124,7 +107,7 @@ export const HistoryScreen: React.FC = () => {
             Start Check
           </Button>
         </div>
-      </div>
+      </>} />
 
       {/* Main Content: Timeline or Compare View */}
       {viewMode === 'compare' ? (
