@@ -2,7 +2,7 @@ import os
 from pydantic import BaseModel
 
 class Settings(BaseModel):
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./sthreecare.db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./careorbit.db")
     CORS_ORIGINS: list[str] = [
         "http://localhost:5173",
         "http://localhost:3000",

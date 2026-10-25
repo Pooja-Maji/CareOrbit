@@ -1,134 +1,115 @@
-# Care Orbit
+# SthreeCare
 
-**Life-Stage Health Compass for women.** Care Orbit helps women check in on their health at every life stage — teen, adult, pregnancy, postpartum and 40+ — using validated screening instruments and published clinical guidelines, then guides them to the right care.
+SthreeCare is a life-stage health screening and care-navigation prototype for women. It brings together explainable screening tools, guidance on next steps, care-facility information, and community support.
 
-> Care Orbit is a screening and care-navigation tool, **not** a diagnostic medical device. It does not replace a doctor's examination. Always discuss results with a qualified clinician.
+> **Health disclaimer:** SthreeCare is a screening and care-navigation tool, not a diagnostic medical device or a substitute for care from a qualified clinician. Discuss health concerns and screening results with a healthcare professional.
 
-## Features
+## Project overview
 
-- **Health checks** – menstrual blood loss (PBAC), haemoglobin (WHO thresholds), postnatal mood (EPDS), symptom log, body-pain painter and danger-sign screening.
-- **Deterministic, explainable results** – clinical rules are plain JSON in `common/rules/`, reviewable by clinicians.
-- **Doctor summary** – printable / PDF report with a QR code.
-- **Care thread & history** – timeline of past checks, compare view and follow-up reminders.
-- **Find care** – facility directory and map.
-- **Volunteer support & Time Bank** – request a companion, earn and spend care credits.
-- **Emergency & crisis support** – always reachable, even when logged out.
-- **Privacy first** – health data stays on the device (IndexedDB); the API never receives it.
-- **Branding** – Care Orbit splash (5 s) on every launch, logo in the header and browser tab, light/dark theme.
+- **Web client:** React and TypeScript application built with Vite.
+- **Screening engine:** deterministic screening logic and clinical rules, with shared verification cases.
+- **API:** optional FastAPI service for facility information, volunteer support and Time Bank credits. The backend includes middleware that rejects health-related fields.
+- **Main user features:** health assessments and results, history and follow-up, finding care, support requests, and a Time Bank.
+
+Screening rules live in `common/rules/` and shared verification cases live in `common/verification/`.
 
 ## Project structure
 
-```
-care-orbit/
-├── apps/
-│   ├── web/                      React + Vite + Tailwind web app (@care-orbit/web)
-│   │   ├── public/               static files (brand logos, icons, illustrations)
-│   │   ├── src/
-│   │   │   ├── app/              shell, header, footer, routes, error boundary
-│   │   │   ├── features/         one folder per feature (assess, result, history, ...)
-│   │   │   ├── design/           design tokens and UI primitives
-│   │   │   ├── db/               on-device database, repos, export/import
-│   │   │   ├── api/              API clients
-│   │   │   ├── lib/  state/      helpers, stores
-│   │   │   └── copy.ts           clinician-reviewable text
-│   │   └── e2e/                  Playwright end-to-end tests
-│   └── api/                      FastAPI backend (care-orbit-api)
-│       ├── app/                  routers, services, models, middleware
-│       ├── seed/                 demo facilities and volunteers
-│       ├── reference/            Python reference scorers (tests only)
-│       ├── scripts/              seed, OpenAPI export, privacy-boundary check
-│       └── tests/
-├── packages/
-│   ├── compass/                  screening engine and scorers (@care-orbit/compass)
-│   └── shared/                   shared types, units, constants (@care-orbit/shared)
+```text
+.
+├── client/
+│   ├── src/                  React application
+│   ├── packages/
+│   │   ├── compass/          Screening engine and tests
+│   │   └── shared/           Shared TypeScript types and constants
+│   └── e2e/                  End-to-end test configuration
 ├── common/
-│   ├── rules/                    clinical rules (JSON), schemas, SOURCES.md
-│   └── verification/             test cases shared by TypeScript and Python
-├── docs/                         architecture notes
-├── scripts/                      rule validation, API-type generation
-├── .github/workflows/            CI
-├── Makefile
-├── pnpm-workspace.yaml
-└── package.json
+│   ├── rules/                Screening rules and clinical sources
+│   └── verification/         Shared screening test cases
+├── server/
+│   ├── app/                  FastAPI application, routes and services
+│   ├── seed/                 Initial facilities and volunteer data
+│   └── tests/                Backend tests
+├── scripts/                  Repository-level utility scripts
+├── public/                   Static assets
+├── Makefile                  Common development and test commands
+├── package.json              Workspace scripts
+└── pnpm-workspace.yaml       pnpm workspace configuration
 ```
 
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how the pieces fit together.
+## Requirements and dependencies
 
-## Requirements
+Install these tools before setting up the project:
 
-| Tool    | Version |
-|---------|---------|
-| Node.js | 18+ (20 recommended) |
-| pnpm    | 8+ |
-| Python  | 3.11+ (only for the API) |
+| Tool | Version | Used for |
+| --- | --- | --- |
+| Node.js | 20 or newer recommended | Web client and TypeScript packages |
+| pnpm | 9 | JavaScript workspace and dependencies |
+| Python | 3.11 or newer | Optional FastAPI backend and its tests |
 
-## Quick start (web app)
+The client uses React, Vite, TypeScript, Tailwind CSS, and Vitest. The screening and shared packages are workspace dependencies. The backend uses FastAPI, Uvicorn, Pydantic, SQLAlchemy, and SQLite by default. The dependency manifests are in `package.json`, `client/package.json`, and `server/requirements.txt`.
 
-```bash
+## Setup and run the web client
+
+From the repository root, install the JavaScript dependencies:
+
+```powershell
+corepack enable
+corepack prepare pnpm@9 --activate
 pnpm install
-pnpm dev            # or: make dev
 ```
 
-Open http://localhost:5173. You will see the Care Orbit splash for 5 seconds, then the login page (or the home page if you are already signed in).
+The client uses the local API URL by default. To configure it explicitly, copy the example into the Vite client directory:
 
-## Scripts
-
-Run from the repository root:
-
-| Command | What it does |
-|---------|--------------|
-| `pnpm dev` | Start the web app |
-| `pnpm build` | Production build of the web app |
-| `pnpm preview` | Preview the production build |
-| `pnpm typecheck` | Type-check every package |
-| `pnpm test` | Run the screening-engine tests (Vitest) |
-| `pnpm validate:rules` | Validate `common/rules/*.json` |
-| `make test-api` | Run the API tests (pytest) |
-| `make check-boundary` | Verify the API never imports health logic |
-| `make gen-api` | Export OpenAPI and regenerate shared API types |
-
-## API (optional)
-
-The web app works on-device. The API powers facilities, volunteer matching and Time Bank credits.
-
-```bash
-cd apps/api
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-cd ../..
-make seed
-make dev-api        # http://localhost:8000  (docs at /docs)
+```powershell
+Copy-Item .env.example client\.env
 ```
 
-Point the web app at it by copying `apps/web/.env.example` to `apps/web/.env`:
+Start the development server:
 
+```powershell
+pnpm dev
 ```
-VITE_API_URL=http://localhost:8000
+
+Open <http://localhost:5173> in a browser. The web client can be run by itself; API-backed features need the backend running as described below.
+
+## Setup and run the API (optional)
+
+Open a second PowerShell terminal at the repository root. Create and activate a virtual environment, then install the backend and test dependencies:
+
+```powershell
+python -m venv server\.venv
+server\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r server\requirements.txt pytest httpx pytest-asyncio
 ```
 
-## Using the app
+Start the API from the repository root:
 
-1. **Register** with name, 10-digit mobile number and password (demo auth, stored on the device), or **Sign in**.
-2. Accept the consent screen, then start a **Health Check**.
-3. Read the result, why each flag was raised, self-care tips and a doctor script.
-4. Export a **doctor summary** (print / PDF) or **back up** your data as `CareOrbit_Health_Backup_<date>.json`.
+```powershell
+python -m uvicorn app.main:app --app-dir server --reload --port 8000
+```
 
-## Branding assets
+The API is available at <http://localhost:8000>. Interactive API documentation is at <http://localhost:8000/docs>, and the health endpoint is <http://localhost:8000/health>. The server initializes its database tables and loads initial seed data on startup.
 
-| File (in `apps/web/public/`) | Used for |
-|------|----------|
-| `brand/care-orbit-logo.png` | Splash screen (logo with name) |
-| `brand/care-orbit-mark.png` | Header and login page (logo without name) |
-| `favicon-32.png`, `icon-192.png`, `icon-512.png`, `favicon.ico`, `apple-touch-icon.png` | Browser tab / home-screen icons (transparent) |
+`server/.env.example` documents backend settings. The application reads supported settings from environment variables; it does not automatically load an `.env` file. For example, set a database URL in PowerShell before starting the API with `$env:DATABASE_URL = "sqlite:///./sthreecare.db"`.
 
-Splash length: `SPLASH_DURATION_MS` in `apps/web/src/features/onboarding/SplashScreen.tsx`.
+## Tests and build
 
-## Privacy & safety
+Run these commands from the repository root:
 
-- Health data lives only in the browser (IndexedDB) and is never sent to the API. Middleware rejects health fields, and `make check-boundary` runs in CI and the pre-commit hook.
-- Auto-lock after inactivity, one-click data clearing, and export/import are built in.
-- The emergency number in the header is **108** (India).
+| Command | Description |
+| --- | --- |
+| `pnpm test` | Run the screening-engine Vitest tests |
+| `pnpm typecheck` | Type-check the workspace packages |
+| `pnpm build` | Build the shared package, screening engine, and web client |
+| `python -m pytest server/tests` | Run the backend tests (install the test dependencies above first) |
+| `python server/scripts/check_no_health_imports.py` | Check the backend health-data boundary |
 
-## Sources & license
+To create and serve a production client build, run `pnpm build`, then `pnpm --filter client preview`.
 
-Clinical sources: `common/rules/SOURCES.md`. License: see `LICENSE`.
+## Privacy and safety
+
+The screening engine and its rules are part of the client-side project. The API is intended for care-navigation and community-support features, and includes middleware to reject health-related fields. Review the implementation and your deployment configuration before using the project with real users or sensitive data.
+
+Clinical references for the screening rules are documented in `common/rules/SOURCES.md`. See `LICENSE` for license information.
