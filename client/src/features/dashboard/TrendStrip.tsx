@@ -126,7 +126,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                       <path
                         d={pathStr}
                         fill="none"
-                        stroke="#6B2D5C"
+                        stroke="#4C1D95"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -139,14 +139,14 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                             cx={c.x}
                             cy={c.y}
                             r="4.5"
-                            fill={c.pt.val >= pbacThreshold ? '#E4735A' : '#6B2D5C'}
+                            fill={c.pt.val >= pbacThreshold ? '#E4735A' : '#4C1D95'}
                             stroke="#FFFFFF"
                             strokeWidth="1.5"
                           />
                           <text
                             x={c.x}
                             y={c.y - 8}
-                            fill="#241B22"
+                            fill="#1B1530"
                             fontSize="10"
                             fontWeight="bold"
                             textAnchor="middle"
@@ -213,14 +213,14 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                         y1={thresholdY}
                         x2="290"
                         y2={thresholdY}
-                        stroke="#1F6F6B"
+                        stroke="#0E7490"
                         strokeDasharray="4 3"
                         strokeWidth="1.5"
                       />
                       <text
                         x="292"
                         y={thresholdY + 3}
-                        fill="#1F6F6B"
+                        fill="#0E7490"
                         fontSize="9"
                         textAnchor="start"
                       >
@@ -231,7 +231,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                       <path
                         d={pathStr}
                         fill="none"
-                        stroke="#1F6F6B"
+                        stroke="#0E7490"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -244,14 +244,14 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                             cx={c.x}
                             cy={c.y}
                             r="4.5"
-                            fill={c.pt.val < hbThreshold ? '#E4735A' : '#1F6F6B'}
+                            fill={c.pt.val < hbThreshold ? '#E4735A' : '#0E7490'}
                             stroke="#FFFFFF"
                             strokeWidth="1.5"
                           />
                           <text
                             x={c.x}
                             y={c.y - 8}
-                            fill="#241B22"
+                            fill="#1B1530"
                             fontSize="10"
                             fontWeight="bold"
                             textAnchor="middle"

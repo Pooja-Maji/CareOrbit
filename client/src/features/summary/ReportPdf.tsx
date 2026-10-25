@@ -24,7 +24,7 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
       {/* Brand band */}
       <div
         className="rounded-xl px-6 py-5 flex items-center justify-between text-white"
-        style={{ background: 'linear-gradient(100deg,#511F45,#6B2D5C 60%,#1F6F6B)' }}
+        style={{ background: '#2E1065' }}
       >
         <div>
           <div className="text-2xl font-bold" style={{ fontFamily: 'Fraunces, Georgia, serif' }}>
@@ -45,18 +45,18 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
           ['Life stage', stage],
           ['Age band', summary.ageBand],
         ].map(([k, v]) => (
-          <div key={k} className="rounded-lg border border-[#F5ECF3] bg-[#FBF7F4] px-3 py-2">
-            <div className="text-[10px] uppercase tracking-wider text-[#8C7F89] font-semibold">{k}</div>
+          <div key={k} className="rounded-lg border border-[#ECEEF5] bg-[#F5F6FA] px-3 py-2">
+            <div className="text-[10px] uppercase tracking-wider text-[#8A84A0] font-semibold">{k}</div>
             <div className="font-semibold capitalize">{v}</div>
           </div>
         ))}
       </div>
 
       {/* Scores */}
-      <h2 className="mt-5 mb-2 text-sm font-bold text-[#6B2D5C] uppercase tracking-wider">Scores</h2>
+      <h2 className="mt-5 mb-2 text-sm font-bold text-[#4C1D95] uppercase tracking-wider">Scores</h2>
       <table className="w-full border-collapse print-avoid-break">
         <thead>
-          <tr className="bg-[#F5ECF3] text-left text-[10px] uppercase tracking-wider text-[#6B2D5C]">
+          <tr className="bg-[#ECEEF5] text-left text-[10px] uppercase tracking-wider text-[#4C1D95]">
             <th className="p-2">Check</th>
             <th className="p-2">Your result</th>
             <th className="p-2">Healthy range</th>
@@ -65,14 +65,14 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
         </thead>
         <tbody>
           {summary.scores.map((s) => (
-            <tr key={s.label} className="border-b border-[#F5ECF3]">
+            <tr key={s.label} className="border-b border-[#ECEEF5]">
               <td className="p-2 font-medium">{s.label}</td>
               <td className="p-2 font-bold">{s.value}</td>
-              <td className="p-2 text-[#61555E]">{s.threshold}</td>
+              <td className="p-2 text-[#5B5470]">{s.threshold}</td>
               <td className="p-2">
                 <span
                   className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white"
-                  style={{ background: s.review ? '#E4735A' : '#1F6F6B' }}
+                  style={{ background: s.review ? '#E4735A' : '#0E7490' }}
                 >
                   {s.review ? 'Review' : 'In range'}
                 </span>
@@ -81,7 +81,7 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
           ))}
           {summary.scores.length === 0 && (
             <tr>
-              <td className="p-2 text-[#61555E]" colSpan={4}>
+              <td className="p-2 text-[#5B5470]" colSpan={4}>
                 No scored checks in this report.
               </td>
             </tr>
@@ -90,11 +90,11 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
       </table>
 
       {/* Flags */}
-      <h2 className="mt-5 mb-2 text-sm font-bold text-[#6B2D5C] uppercase tracking-wider">
+      <h2 className="mt-5 mb-2 text-sm font-bold text-[#4C1D95] uppercase tracking-wider">
         Flags ({summary.flags.length})
       </h2>
       {summary.flags.length === 0 ? (
-        <p className="text-[#61555E]">No flags raised. Keep up regular check-ups.</p>
+        <p className="text-[#5B5470]">No flags raised. Keep up regular check-ups.</p>
       ) : (
         <div className="space-y-2">
           {result.flags.map((f) => (
@@ -102,22 +102,22 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
               key={f.id}
               className="print-avoid-break rounded-lg border px-3 py-2"
               style={{
-                borderColor: f.level === 'urgent' ? '#B3261E' : f.level === 'discuss' ? '#E4735A' : '#1F6F6B',
+                borderColor: f.level === 'urgent' ? '#B3261E' : f.level === 'discuss' ? '#E4735A' : '#0E7490',
                 borderLeftWidth: 5,
               }}
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="font-bold text-[13px]">{f.title}</div>
-                <div className="text-[10px] uppercase font-bold tracking-wider text-[#61555E]">
+                <div className="text-[10px] uppercase font-bold tracking-wider text-[#5B5470]">
                   {f.level === 'urgent' ? 'Urgent' : f.level === 'discuss' ? 'Discuss' : 'Info'}
                 </div>
               </div>
-              <div className="text-[#61555E] mt-0.5">{f.why}</div>
+              <div className="text-[#5B5470] mt-0.5">{f.why}</div>
               <div className="mt-1">
-                <span className="font-semibold text-[#6B2D5C]">Next step: </span>
+                <span className="font-semibold text-[#4C1D95]">Next step: </span>
                 {f.nextStep}
               </div>
-              <div className="text-[10px] text-[#8C7F89] mt-0.5">Source: {f.source}</div>
+              <div className="text-[10px] text-[#8A84A0] mt-0.5">Source: {f.source}</div>
             </div>
           ))}
         </div>
@@ -126,7 +126,7 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
       {/* Doctor points + QR */}
       <div className="grid grid-cols-[1fr_auto] gap-5 mt-5 items-start print-avoid-break">
         <div>
-          <h2 className="mb-2 text-sm font-bold text-[#6B2D5C] uppercase tracking-wider">Ask your doctor</h2>
+          <h2 className="mb-2 text-sm font-bold text-[#4C1D95] uppercase tracking-wider">Ask your doctor</h2>
           <ul className="list-disc pl-5 space-y-1">
             {summary.doctorTalkingPoints.length ? (
               summary.doctorTalkingPoints.map((p, i) => <li key={i}>{p}</li>)
@@ -138,13 +138,13 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
         {qrUrl && (
           <div className="text-center">
             <img src={qrUrl} width={110} height={110} alt="QR code of this summary" />
-            <div className="text-[9px] text-[#8C7F89] mt-1">Scan for summary</div>
+            <div className="text-[9px] text-[#8A84A0] mt-1">Scan for summary</div>
           </div>
         )}
       </div>
 
       {/* Disclaimer */}
-      <div className="mt-6 pt-3 border-t border-[#F5ECF3] text-[10px] text-[#8C7F89] print-avoid-break">
+      <div className="mt-6 pt-3 border-t border-[#ECEEF5] text-[10px] text-[#8A84A0] print-avoid-break">
         {COPY.nonDiagnosticDisclaimer} Emergency: 108 · Tele-MANAS: 14416 (free, 24/7).
       </div>
     </div>

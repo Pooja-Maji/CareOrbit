@@ -14,7 +14,7 @@ export const QrCode: React.FC<QrCodeProps> = ({ value, size = 180 }) => {
       width: size,
       margin: 1,
       color: {
-        dark: '#241B22',
+        dark: '#1B1530',
         light: '#FFFFFF',
       },
     })

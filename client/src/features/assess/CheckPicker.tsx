@@ -42,7 +42,7 @@ export const CheckPicker: React.FC = () => {
       hint: 'Pads & clots · 1 min',
       icon: <Droplets className="w-6 h-6" />,
       done: !!inputs.pbac && (inputs.pbac.pad.light + inputs.pbac.pad.moderate + inputs.pbac.pad.saturated > 0),
-      gradient: 'from-plum to-plum-light',
+      gradient: 'from-plum to-plum',
     },
     {
       id: 'hb',
@@ -51,7 +51,7 @@ export const CheckPicker: React.FC = () => {
       icon: <ClipboardList className="w-6 h-6" />,
       done: !!inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0,
       badge: inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
-      gradient: 'from-teal to-[#2a8a85]',
+      gradient: 'from-teal to-teal',
     },
     {
       id: 'epds',
@@ -60,7 +60,7 @@ export const CheckPicker: React.FC = () => {
       icon: <Brain className="w-6 h-6" />,
       done: !!inputs.epds && inputs.epds.answers.some((a) => a > 0),
       badge: profile.lifeStage === 'postpartum' ? 'Suggested' : undefined,
-      gradient: 'from-[#8a4b9a] to-[#b77bc4]',
+      gradient: 'from-plum to-plum',
     },
     {
       id: 'symptoms',
@@ -69,7 +69,7 @@ export const CheckPicker: React.FC = () => {
       icon: <Siren className="w-6 h-6" />,
       done: !!inputs.dangerSigns?.selectedSigns?.length,
       badge: inputs.dangerSigns?.selectedSigns?.length ? 'Alert' : undefined,
-      gradient: 'from-coral to-[#f0907a]',
+      gradient: 'from-coral to-coral',
     },
   ];
 

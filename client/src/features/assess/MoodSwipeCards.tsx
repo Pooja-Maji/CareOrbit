@@ -222,7 +222,7 @@ export const MoodSwipeCards: React.FC<MoodSwipeCardsProps> = ({ value, onChange,
           >
             <Card variant="elevated" padding="lg" className="space-y-6 cursor-grab active:cursor-grabbing">
               <div className="flex items-start gap-4">
-                <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#8a4b9a] to-[#b77bc4] text-white flex items-center justify-center flex-shrink-0">
+                <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-plum to-plum text-white flex items-center justify-center flex-shrink-0">
                   <Brain className="w-6 h-6" />
                 </span>
                 <div>
@@ -281,13 +281,13 @@ export const MoodSwipeCards: React.FC<MoodSwipeCardsProps> = ({ value, onChange,
         <Card padding="lg" interactive className="flex xl:flex-col items-center gap-6 text-center">
           <div className="relative w-32 h-32 flex-shrink-0">
             <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              <circle cx="50" cy="50" r="42" fill="none" stroke="#F5ECF3" strokeWidth="9" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#ECEEF5" strokeWidth="9" />
               <circle
                 cx="50"
                 cy="50"
                 r="42"
                 fill="none"
-                stroke={totalScore >= 13 ? '#E4735A' : '#6B2D5C'}
+                stroke={totalScore >= 13 ? '#E4735A' : '#4C1D95'}
                 strokeWidth="9"
                 strokeLinecap="round"
                 strokeDasharray={circ}

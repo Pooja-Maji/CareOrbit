@@ -6,10 +6,10 @@ export interface SelfCareCardProps {
 }
 
 const TIPS = [
-  { icon: Salad, title: 'Iron + Vitamin C', text: 'Dates, lentils, greens with amla or lemon.', tone: 'from-teal to-[#2a8a85]' },
-  { icon: Waves, title: 'Warm compress', text: 'On the lower belly to ease cramps.', tone: 'from-coral to-[#f0907a]' },
-  { icon: Droplets, title: 'Stay hydrated', text: 'Water, coconut water, warm soups.', tone: 'from-[#2f7fb0] to-[#5aa6d4]' },
-  { icon: Moon, title: 'Rest well', text: 'Short breaks. Sleep early on heavy days.', tone: 'from-plum to-plum-light' },
+  { icon: Salad, title: 'Iron + Vitamin C', text: 'Dates, lentils, greens with amla or lemon.', tone: 'from-teal to-teal' },
+  { icon: Waves, title: 'Warm compress', text: 'On the lower belly to ease cramps.', tone: 'from-coral to-coral' },
+  { icon: Droplets, title: 'Stay hydrated', text: 'Water, coconut water, warm soups.', tone: 'from-teal to-teal' },
+  { icon: Moon, title: 'Rest well', text: 'Short breaks. Sleep early on heavy days.', tone: 'from-plum to-plum' },
 ];
 
 /** Flip cards: hover or tap to reveal the tip. */

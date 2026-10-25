@@ -47,7 +47,7 @@ export const CreditRing: React.FC<CreditRingProps> = ({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="#F5ECF3"
+            stroke="#ECEEF5"
             strokeWidth={strokeWidth}
           />
 
@@ -58,7 +58,7 @@ export const CreditRing: React.FC<CreditRingProps> = ({
               cy={size / 2}
               r={radius}
               fill="none"
-              stroke="#1F6F6B"
+              stroke="#0E7490"
               strokeWidth={strokeWidth}
               strokeDasharray={`${earnedDash} ${circumference}`}
               strokeDashoffset="0"
@@ -73,7 +73,7 @@ export const CreditRing: React.FC<CreditRingProps> = ({
               cy={size / 2}
               r={radius}
               fill="none"
-              stroke="#6B2D5C"
+              stroke="#4C1D95"
               strokeWidth={strokeWidth}
               strokeDasharray={`${sponsoredDash} ${circumference}`}
               strokeDashoffset={-earnedDash}

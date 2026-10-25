@@ -143,11 +143,11 @@ export const ProfileEdit: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Patient Profile Header Card */}
-      <div className="p-6 rounded-[24px] bg-gradient-to-br from-white via-[#FAF3F8] to-white border border-plum-soft shadow-lifted">
+      <div className="p-6 rounded-[24px] bg-white border border-plum-soft shadow-lifted">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           {/* Avatar and Identity */}
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-plum via-[#883A76] to-teal flex items-center justify-center text-white text-2xl font-heading font-bold shadow-soft flex-shrink-0">
+            <div className="w-16 h-16 rounded-2xl bg-plum flex items-center justify-center text-white text-2xl font-heading font-bold shadow-soft flex-shrink-0">
               {displayName.slice(0, 2).toUpperCase()}
             </div>
             <div>

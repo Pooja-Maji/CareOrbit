@@ -59,6 +59,8 @@ export {
   Waves,
   Wind,
   Moon,
+  Sun,
+  Coins,
   Zap,
   Leaf,
   FileDown,

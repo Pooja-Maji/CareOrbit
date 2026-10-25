@@ -23,7 +23,7 @@ export const ProgressThread: React.FC<ProgressThreadProps> = ({
     return (
       <div className="relative pl-8 py-2">
         {/* Continuous thread line */}
-        <div className="absolute left-3 top-3 bottom-3 w-0.5 bg-gradient-to-b from-plum via-plum-light to-teal opacity-40" />
+        <div className="absolute left-3 top-3 bottom-3 w-0.5 bg-gradient-to-b from-teal via-teal to-teal opacity-40" />
 
         <div className="space-y-6">
           {steps.map((step) => {
@@ -76,7 +76,7 @@ export const ProgressThread: React.FC<ProgressThreadProps> = ({
     <div className="w-full py-4">
       <div className="relative flex items-center justify-between">
         {/* Continuous horizontal thread */}
-        <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-plum via-plum-light to-teal opacity-30 z-0" />
+        <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-teal via-teal to-teal opacity-30 z-0" />
 
         {steps.map((step, idx) => {
           let dotClasses = 'bg-white border-2 border-plum-soft text-ink-subtle';

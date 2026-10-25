@@ -8,37 +8,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: '#FBF7F4',
+        // Every colour is a CSS variable (see tokens.css) so light/dark just swaps the values.
+        // Names kept (plum = violet, teal = cyan) so every screen re-themes without edits.
+        cream: 'rgb(var(--c-cream) / <alpha-value>)',
+        surface: 'rgb(var(--c-surface) / <alpha-value>)',
+        marigold: '#F2A93B',
         plum: {
-          DEFAULT: '#6B2D5C',
-          light: '#883A76',
-          soft: '#F5ECF3',
-          dark: '#511F45',
+          DEFAULT: 'rgb(var(--c-plum) / <alpha-value>)',
+          light: 'rgb(var(--c-plum-light) / <alpha-value>)',
+          soft: 'rgb(var(--c-plum-soft) / <alpha-value>)',
+          dark: 'rgb(var(--c-plum-dark) / <alpha-value>)',
         },
         teal: {
-          DEFAULT: '#1F6F6B',
-          soft: '#E8F4F3',
-          dark: '#16524F',
+          DEFAULT: 'rgb(var(--c-teal) / <alpha-value>)',
+          soft: 'rgb(var(--c-teal-soft) / <alpha-value>)',
+          dark: 'rgb(var(--c-teal-dark) / <alpha-value>)',
         },
         coral: {
-          DEFAULT: '#E4735A',
-          soft: '#FDF1EE',
-          dark: '#C8573E',
+          DEFAULT: 'rgb(var(--c-coral) / <alpha-value>)',
+          soft: 'rgb(var(--c-coral-soft) / <alpha-value>)',
+          dark: 'rgb(var(--c-coral-dark) / <alpha-value>)',
         },
         amber: {
-          DEFAULT: '#B7791F',
-          soft: '#FDF7EB',
-          dark: '#935F16',
+          DEFAULT: 'rgb(var(--c-amber) / <alpha-value>)',
+          soft: 'rgb(var(--c-amber-soft) / <alpha-value>)',
+          dark: 'rgb(var(--c-amber-dark) / <alpha-value>)',
         },
         emergency: {
-          DEFAULT: '#B3261E',
-          soft: '#FDECEB',
-          dark: '#8C1D18',
+          DEFAULT: 'rgb(var(--c-emergency) / <alpha-value>)',
+          soft: 'rgb(var(--c-emergency-soft) / <alpha-value>)',
+          dark: 'rgb(var(--c-emergency-dark) / <alpha-value>)',
         },
         ink: {
-          DEFAULT: '#241B22',
-          muted: '#61555E',
-          subtle: '#8C7F89',
+          DEFAULT: 'rgb(var(--c-ink) / <alpha-value>)',
+          muted: 'rgb(var(--c-ink-muted) / <alpha-value>)',
+          subtle: 'rgb(var(--c-ink-subtle) / <alpha-value>)',
         },
       },
       borderRadius: {
@@ -49,8 +53,8 @@ export default {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 4px 20px -2px rgba(107, 45, 92, 0.06), 0 2px 6px -1px rgba(107, 45, 92, 0.04)',
-        'lifted': '0 12px 32px -4px rgba(107, 45, 92, 0.12), 0 4px 12px -2px rgba(107, 45, 92, 0.06)',
+        'soft': '0 4px 20px -2px rgba(109, 40, 217, 0.07), 0 2px 6px -1px rgba(109, 40, 217, 0.05)',
+        'lifted': '0 12px 32px -4px rgba(109, 40, 217, 0.16), 0 4px 12px -2px rgba(14, 116, 144, 0.08)',
       },
       height: { bar: '64px' },
       spacing: { bar: '64px' },
@@ -62,6 +66,7 @@ export default {
         marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
         blob: { '0%,100%': { transform: 'translate(0,0) scale(1)' }, '33%': { transform: 'translate(30px,-20px) scale(1.1)' }, '66%': { transform: 'translate(-20px,20px) scale(0.95)' } },
         shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
+        spinIn: { '0%': { opacity: '0', transform: 'rotate(-90deg) scale(.5)' }, '100%': { opacity: '1', transform: 'rotate(0) scale(1)' } },
         ring: { '0%': { boxShadow: '0 0 0 0 rgba(179,38,30,0.55)' }, '100%': { boxShadow: '0 0 0 14px rgba(179,38,30,0)' } },
       },
       animation: {
@@ -73,6 +78,7 @@ export default {
         blob: 'blob 14s ease-in-out infinite',
         shimmer: 'shimmer 3s linear infinite',
         ring: 'ring 1.8s ease-out infinite',
+        'spin-in': 'spinIn .4s cubic-bezier(0.34,1.56,0.64,1) both',
       },
       minHeight: {
         'tap': '48px',

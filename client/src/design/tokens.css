@@ -2,25 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   THEME — violet + cyan. Values are "R G B" triplets so Tailwind can
+   apply opacity (bg-plum/20). .dark swaps them; nothing else changes.
+   ------------------------------------------------------------------ */
 :root {
-  --color-cream: #FBF7F4;
-  --color-plum: #6B2D5C;
-  --color-plum-soft: #F5ECF3;
-  --color-teal: #1F6F6B;
-  --color-coral: #E4735A;
-  --color-amber: #B7791F;
-  --color-red: #B3261E;
-  --color-ink: #241B22;
+  color-scheme: light;
+  --c-cream: 245 246 250;
+  --c-surface: 255 255 255;
+  --c-plum: 76 29 149;         /* dark violet #4C1D95 */
+  --c-plum-light: 91 33 182;
+  --c-plum-soft: 236 238 245;  /* neutral tint — no pastel violet */
+  --c-plum-dark: 46 16 101;    /* #2E1065 */
+  --c-teal: 14 116 144;        /* cyan, readable on white */
+  --c-teal-soft: 224 246 251;
+  --c-teal-dark: 21 94 117;
+  --c-coral: 228 115 90;
+  --c-coral-soft: 253 241 238;
+  --c-coral-dark: 200 87 62;
+  --c-amber: 183 121 31;
+  --c-amber-soft: 253 247 235;
+  --c-amber-dark: 147 95 22;
+  --c-emergency: 179 38 30;
+  --c-emergency-soft: 253 236 235;
+  --c-emergency-dark: 140 29 24;
+  --c-ink: 27 21 48;
+  --c-ink-muted: 91 84 112;
+  --c-ink-subtle: 138 132 160;
 
   --radius-card: 20px;
   --radius-pill: 9999px;
   --min-tap: 48px;
 }
 
+.dark {
+  color-scheme: dark;
+  --c-cream: 11 6 23;
+  --c-surface: 22 11 51;
+  --c-plum: 109 40 217;        /* buttons stay deep violet */
+  --c-plum-light: 124 58 237;
+  --c-plum-soft: 36 18 79;
+  --c-plum-dark: 91 33 182;
+  --c-teal: 34 211 238;        /* cyan #22D3EE */
+  --c-teal-soft: 8 47 62;
+  --c-teal-dark: 103 232 249;
+  --c-coral: 240 128 102;
+  --c-coral-soft: 58 31 36;
+  --c-coral-dark: 244 151 127;
+  --c-amber: 224 160 48;
+  --c-amber-soft: 51 39 15;
+  --c-amber-dark: 242 184 75;
+  --c-emergency: 239 68 68;
+  --c-emergency-soft: 58 21 23;
+  --c-emergency-dark: 220 38 38;
+  --c-ink: 240 240 250;
+  --c-ink-muted: 176 176 200;
+  --c-ink-subtle: 135 135 165;
+}
+/* Dark mode: violet text would be too dim on dark violet, so text uses cyan; cyan buttons get dark text. */
+.dark .text-plum, .dark .hover\:text-plum:hover { color: #22D3EE; }
+.dark .bg-teal { color: #1E0B4D; }
+
+/* Cards/inputs/chips use bg-white on purpose; in dark mode they become the raised surface. */
+.dark .bg-white { background-color: rgb(var(--c-surface)); }
+.dark .bg-white\/95 { background-color: rgb(var(--c-surface) / .95); }
+.dark .bg-white\/90 { background-color: rgb(var(--c-surface) / .9); }
+.dark .bg-white\/80 { background-color: rgb(var(--c-surface) / .8); }
+.dark .border-plum-soft, .dark [class*="border-plum-soft"] { border-color: rgb(var(--c-plum) / .22); }
+body, .bg-cream { transition: background-color .3s, color .3s; }
+
 @layer base {
   body {
-    background-color: var(--color-cream);
-    color: var(--color-ink);
+    background-color: rgb(var(--c-cream));
+    color: rgb(var(--c-ink));
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
@@ -43,20 +97,20 @@
 
 /* Glassmorphism and Luxury Cards */
 .glass-nav {
-  background: rgba(251, 247, 244, 0.92);
+  background: rgb(var(--c-cream) / 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgb(var(--c-surface) / 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(107, 45, 92, 0.08);
+  border: 1px solid rgb(var(--c-plum) / 0.1);
 }
 
 .glass-drawer {
-  background: rgba(251, 247, 244, 0.98);
+  background: rgb(var(--c-cream) / 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -72,7 +126,7 @@
   bottom: 0;
   left: 20px;
   width: 2px;
-  background: linear-gradient(180deg, #6B2D5C 0%, #1F6F6B 50%, #E4735A 100%);
+  background: #0891B2;
   opacity: 0.4;
   z-index: 0;
 }
@@ -120,7 +174,7 @@
 }
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px -4px rgba(107, 45, 92, 0.12), 0 4px 10px -2px rgba(107, 45, 92, 0.05);
+  box-shadow: 0 12px 28px -4px rgba(46, 16, 101, 0.16), 0 4px 10px -2px rgba(46, 16, 101, 0.08);
 }
 
 /* Respect user's motion preferences */
@@ -140,10 +194,10 @@
 
 /* Header + Footer share one surface so they always match */
 .bar-surface {
-  background: linear-gradient(100deg, #511F45 0%, #6B2D5C 55%, #7A3466 100%);
+  background: linear-gradient(100deg, #2E1065 0%, #2E1065 28%, #1F4B8E 52%, #0E7490 76%, #0E7490 100%); /* violet -> blended middle -> cyan, no hard edge */
   color: #fff;
   height: var(--bar-h);
-  box-shadow: 0 0 30px -6px rgba(81, 31, 69, 0.45);
+  box-shadow: 0 0 30px -6px rgba(46, 16, 101, 0.5);
 }
 .bar-link {
   display: inline-flex; align-items: center; gap: 8px;
@@ -153,7 +207,9 @@
   white-space: nowrap;
 }
 .bar-link:hover { background: rgba(255,255,255,0.14); color: #fff; transform: translateY(-1px); }
-.bar-link.active { background: #fff; color: #511F45; box-shadow: 0 6px 16px -6px rgba(0,0,0,.35); }
+.bar-link.active { background: #fff; color: #2E1065; box-shadow: 0 6px 16px -6px rgba(0,0,0,.35); }
+
+
 
 /* Page-level staggered reveal: children fade up one after another */
 .stagger > * { animation: slideUpIn .55s cubic-bezier(.16,1,.3,1) both; }
@@ -168,16 +224,14 @@
 
 /* Tile hover: lift + glow + icon wiggle */
 .tile { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s, border-color .3s; }
-.tile:hover { transform: translateY(-5px); box-shadow: 0 18px 36px -10px rgba(107,45,92,.28); }
+.tile:hover { transform: translateY(-5px); box-shadow: 0 18px 36px -10px rgba(46,16,101,.30); }
 .tile .tile-icon { transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
 .tile:hover .tile-icon { transform: scale(1.18) rotate(-6deg); }
 .tile:active { transform: translateY(-1px) scale(.98); }
 
 /* Animated gradient hero */
 .hero-gradient {
-  background: linear-gradient(120deg, #511F45, #6B2D5C 40%, #1F6F6B 100%);
-  background-size: 200% 200%;
-  animation: heroShift 14s ease-in-out infinite;
+  background: linear-gradient(112deg, #2E1065 0%, #2E1065 36%, #1F4B8E 58%, #0E7490 82%, #0E7490 100%);
 }
 @keyframes heroShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
@@ -193,7 +247,7 @@
 /* 3D flip flashcards */
 .flip { perspective: 1000px; }
 .flip-inner { position: relative; width: 100%; height: 100%; transition: transform .7s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
-.flip:hover .flip-inner, .flip:focus-visible .flip-inner, .flip.flipped .flip-inner { transform: rotateY(180deg); }
+.flip.flipped .flip-inner { transform: rotateY(180deg); }
 .flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 20px; }
 .flip-back { transform: rotateY(180deg); }
 
@@ -213,8 +267,53 @@
   @page { size: A4; margin: 14mm; }
   html, body { background: #fff !important; }
   #root { display: none !important; }
-  .print-root { display: block !important; color: #241B22; font-family: 'Inter', system-ui, sans-serif; }
+  .print-root { display: block !important; color: #1B1530; font-family: 'Inter', system-ui, sans-serif; }
   .print-root * { animation: none !important; transition: none !important; }
   .print-avoid-break { break-inside: avoid; page-break-inside: avoid; }
   .print-root { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+.dark .bar-surface { background: linear-gradient(100deg, #0F0626 0%, #0F0626 28%, #123A63 52%, #0B5C73 76%, #0B5C73 100%); }
+
+.dark .hero-gradient { background: linear-gradient(112deg, #1E0B4D 0%, #1E0B4D 36%, #163F6B 58%, #0B5C73 82%, #0B5C73 100%); }
+
+/* Half violet | half cyan button (hard edge) */
+.split-btn { background: linear-gradient(90deg, #2E1065 0%, #2E1065 42%, #1F4B8E 66%, #22D3EE 100%); }
+
+/* ============================================================
+   TIP FLASHCARDS — dark violet + cyan, solid (never blended).
+   Cards alternate: violet front / cyan back, then cyan front / violet back.
+   Each card shows its front ~2s, flips by itself, you read it, it flips back.
+   ============================================================ */
+.tips-stage {
+  position: relative; overflow: hidden; border-radius: 28px; padding: 28px 0;
+  background: #12062B;
+  border: 1px solid rgba(34, 211, 238, .35);
+  box-shadow: 0 24px 60px -24px rgba(18, 6, 43, .9);
+}
+
+.flip-inner.auto-flip { animation: tipFlip 8s ease-in-out infinite; }
+@keyframes tipFlip {
+  0%, 25%     { transform: rotateY(0deg); }      /* front: 2s */
+  32.5%, 80%  { transform: rotateY(180deg); }    /* flip, then read ~4s */
+  87.5%, 100% { transform: rotateY(0deg); }
+}
+.flip:hover .flip-inner.auto-flip, .flip:focus-visible .flip-inner.auto-flip { animation-play-state: paused; }
+.flip.flipped .flip-inner.auto-flip { animation: none; transform: rotateY(180deg); }
+
+.tip-front, .tip-back { overflow: hidden; box-shadow: 0 16px 34px -14px rgba(0,0,0,.7); }
+.tip-half { position: relative; }
+/* Card faces: violet melts into cyan through a blended middle (no hard edge) */
+.tip-front.grad-a { background: linear-gradient(180deg, #2E1065 0%, #2E1065 28%, #1F4B8E 50%, #22D3EE 78%, #22D3EE 100%); }
+.tip-front.grad-b { background: linear-gradient(180deg, #22D3EE 0%, #22D3EE 22%, #1F4B8E 50%, #2E1065 72%, #2E1065 100%); }
+.tip-back.grad-a  { background: linear-gradient(150deg, #2E1065 0%, #2E1065 25%, #1F4B8E 55%, #0E7490 100%); color: #fff; }
+.tip-back.grad-b  { background: linear-gradient(330deg, #2E1065 0%, #2E1065 25%, #1F4B8E 55%, #0E7490 100%); color: #fff; }
+.tip-halo { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; }
+.tip-timer {
+  position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; transform-origin: left; transform: scaleX(0);
+  animation: tipTimer 8s linear infinite;
+}
+@keyframes tipTimer {
+  0% { transform: scaleX(0); } 25%, 86% { transform: scaleX(1); } 87.5%, 100% { transform: scaleX(0); }
+}
+.flip:hover .tip-timer, .flip:focus-visible .tip-timer { animation-play-state: paused; }

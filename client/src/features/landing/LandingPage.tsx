@@ -62,7 +62,7 @@ export const LandingPage: React.FC = () => {
 
         <h1 className="text-4xl sm:text-6xl font-heading font-bold text-ink tracking-tight leading-[1.15]">
           Life-Stage Health Compass <br className="hidden sm:inline" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-plum via-[#883A76] to-teal">
+          <span className="text-teal">
             for Women
           </span>
         </h1>
@@ -73,7 +73,7 @@ export const LandingPage: React.FC = () => {
 
         {/* Pitch Quote Card */}
         <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md border border-plum-soft/80 shadow-soft max-w-2xl mx-auto text-left relative overflow-hidden group hover:border-plum/40 transition-all">
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-plum to-teal" />
+          <div className="absolute top-0 left-0 w-1.5 h-full bg-teal" />
           <p className="text-xs sm:text-sm text-ink italic font-serif leading-relaxed pl-3">
             "Women don't fall short of care because they don't care. They fall short because no one connects what she feels, what to do, and who can help. We do."
           </p>

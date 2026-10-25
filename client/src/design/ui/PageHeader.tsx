@@ -10,10 +10,10 @@ export interface PageHeaderProps {
 }
 
 const TONES = {
-  plum: 'from-plum to-plum-light',
-  teal: 'from-teal to-[#2a8a85]',
-  coral: 'from-coral to-[#f0907a]',
-  amber: 'from-amber to-[#d99a3d]',
+  plum: 'from-plum to-plum',
+  teal: 'from-teal to-teal',
+  coral: 'from-coral to-coral',
+  amber: 'from-amber to-amber',
 };
 
 /** Compact page title: icon + one-line title + one-line subtitle + actions on the right. */
