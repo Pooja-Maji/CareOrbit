@@ -1,5 +1,6 @@
 export {
   Heart,
+  Compass,
   Shield,
   AlertTriangle,
   CheckCircle,

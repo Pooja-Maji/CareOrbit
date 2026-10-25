@@ -318,6 +318,32 @@ body, .bg-cream { transition: background-color .3s, color .3s; }
    (--c-bar-fg is re-scoped so every text-bar / bg-bar utility inside turns white.) */
 .bar-surface.bar-dark {
   --c-bar-fg: 255 255 255;
-  background: linear-gradient(100deg, #2E1065 0%, #5B2A8C 45%, #A8367F 100%);
+  background: linear-gradient(100deg, #3D2962 0%, #513372 50%, #6B3C77 100%);
   color: #fff;
 }
+
+
+/* ============================================================
+   HOME PAGE — soft pink / lavender panels from the design mockup.
+   Light values are the mockup colours; .dark swaps to theme tokens.
+   ============================================================ */
+.home-hero { background: linear-gradient(180deg, #FDF5F8 0%, #FDF4F6 100%); }
+.home-pink { background: #FDF2F5; }
+.home-lav { background: #F6F2FC; }
+.home-stage { background: linear-gradient(100deg, #FCF3F7 0%, #FDF6F8 55%, #FEFAFB 100%); }
+.home-pink-card { background: #FEF1F6; }
+.home-trust { background: #F2EEFC; }
+.home-cta { background: linear-gradient(100deg, #46316C 0%, #5B3A77 55%, #6A3F78 100%); }
+.dark .home-pink, .dark .home-stage, .dark .home-pink-card { background: rgb(var(--c-teal-soft)); }
+.dark .home-lav, .dark .home-trust { background: rgb(var(--c-plum-soft)); }
+/* the hero art is a light photo, so the hero stays light in dark mode */
+.dark .home-hero { background: #FDF5F8; }
+.home-fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%);
+          mask-image: linear-gradient(to right, transparent 0, #000 14%);
+}
+.home-fade-round {
+  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+          mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+}
+.dark .home-fade-round { filter: brightness(.85) saturate(.9); }

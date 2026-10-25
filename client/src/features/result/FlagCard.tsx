@@ -20,8 +20,9 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">
           <span
-            className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white ${urgent ? 'bg-emergency' : discuss ? 'bg-coral' : 'bg-teal'
-              }`}
+            className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white ${
+              urgent ? 'bg-emergency' : discuss ? 'bg-coral' : 'bg-teal'
+            }`}
           >
             {urgent ? <AlertTriangle className="w-5 h-5" /> : discuss ? <Info className="w-5 h-5" /> : <CheckCircle className="w-5 h-5" />}
           </span>

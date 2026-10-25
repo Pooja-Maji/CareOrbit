@@ -58,51 +58,51 @@ export const CheckPicker: React.FC = () => {
     badge?: string;
     gradient: string;
   }[] = [
-      {
-        id: 'pbac',
-        label: 'Period flow',
-        hint: 'Pads & clots · 1 min',
-        icon: <Droplets className="w-6 h-6" />,
-        done: !!inputs.pbac && (inputs.pbac.pad.light + inputs.pbac.pad.moderate + inputs.pbac.pad.saturated > 0),
-        gradient: 'from-plum to-plum',
-      },
-      {
-        id: 'hb',
-        label: 'Blood (Hb)',
-        hint: 'From a lab report',
-        icon: <ClipboardList className="w-6 h-6" />,
-        done: !!inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0,
-        badge: inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
-        gradient: 'from-teal to-teal',
-      },
-      {
-        id: 'epds',
-        label: 'Mood',
-        hint: '10 quick cards',
-        icon: <Brain className="w-6 h-6" />,
-        done: !!inputs.epds && inputs.epds.answers.some((a) => a > 0),
-        badge: profile.lifeStage === 'postpartum' ? 'Suggested' : undefined,
-        gradient: 'from-plum to-plum',
-      },
-      {
-        id: 'symptoms',
-        label: 'Symptoms',
-        hint: 'Pain & danger signs',
-        icon: <Siren className="w-6 h-6" />,
-        done: !!inputs.dangerSigns?.selectedSigns?.length,
-        badge: inputs.dangerSigns?.selectedSigns?.length ? 'Alert' : undefined,
-        gradient: 'from-coral to-coral',
-      },
-      {
-        id: 'pain',
-        label: 'Body pain map',
-        hint: 'Tap where it hurts',
-        icon: <Activity className="w-6 h-6" />,
-        done: !!inputs.symptoms?.painLocations?.length,
-        badge: inputs.symptoms?.painLocations?.length ? `${inputs.symptoms.painLocations.length} areas` : undefined,
-        gradient: 'from-coral to-coral',
-      },
-    ];
+    {
+      id: 'pbac',
+      label: 'Period flow',
+      hint: 'Pads & clots · 1 min',
+      icon: <Droplets className="w-6 h-6" />,
+      done: !!inputs.pbac && (inputs.pbac.pad.light + inputs.pbac.pad.moderate + inputs.pbac.pad.saturated > 0),
+      gradient: 'from-plum to-plum',
+    },
+    {
+      id: 'hb',
+      label: 'Blood (Hb)',
+      hint: 'From a lab report',
+      icon: <ClipboardList className="w-6 h-6" />,
+      done: !!inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0,
+      badge: inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
+      gradient: 'from-teal to-teal',
+    },
+    {
+      id: 'epds',
+      label: 'Mood',
+      hint: '10 quick cards',
+      icon: <Brain className="w-6 h-6" />,
+      done: !!inputs.epds && inputs.epds.answers.some((a) => a > 0),
+      badge: profile.lifeStage === 'postpartum' ? 'Suggested' : undefined,
+      gradient: 'from-plum to-plum',
+    },
+    {
+      id: 'symptoms',
+      label: 'Symptoms',
+      hint: 'Pain & danger signs',
+      icon: <Siren className="w-6 h-6" />,
+      done: !!inputs.dangerSigns?.selectedSigns?.length,
+      badge: inputs.dangerSigns?.selectedSigns?.length ? 'Alert' : undefined,
+      gradient: 'from-coral to-coral',
+    },
+    {
+      id: 'pain',
+      label: 'Body pain map',
+      hint: 'Tap where it hurts',
+      icon: <Activity className="w-6 h-6" />,
+      done: !!inputs.symptoms?.painLocations?.length,
+      badge: inputs.symptoms?.painLocations?.length ? `${inputs.symptoms.painLocations.length} areas` : undefined,
+      gradient: 'from-coral to-coral',
+    },
+  ];
 
   const doneCount = tabs.filter((t) => t.done).length;
 
@@ -188,8 +188,9 @@ export const CheckPicker: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`tile relative text-left p-4 rounded-card border-2 overflow-hidden ${active ? 'border-plum bg-white shadow-lifted' : 'border-transparent bg-white shadow-soft'
-                }`}
+              className={`tile relative text-left p-4 rounded-card border-2 overflow-hidden ${
+                active ? 'border-plum bg-white shadow-lifted' : 'border-transparent bg-white shadow-soft'
+              }`}
             >
               <div className="flex items-start justify-between">
                 <span className={`tile-icon w-12 h-12 rounded-2xl bg-gradient-to-br ${tab.gradient} text-white flex items-center justify-center`}>

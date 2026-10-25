@@ -6,6 +6,15 @@ import { ThemeToggle } from '../design/ui/ThemeToggle';
 import { NAV_ITEMS, NAV_GROUPS } from './navItems';
 import { COPY } from '../copy';
 
+/** Top-bar links shown on wide screens (everything else lives in the Menu drawer). */
+const TOP_NAV = [
+  { to: '/dashboard', label: 'Home' },
+  { to: '/assess', label: 'Health Check' },
+  { to: '/profile', label: 'Reports' },
+  { to: '/find-care', label: 'Resources' },
+  { to: '/about', label: 'About' },
+];
+
 const TONE_BG: Record<string, string> = {
   plum: 'bg-plum-soft text-plum',
   teal: 'bg-teal-soft text-teal',
@@ -51,22 +60,41 @@ export const Header: React.FC = () => {
           </Link>
 
           {here && (
-            <span className="hidden md:inline-flex items-center gap-2 px-3 h-8 rounded-full bg-bar/10 border border-bar/15 text-sm font-semibold text-bar/90">
+            <span className="hidden md:inline-flex lg:hidden items-center gap-2 px-3 h-8 rounded-full bg-bar/10 border border-bar/15 text-sm font-semibold text-bar/90">
               <here.icon className="w-4 h-4" />
               {here.label}
             </span>
           )}
 
-          <div className="flex items-center gap-2 ml-auto flex-shrink-0">
+          <nav aria-label="Primary" className="hidden lg:flex flex-1 items-center justify-center gap-5 xl:gap-10">
+            {TOP_NAV.map((n) => {
+              const active = n.to === '/dashboard' ? pathname === '/' || pathname === '/dashboard' : pathname.startsWith(n.to);
+              return (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  aria-current={active ? 'page' : undefined}
+                  className={`relative flex items-center h-16 text-sm font-medium whitespace-nowrap transition-colors ${
+                    active ? 'text-white' : 'text-white/80 hover:text-white'
+                  }`}
+                >
+                  {n.label}
+                  {active && <span className="absolute left-0 right-0 bottom-3 h-0.5 rounded-full bg-white" />}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-2 ml-auto lg:ml-0 flex-shrink-0">
             <Link
               to="/profile"
               title="My profile & reports"
-              className="hidden md:flex items-center gap-2 h-10 pl-1.5 pr-4 rounded-full bg-bar/10 hover:bg-bar/20 border border-bar/15 transition-colors"
+              className="hidden md:flex items-center gap-2 h-10 pl-1.5 pr-1.5 xl:pr-4 rounded-full bg-bar/10 hover:bg-bar/20 border border-bar/15 transition-colors"
             >
               <span className="w-7 h-7 rounded-full bg-[#fff] text-plum-dark text-[11px] font-bold flex items-center justify-center">
                 {initials}
               </span>
-              <span className="text-sm font-semibold max-w-[110px] truncate">Profile</span>
+              <span className="hidden xl:inline text-sm font-semibold max-w-[110px] truncate">Profile</span>
             </Link>
 
             <ThemeToggle onBar className="hidden sm:block" />
