@@ -13,7 +13,7 @@ export const getInitialTheme = (): Theme => {
 
 export const applyTheme = (t: Theme) => {
   document.documentElement.classList.toggle('dark', t === 'dark');
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'dark' ? '#0B0617' : '#2E1065');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'dark' ? '#11081F' : '#CDB9F7');
 };
 
 export const useTheme = () => {

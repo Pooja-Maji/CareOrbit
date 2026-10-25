@@ -39,16 +39,13 @@ export const TipFlashcards: React.FC = () => {
         <span className="text-xs font-normal text-ink-subtle">flips on its own · hover to pause · tap to hold</span>
       </h2>
 
-      <div className="tips-stage">
-        <div className="marquee-wrap marquee-mask relative overflow-hidden py-2">
+        <div className="marquee-wrap marquee-mask relative overflow-hidden py-4">
           <div className="marquee-track flex gap-5 w-max animate-marquee px-5">
             {loop.map((t, i) => {
               const n = i % TIPS.length;
               const vTop = n % 2 === 0; // alternate which colour is on top
               const delay = { animationDelay: `-${(n * 1.15).toFixed(2)}s` };
               const grad = vTop ? 'grad-a' : 'grad-b';
-              const top = vTop ? 'text-white' : 'text-[#1E0B4D]';
-              const bottom = vTop ? 'text-[#1E0B4D]' : 'text-white';
               return (
                 <button
                   key={i}
@@ -58,22 +55,22 @@ export const TipFlashcards: React.FC = () => {
                   onClick={(e) => e.currentTarget.classList.toggle('flipped')}
                 >
                   <div className="flip-inner auto-flip" style={delay}>
-                    {/* FRONT: violet blends into cyan */}
+                    {/* FRONT: light violet blends into light pink */}
                     <div className={`flip-face tip-front ${grad} flex flex-col justify-between p-4`}>
-                      <div className={`flex items-start justify-between ${top}`}>
-                        <span className={`tip-halo ${vTop ? 'bg-[#22D3EE] text-[#1E0B4D]' : 'bg-[#2E1065] text-white'}`}>
+                      <div className={`flex items-start justify-between`}>
+                        <span className="tip-halo">
                           <t.icon className="w-6 h-6" />
                         </span>
                         <span className="text-[11px] font-bold tracking-widest opacity-80">
                           TIP {String(n + 1).padStart(2, '0')}
                         </span>
                       </div>
-                      <div className={`font-heading font-bold text-2xl leading-tight ${bottom}`}>{t.title}</div>
-                      <span className="tip-timer" style={{ ...delay, background: vTop ? '#2E1065' : '#22D3EE' }} />
+                      <div className={`font-heading font-bold text-2xl leading-tight`}>{t.title}</div>
+                      <span className="tip-timer" style={delay} />
                     </div>
-                    {/* BACK: same blend, white text */}
+                    {/* BACK: same blend */}
                     <div className={`flip-face flip-back tip-back ${grad} p-5 flex flex-col justify-center gap-2`}>
-                      <span className="text-[11px] font-bold tracking-widest uppercase text-[#67E8F9]">{t.title}</span>
+                      <span className="text-[11px] font-bold tracking-widest uppercase text-[#5B3FA8]">{t.title}</span>
                       <p className="text-[15px] leading-snug font-semibold">{t.tip}</p>
                     </div>
                   </div>
@@ -82,7 +79,6 @@ export const TipFlashcards: React.FC = () => {
             })}
           </div>
         </div>
-      </div>
     </section>
   );
 };

@@ -126,7 +126,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                       <path
                         d={pathStr}
                         fill="none"
-                        stroke="#4C1D95"
+                        stroke="#7E57C2"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -139,7 +139,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                             cx={c.x}
                             cy={c.y}
                             r="4.5"
-                            fill={c.pt.val >= pbacThreshold ? '#E4735A' : '#4C1D95'}
+                            fill={c.pt.val >= pbacThreshold ? '#E4735A' : '#7E57C2'}
                             stroke="#FFFFFF"
                             strokeWidth="1.5"
                           />
@@ -213,14 +213,14 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                         y1={thresholdY}
                         x2="290"
                         y2={thresholdY}
-                        stroke="#0E7490"
+                        stroke="#B04A7C"
                         strokeDasharray="4 3"
                         strokeWidth="1.5"
                       />
                       <text
                         x="292"
                         y={thresholdY + 3}
-                        fill="#0E7490"
+                        fill="#B04A7C"
                         fontSize="9"
                         textAnchor="start"
                       >
@@ -231,7 +231,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                       <path
                         d={pathStr}
                         fill="none"
-                        stroke="#0E7490"
+                        stroke="#B04A7C"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -244,7 +244,7 @@ export const TrendStrip: React.FC<TrendStripProps> = ({ history, isPregnant = fa
                             cx={c.x}
                             cy={c.y}
                             r="4.5"
-                            fill={c.pt.val < hbThreshold ? '#E4735A' : '#0E7490'}
+                            fill={c.pt.val < hbThreshold ? '#E4735A' : '#B04A7C'}
                             stroke="#FFFFFF"
                             strokeWidth="1.5"
                           />

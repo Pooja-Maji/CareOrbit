@@ -64,26 +64,25 @@ export const DashboardScreen: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* HERO */}
-      <section className="hero-gradient relative overflow-hidden rounded-[28px] text-white p-6 sm:p-8 lg:p-10 shadow-lifted">
-        <div className="absolute -bottom-24 -right-16 w-72 h-72 rounded-full border-[3px] border-[#2E1065]/60" />
+      <section className="hero-gradient relative overflow-hidden rounded-[28px] text-bar p-6 sm:p-8 lg:p-10 shadow-lifted">
 
         <div className="relative flex flex-wrap items-center justify-between gap-6">
           <div className="space-y-3 min-w-0">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#22D3EE] text-[#1E0B4D] text-xs font-bold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/70 text-plum-dark text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" /> {stage}
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold leading-tight">Hi, {name} 👋</h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold leading-tight">Hi, {name}</h1>
             <div className="flex flex-wrap gap-3 pt-1">
               {stats.map((s) => (
                 <button
                   key={s.label}
                   type="button"
                   onClick={() => navigate(s.to)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/12 backdrop-blur border border-white/15 hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-bar/10 backdrop-blur border border-bar/15 hover:bg-bar/20 transition-colors"
                 >
                   <s.icon className="w-4 h-4" />
                   <span className="text-2xl font-heading font-bold leading-none">{s.value}</span>
-                  <span className="text-xs text-white/80">{s.label}</span>
+                  <span className="text-xs text-bar/80">{s.label}</span>
                 </button>
               ))}
             </div>
@@ -93,7 +92,7 @@ export const DashboardScreen: React.FC = () => {
             size="lg"
             onClick={() => navigate('/assess')}
             icon={<ClipboardList className="w-5 h-5" />}
-            className="shine !bg-[#fff] !text-[#2E1065] hover:!bg-[#fff] hover:scale-105 shadow-lifted"
+            className="!bg-plum !text-white hover:!bg-plum shadow-soft"
           >
             Start health check
           </Button>
