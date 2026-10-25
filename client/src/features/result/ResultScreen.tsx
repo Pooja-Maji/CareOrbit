@@ -73,15 +73,25 @@ export const ResultScreen: React.FC = () => {
         title="Your Results"
         subtitle={`Saved on this device · ${result.stage}`}
         actions={
-          <>
-            <Button variant="outline" onClick={() => navigate('/print-summary')} icon={<FileText className="w-4 h-4" />}>
-              Print (A4)
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate('/print-summary')}
+              icon={<FileText className="w-4 h-4" />}
+            >
+              Print Dossier
             </Button>
-            <Button variant="secondary" onClick={() => setSheetOpen(true)} icon={<Stethoscope className="w-4 h-4" />}>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setSheetOpen(true)}
+              icon={<Stethoscope className="w-4 h-4" />}
+            >
               Doctor summary
             </Button>
             <PdfReportButton result={result} profile={profile} label="Download PDF" />
-          </>
+          </div>
         }
       />
 
@@ -108,10 +118,10 @@ export const ResultScreen: React.FC = () => {
       {/* Gauges */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 stagger">
         {typeof pbac === 'number' && (
-          <ThresholdGauge title="Period flow" score={pbac} threshold={100} source="PBAC" unit="pts" />
+          <ThresholdGauge title="Period flow" score={pbac} threshold={100} source="PBAC (Higham 1990)" unit="pts" />
         )}
         {typeof hb === 'number' && (
-          <ThresholdGauge title="Haemoglobin" score={hb} threshold={profile.isPregnant ? 11.0 : 12.0} maxScore={18} source="WHO" unit="g/dL" lowIsConcern />
+          <ThresholdGauge title="Haemoglobin" score={hb} threshold={profile.isPregnant ? 11.0 : 12.0} maxScore={18} source="WHO Guidelines" unit="g/dL" lowIsConcern />
         )}
         {typeof epds === 'number' && (
           <ThresholdGauge title="Mood" score={epds} threshold={13} maxScore={30} source="EPDS" unit="/ 30" />

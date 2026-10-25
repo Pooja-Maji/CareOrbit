@@ -28,7 +28,8 @@ export const RequestSupportScreen: React.FC = () => {
   const [taskType, setTaskType] = useState<SupportTaskType>(stateContext.taskType || 'navigation');
   const [language, setLanguage] = useState<string>('Kannada');
   const [logisticsNotes, setLogisticsNotes] = useState<string>(
-    stateContext.facilityName ? `Appointment navigation at ${stateContext.facilityName}` : ''
+    stateContext.logisticsNotes ||
+      (stateContext.facilityName ? `Appointment navigation at ${stateContext.facilityName}` : '')
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTask, setActiveTask] = useState<SupportTask | null>(null);

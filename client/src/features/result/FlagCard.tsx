@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Flag } from '@sthreecare/shared';
 import { Card } from '../../design/ui/Card';
 import { EvidenceChip } from './EvidenceChip';
-import { AlertTriangle, Info, ArrowRight, CheckCircle, Sparkles } from '../../design/ui/Icon';
+import { AlertTriangle, Info, ArrowRight, Sparkles, CheckCircle } from '../../design/ui/Icon';
 
 export interface FlagCardProps {
   flag: Flag;
@@ -33,6 +33,53 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Explanation paragraph */}
+      <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
+        {flag.why}
+      </p>
+
+      {/* Next Step Action Box */}
+      <div className="p-3.5 rounded-xl bg-white/80 border border-plum-soft/60 space-y-1">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-plum block">
+          Recommended Next Step:
+        </span>
+        <p className="text-xs text-ink font-medium leading-relaxed">
+          {flag.nextStep}
+        </p>
+      </div>
+
+      {/* Bottom Bar: Evidence Chip + Volunteer Request + Why Button */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-black/5">
+        <div className="flex flex-wrap items-center gap-2">
+          <EvidenceChip
+            source={flag.source}
+            ruleId={flag.ruleId}
+            onClick={() => onOpenWhy(flag)}
+          />
+
+          {!urgent && flag.nextStep && (
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/support', {
+                  state: {
+                    taskType: 'navigation',
+                    facilityName: 'Healthcare Facility',
+                    logisticsNotes: `${flag.title}: ${flag.nextStep}`,
+                  },
+                })
+              }
+              className="text-xs font-semibold text-teal hover:text-teal-dark inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-soft/60 border border-teal/20 hover:bg-teal-soft transition-colors"
+              title="Request a verified volunteer companion through Healthcare Time Bank"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-teal" />
+              <span>Get Volunteer Help</span>
+            </button>
+          )}
+        </div>
+
         <button
           type="button"
           onClick={() => onOpenWhy(flag)}
@@ -40,35 +87,6 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
         >
           Why? <ArrowRight className="w-3.5 h-3.5" />
         </button>
-      </div>
-
-      <div className="flex items-start gap-2 p-3 rounded-xl bg-white/80 border border-plum-soft/60">
-        <ArrowRight className="w-4 h-4 text-plum mt-0.5 flex-shrink-0" />
-        <p className="text-sm text-ink font-medium">{flag.nextStep}</p>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2">
-        <EvidenceChip source={flag.source} ruleId={flag.ruleId} onClick={() => onOpenWhy(flag)} />
-
-        {!urgent && flag.nextStep && (
-          <button
-            type="button"
-            onClick={() =>
-              navigate('/support', {
-                state: {
-                  taskType: 'navigation',
-                  facilityName: 'Healthcare Facility',
-                  logisticsNotes: `${flag.title}: ${flag.nextStep}`,
-                },
-              })
-            }
-            className="text-xs font-semibold text-teal hover:text-teal-dark inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-soft/60 border border-teal/20 hover:bg-teal-soft transition-colors"
-            title="Request a verified volunteer companion through Healthcare Time Bank"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-teal" />
-            <span>Get Volunteer Help</span>
-          </button>
-        )}
       </div>
     </Card>
   );
