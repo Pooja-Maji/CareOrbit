@@ -114,17 +114,6 @@ export const HistoryScreen: React.FC = () => {
             </div>
           )}
 
-          {dbResults.length === 0 && (
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={handleSeedDemo}
-              icon={<Sparkles className="w-3.5 h-3.5 text-plum" />}
-              className="text-xs"
-            >
-              Load Demo Persona
-            </Button>
-          )}
 
           <Button
             variant="primary"

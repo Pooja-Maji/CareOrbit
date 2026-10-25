@@ -177,18 +177,26 @@ export const ResultScreen: React.FC = () => {
 
         <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
           <Link
+            to="/profile"
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-plum text-white hover:bg-plum-dark text-xs font-semibold transition-colors shadow-soft hover-lift"
+          >
+            <FileText className="w-3.5 h-3.5 mr-1.5" />
+            <span>Saved in Your Profile Dossier</span>
+          </Link>
+
+          <Link
             to="/support"
-            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-teal text-white hover:bg-teal/90 text-xs font-semibold transition-colors shadow-soft"
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-teal text-white hover:bg-teal/90 text-xs font-semibold transition-colors shadow-soft hover-lift"
           >
             <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-            <span>Request Volunteer (Time Bank)</span>
+            <span>Request Volunteer</span>
           </Link>
 
           <Link
             to="/history"
-            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-plum-soft text-plum hover:bg-plum/10 text-xs font-semibold transition-colors"
+            className="inline-flex items-center justify-center px-4 py-2.5 rounded-full bg-plum-soft text-plum hover:bg-plum/10 text-xs font-semibold transition-colors hover-lift"
           >
-            <span>Care Thread Timeline</span>
+            <span>Timeline</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1" />
           </Link>
         </div>

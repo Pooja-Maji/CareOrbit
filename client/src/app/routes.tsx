@@ -1,9 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAppStore } from '../lib/store';
 import { Shell } from './Shell';
-import { LandingPage } from '../features/landing/LandingPage';
-import { LimitsAndSources } from '../features/landing/LimitsAndSources';
-import { LoginScreen } from '../features/onboarding/LoginScreen';
+import { AuthScreen } from '../features/onboarding/AuthScreen';
 import { ConsentScreen } from '../features/onboarding/ConsentScreen';
 import { ProfileEdit } from '../features/profile/ProfileEdit';
 import { CheckPicker } from '../features/assess/CheckPicker';
@@ -15,18 +14,30 @@ import { FindCareScreen } from '../features/find-care/FindCareScreen';
 import { RequestSupportScreen } from '../features/support/RequestSupportScreen';
 import { TimeBankScreen } from '../features/time-bank/TimeBankScreen';
 import { FollowUpScreen } from '../features/follow-up/FollowUpScreen';
+import { LimitsAndSources } from '../features/landing/LimitsAndSources';
 
 export const AppRoutes: React.FC = () => {
+  const { isLoggedIn } = useAppStore();
+
+  // If NOT logged in, show ONLY the Login / Register screen
+  if (!isLoggedIn) {
+    return (
+      <Routes>
+        <Route path="/emergency" element={<EmergencyTakeover />} />
+        <Route path="*" element={<AuthScreen />} />
+      </Routes>
+    );
+  }
+
+  // Once logged in, Home page is the main Dashboard and all features are accessible
   return (
     <Routes>
-      {/* Emergency Takeover takes over entire screen without standard shell */}
+      {/* Emergency Takeover takes over entire screen */}
       <Route path="/emergency" element={<EmergencyTakeover />} />
 
       {/* Main Layout Shell */}
       <Route element={<Shell />}>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/consent" element={<ConsentScreen />} />
+        <Route path="/" element={<DashboardScreen />} />
         <Route path="/dashboard" element={<DashboardScreen />} />
         <Route path="/profile" element={<ProfileEdit />} />
         <Route path="/assess" element={<CheckPicker />} />
@@ -36,6 +47,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/support" element={<RequestSupportScreen />} />
         <Route path="/time-bank" element={<TimeBankScreen />} />
         <Route path="/follow-up" element={<FollowUpScreen />} />
+        <Route path="/consent" element={<ConsentScreen />} />
         <Route path="/about" element={<LimitsAndSources />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

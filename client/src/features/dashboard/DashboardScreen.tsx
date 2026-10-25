@@ -15,7 +15,7 @@ import { StageSummary } from './StageSummary';
 import { BackupPrompt } from './BackupPrompt';
 import { StorageNotice } from './StorageNotice';
 import { Button } from '../../design/ui/Button';
-import { Activity, Sparkles, Calendar, ArrowRight, Shield, Heart } from '../../design/ui/Icon';
+import { Activity, Sparkles, Calendar, ArrowRight, Shield, Heart, FileText } from '../../design/ui/Icon';
 import { getAllResultsFromDb } from '../../db/historyRepo';
 import { getAllFollowUpsFromDb, updateFollowUpStatus } from '../../db/followUpRepo';
 import type { ExtendedFollowUp } from '../../db/schema';
@@ -75,22 +75,23 @@ export const DashboardScreen: React.FC = () => {
 
   const latestResult = dbResults[0] || result || null;
   const activeFollowUp = followUps.find((f) => f.status === 'open') || null;
+  const userName = profile.name || 'Patient';
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto py-4">
+    <div className="space-y-6 max-w-5xl mx-auto py-4 animate-fade-in">
       {/* Top Header / Welcome Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-plum bg-plum-soft px-2.5 py-0.5 rounded-full border border-plum/20">
-              Stage 4 • Life-Stage Compass
+              {profile.lifeStage} Life Stage
             </span>
             <span className="text-xs text-ink-subtle">
-              Private on-device health record
+              On-Device Health Record
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink mt-1">
-            Personal Health Dashboard
+            Welcome back, {userName}
           </h1>
           <p className="text-xs sm:text-sm text-ink-muted">
             Tracking your health trajectory for life stage: <strong className="text-plum capitalize">{profile.lifeStage}</strong>.
@@ -98,18 +99,6 @@ export const DashboardScreen: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-center">
-          {dbResults.length === 0 && (
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={handleSeedDemo}
-              icon={<Sparkles className="w-3.5 h-3.5 text-plum" />}
-              className="text-xs"
-            >
-              Load Demo Persona
-            </Button>
-          )}
-
           <Button
             variant="primary"
             size="md"
@@ -117,7 +106,7 @@ export const DashboardScreen: React.FC = () => {
             icon={<Activity className="w-4 h-4" />}
             className="shadow-soft"
           >
-            Start Check
+            Start Health Check
           </Button>
         </div>
       </div>
@@ -138,12 +127,30 @@ export const DashboardScreen: React.FC = () => {
       {/* 3. Life-Stage Preventive Screening Schedule */}
       <StageSummary profile={profile} />
 
-      {/* Quick Navigation to Person B Features */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* Quick Navigation to Key Features */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <button
+          type="button"
+          onClick={() => navigate('/profile')}
+          className="p-4 rounded-card bg-white border border-plum-soft hover:border-plum hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
+        >
+          <div className="w-9 h-9 rounded-full bg-plum-soft flex items-center justify-center text-plum group-hover:scale-105 transition-transform flex-shrink-0">
+            <FileText className="w-4 h-4" />
+          </div>
+          <div>
+            <h4 className="font-heading font-semibold text-sm text-ink group-hover:text-plum transition-colors">
+              Saved Reports ({dbResults.length})
+            </h4>
+            <p className="text-xs text-ink-muted mt-0.5">
+              Dossier, QR codes & doctor sheets
+            </p>
+          </div>
+        </button>
+
         <button
           type="button"
           onClick={() => navigate('/history')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-plum hover:shadow-soft transition-all text-left flex items-start gap-3 group"
+          className="p-4 rounded-card bg-white border border-plum-soft hover:border-plum hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
         >
           <div className="w-9 h-9 rounded-full bg-plum-soft flex items-center justify-center text-plum group-hover:scale-105 transition-transform flex-shrink-0">
             <Activity className="w-4 h-4" />
@@ -153,7 +160,7 @@ export const DashboardScreen: React.FC = () => {
               Care Thread Timeline
             </h4>
             <p className="text-xs text-ink-muted mt-0.5">
-              {dbResults.length} recorded checks & flag logs
+              Longitudinal tracking & cycle comparison
             </p>
           </div>
         </button>
@@ -161,7 +168,7 @@ export const DashboardScreen: React.FC = () => {
         <button
           type="button"
           onClick={() => navigate('/find-care')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-teal hover:shadow-soft transition-all text-left flex items-start gap-3 group"
+          className="p-4 rounded-card bg-white border border-plum-soft hover:border-teal hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
         >
           <div className="w-9 h-9 rounded-full bg-teal-soft flex items-center justify-center text-teal group-hover:scale-105 transition-transform flex-shrink-0">
             <Heart className="w-4 h-4" />
@@ -179,7 +186,7 @@ export const DashboardScreen: React.FC = () => {
         <button
           type="button"
           onClick={() => navigate('/time-bank')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-teal hover:shadow-soft transition-all text-left flex items-start gap-3 group"
+          className="p-4 rounded-card bg-white border border-plum-soft hover:border-teal hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
         >
           <div className="w-9 h-9 rounded-full bg-teal-soft flex items-center justify-center text-teal group-hover:scale-105 transition-transform flex-shrink-0">
             <Sparkles className="w-4 h-4" />

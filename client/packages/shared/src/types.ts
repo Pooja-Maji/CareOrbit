@@ -55,7 +55,13 @@ export interface ProfileHistory {
 
 export interface Profile {
   id: string;
+  name?: string;
   phoneNumber?: string;
+  emergencyContact?: {
+    name: string;
+    phone: string;
+    relationship?: string;
+  };
   ageBand: AgeBand;
   lifeStage: LifeStage;
   isPregnant: boolean;

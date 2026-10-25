@@ -94,16 +94,6 @@ export const CheckPicker: React.FC = () => {
           </p>
         </div>
 
-        {/* 90-second Hackathon Demo Shortcut */}
-        <button
-          type="button"
-          onClick={load90SecondDemo}
-          className="px-3.5 py-2 rounded-xl border border-plum/30 bg-plum-soft/60 hover:bg-plum-soft text-plum text-xs font-semibold flex items-center gap-1.5 transition-colors self-start sm:self-center"
-          title="Pre-fills heavy flow (PBAC > 100) and moderate anaemia (Hb 9.8 g/dL)"
-        >
-          <Sparkles className="w-4 h-4 text-plum" />
-          <span>Load 90s Pitch Demo Persona</span>
-        </button>
       </div>
 
       {/* Tabs Navigation */}
