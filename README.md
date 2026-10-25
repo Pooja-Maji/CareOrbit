@@ -144,7 +144,7 @@ The first working version is one connected path, which is the demo:
 <img width="1148" height="3630" alt="mermaid-diagram-2026-10-25-193155" src="https://github.com/user-attachments/assets/758458a6-3b4b-41ad-a67d-5a7887f6f560" />
 
 
-```
+
 
 **Reading the diagram**
 
