@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Flag } from '@sthreecare/shared';
 import { Card } from '../../design/ui/Card';
 import { EvidenceChip } from './EvidenceChip';
-<<<<<<< HEAD
-import { AlertTriangle, Info, ArrowRight, Sparkles } from '../../design/ui/Icon';
-=======
-import { AlertTriangle, Info, ArrowRight, CheckCircle } from '../../design/ui/Icon';
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
+import { AlertTriangle, Info, ArrowRight, Sparkles, CheckCircle } from '../../design/ui/Icon';
 
 export interface FlagCardProps {
   flag: Flag;
@@ -15,16 +11,9 @@ export interface FlagCardProps {
 }
 
 export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
-<<<<<<< HEAD
   const navigate = useNavigate();
-  const isUrgent = flag.level === 'urgent';
-  const isDiscuss = flag.level === 'discuss';
-
-  const cardVariant = isUrgent ? 'emergency' : isDiscuss ? 'coral' : 'default';
-=======
   const urgent = flag.level === 'urgent';
   const discuss = flag.level === 'discuss';
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
 
   return (
     <Card variant={urgent ? 'emergency' : discuss ? 'coral' : 'default'} padding="md" interactive className="space-y-3">
@@ -44,7 +33,6 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
             </span>
           </div>
         </div>
-<<<<<<< HEAD
       </div>
 
       {/* Explanation paragraph */}
@@ -71,7 +59,7 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
             onClick={() => onOpenWhy(flag)}
           />
 
-          {!isUrgent && flag.nextStep && (
+          {!urgent && flag.nextStep && (
             <button
               type="button"
               onClick={() =>
@@ -92,8 +80,6 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
           )}
         </div>
 
-=======
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
         <button
           type="button"
           onClick={() => onOpenWhy(flag)}
@@ -102,13 +88,6 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
           Why? <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
-
-      <div className="flex items-start gap-2 p-3 rounded-xl bg-white/80 border border-plum-soft/60">
-        <ArrowRight className="w-4 h-4 text-plum mt-0.5 flex-shrink-0" />
-        <p className="text-sm text-ink font-medium">{flag.nextStep}</p>
-      </div>
-
-      <EvidenceChip source={flag.source} ruleId={flag.ruleId} onClick={() => onOpenWhy(flag)} />
     </Card>
   );
 };

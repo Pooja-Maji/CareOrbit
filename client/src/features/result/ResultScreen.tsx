@@ -10,6 +10,7 @@ import { SelfCareCard } from './SelfCareCard';
 import { DoctorSummarySheet } from '../summary/DoctorSummarySheet';
 import { PdfReportButton } from '../summary/ReportPdf';
 import { Button } from '../../design/ui/Button';
+import { Card } from '../../design/ui/Card';
 import { PageHeader } from '../../design/ui/PageHeader';
 import {
   HeartPulse,
@@ -20,6 +21,9 @@ import {
   HandHeart,
   Clock,
   ArrowUpRight,
+  Heart,
+  FileText,
+  ArrowRight,
 } from '../../design/ui/Icon';
 import { saveResultToDb } from '../../db/historyRepo';
 import { addFollowUpFromFlag } from '../../db/followUpRepo';
@@ -39,7 +43,6 @@ export const ResultScreen: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   React.useEffect(() => {
-<<<<<<< HEAD
     if (result) {
       saveResultToDb(result);
       result.flags.forEach((f) => {
@@ -48,9 +51,6 @@ export const ResultScreen: React.FC = () => {
         }
       });
     }
-=======
-    if (result) saveResultToDb(result);
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
   }, [result]);
 
   if (!result) {
@@ -67,22 +67,11 @@ export const ResultScreen: React.FC = () => {
     );
   }
 
-<<<<<<< HEAD
-  const pbacScore = result.scores['pbac'];
-  const hbScore = result.scores['hb'];
-  const epdsScore = result.scores['epds'];
-
-  const hasPerinatalMoodFlag = result.flags.some((f) => f.ruleId.startsWith('epds_'));
-
-  const handleOpenWhy = (flag: Flag) => {
-    setSelectedFlagForWhy(flag);
-    setIsWhyDrawerOpen(true);
-  };
-=======
   const pbac = result.scores['pbac'];
   const hb = result.scores['hb'];
   const epds = result.scores['epds'];
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
+
+  const hasPerinatalMoodFlag = result.flags.some((f) => f.ruleId.startsWith('epds_'));
 
   return (
     <div className="space-y-6">
@@ -91,39 +80,27 @@ export const ResultScreen: React.FC = () => {
         title="Your Results"
         subtitle={`Saved on this device · ${result.stage}`}
         actions={
-          <>
-            <Button variant="secondary" onClick={() => setSheetOpen(true)} icon={<Stethoscope className="w-4 h-4" />}>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate('/print-summary')}
+              icon={<FileText className="w-4 h-4" />}
+            >
+              Print Dossier
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setSheetOpen(true)}
+              icon={<Stethoscope className="w-4 h-4" />}
+            >
               Doctor summary
             </Button>
             <PdfReportButton result={result} profile={profile} label="Download PDF" />
-          </>
+          </div>
         }
       />
-
-<<<<<<< HEAD
-        {/* Doctor Summary Sheet & Print Controls */}
-        <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate('/print-summary')}
-            icon={<FileText className="w-4 h-4" />}
-            className="shadow-xs"
-          >
-            Print Dossier (A4)
-          </Button>
-
-          <Button
-            variant="teal"
-            size="sm"
-            onClick={() => setIsDoctorSheetOpen(true)}
-            icon={<Sparkles className="w-4 h-4" />}
-            className="shadow-soft"
-          >
-            Doctor Summary & QR
-          </Button>
-        </div>
-      </div>
 
       {/* Perinatal Mood / Crisis Support Banner if relevant */}
       {hasPerinatalMoodFlag && (
@@ -153,25 +130,13 @@ export const ResultScreen: React.FC = () => {
         </Card>
       )}
 
-      {/* Gauges Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {typeof pbacScore === 'number' && (
-          <ThresholdGauge
-            title="Menstrual Flow (PBAC)"
-            score={pbacScore}
-            threshold={100}
-            source="Higham 1990"
-            unit="pts"
-          />
-=======
       {/* Gauges */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 stagger">
         {typeof pbac === 'number' && (
-          <ThresholdGauge title="Period flow" score={pbac} threshold={100} source="PBAC" unit="pts" />
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
+          <ThresholdGauge title="Period flow" score={pbac} threshold={100} source="PBAC (Higham 1990)" unit="pts" />
         )}
         {typeof hb === 'number' && (
-          <ThresholdGauge title="Haemoglobin" score={hb} threshold={profile.isPregnant ? 11.0 : 12.0} maxScore={18} source="WHO" unit="g/dL" lowIsConcern />
+          <ThresholdGauge title="Haemoglobin" score={hb} threshold={profile.isPregnant ? 11.0 : 12.0} maxScore={18} source="WHO Guidelines" unit="g/dL" lowIsConcern />
         )}
         {typeof epds === 'number' && (
           <ThresholdGauge title="Mood" score={epds} threshold={13} maxScore={30} source="EPDS" unit="/ 30" />
