@@ -10,6 +10,7 @@ import { SelfCareCard } from './SelfCareCard';
 import { DoctorSummarySheet } from '../summary/DoctorSummarySheet';
 import { PdfReportButton } from '../summary/ReportPdf';
 import { Button } from '../../design/ui/Button';
+import { Card } from '../../design/ui/Card';
 import { PageHeader } from '../../design/ui/PageHeader';
 import {
   HeartPulse,
@@ -20,9 +21,11 @@ import {
   HandHeart,
   Clock,
   ArrowUpRight,
+  ArrowRight,
+  FileText,
+  Heart,
 } from '../../design/ui/Icon';
 import { saveResultToDb } from '../../db/historyRepo';
-import { addFollowUpFromFlag } from '../../db/followUpRepo';
 
 const NEXT = [
   { to: '/find-care', label: 'Find a clinic', icon: MapPin, tone: 'bg-teal-soft text-teal' },
@@ -39,18 +42,8 @@ export const ResultScreen: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   React.useEffect(() => {
-<<<<<<< HEAD
-    if (result) {
-      saveResultToDb(result);
-      result.flags.forEach((f) => {
-        if (f.nextStep) {
-          addFollowUpFromFlag(result.id, f.nextStep).catch(() => {});
-        }
-      });
-    }
-=======
+    // saveResultToDb also creates (deduplicated) follow-ups from each flag's next step
     if (result) saveResultToDb(result);
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
   }, [result]);
 
   if (!result) {
@@ -67,22 +60,11 @@ export const ResultScreen: React.FC = () => {
     );
   }
 
-<<<<<<< HEAD
-  const pbacScore = result.scores['pbac'];
-  const hbScore = result.scores['hb'];
-  const epdsScore = result.scores['epds'];
-
-  const hasPerinatalMoodFlag = result.flags.some((f) => f.ruleId.startsWith('epds_'));
-
-  const handleOpenWhy = (flag: Flag) => {
-    setSelectedFlagForWhy(flag);
-    setIsWhyDrawerOpen(true);
-  };
-=======
   const pbac = result.scores['pbac'];
   const hb = result.scores['hb'];
   const epds = result.scores['epds'];
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
+
+  const hasPerinatalMoodFlag = result.flags.some((f) => f.ruleId.startsWith('epds_'));
 
   return (
     <div className="space-y-6">
@@ -92,6 +74,9 @@ export const ResultScreen: React.FC = () => {
         subtitle={`Saved on this device · ${result.stage}`}
         actions={
           <>
+            <Button variant="outline" onClick={() => navigate('/print-summary')} icon={<FileText className="w-4 h-4" />}>
+              Print (A4)
+            </Button>
             <Button variant="secondary" onClick={() => setSheetOpen(true)} icon={<Stethoscope className="w-4 h-4" />}>
               Doctor summary
             </Button>
@@ -100,32 +85,7 @@ export const ResultScreen: React.FC = () => {
         }
       />
 
-<<<<<<< HEAD
-        {/* Doctor Summary Sheet & Print Controls */}
-        <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate('/print-summary')}
-            icon={<FileText className="w-4 h-4" />}
-            className="shadow-xs"
-          >
-            Print Dossier (A4)
-          </Button>
-
-          <Button
-            variant="teal"
-            size="sm"
-            onClick={() => setIsDoctorSheetOpen(true)}
-            icon={<Sparkles className="w-4 h-4" />}
-            className="shadow-soft"
-          >
-            Doctor Summary & QR
-          </Button>
-        </div>
-      </div>
-
-      {/* Perinatal Mood / Crisis Support Banner if relevant */}
+      {/* Perinatal mood support banner */}
       {hasPerinatalMoodFlag && (
         <Card variant="plumSoft" padding="md" className="flex flex-col sm:flex-row items-center justify-between gap-4 border border-plum/20 animate-fade-in">
           <div className="flex items-center gap-3">
@@ -133,42 +93,22 @@ export const ResultScreen: React.FC = () => {
               <Heart className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-heading font-semibold text-sm text-ink">
-                Emotional Well-being & Counseling Guide
-              </h4>
+              <h4 className="font-heading font-semibold text-sm text-ink">Emotional well-being &amp; counselling guide</h4>
               <p className="text-xs text-ink-muted">
-                Perinatal mood changes are medical, real, and treatable. Free 24/7 confidential support through Tele-MANAS (14416) and guided calming exercises.
+                Perinatal mood changes are real and treatable. Free 24/7 confidential support through Tele-MANAS (14416).
               </p>
             </div>
           </div>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => navigate('/crisis-support')}
-            icon={<ArrowRight className="w-4 h-4" />}
-            className="flex-shrink-0"
-          >
-            Access Support Guide
+          <Button variant="primary" size="sm" onClick={() => navigate('/crisis-support')} icon={<ArrowRight className="w-4 h-4" />} className="flex-shrink-0">
+            Access support guide
           </Button>
         </Card>
       )}
 
-      {/* Gauges Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {typeof pbacScore === 'number' && (
-          <ThresholdGauge
-            title="Menstrual Flow (PBAC)"
-            score={pbacScore}
-            threshold={100}
-            source="Higham 1990"
-            unit="pts"
-          />
-=======
       {/* Gauges */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 stagger">
         {typeof pbac === 'number' && (
           <ThresholdGauge title="Period flow" score={pbac} threshold={100} source="PBAC" unit="pts" />
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
         )}
         {typeof hb === 'number' && (
           <ThresholdGauge title="Haemoglobin" score={hb} threshold={profile.isPregnant ? 11.0 : 12.0} maxScore={18} source="WHO" unit="g/dL" lowIsConcern />

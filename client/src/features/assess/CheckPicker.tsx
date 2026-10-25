@@ -17,27 +17,24 @@ import { MoodSwipeCards } from './MoodSwipeCards';
 import { SymptomLog } from './SymptomLog';
 import { BodyPainPainter } from './BodyPainPainter';
 import { Button } from '../../design/ui/Button';
-<<<<<<< HEAD
-import { Activity, Heart, Shield, AlertTriangle, ArrowRight, Sparkles, PhoneCall } from '../../design/ui/Icon';
-import { Card } from '../../design/ui/Card';
-=======
 import { PageHeader } from '../../design/ui/PageHeader';
 import {
   ClipboardList,
   Droplets,
   Brain,
   Siren,
+  Activity,
   Check,
   ArrowRight,
   Shield,
+  AlertTriangle,
+  PhoneCall,
 } from '../../design/ui/Icon';
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
 
 export const CheckPicker: React.FC = () => {
   const navigate = useNavigate();
   const { updateInputs } = useAppStore();
 
-<<<<<<< HEAD
   const {
     activeTab,
     setActiveTab,
@@ -52,13 +49,8 @@ export const CheckPicker: React.FC = () => {
     profile,
   } = useAssessment();
 
-  const tabs: { id: AssessmentTab; label: string; icon: React.ReactNode; badge?: string }[] = [
-=======
-  const defaultTab: CheckTab = profile.lifeStage === 'postpartum' ? 'epds' : 'pbac';
-  const [activeTab, setActiveTab] = useState<CheckTab>(defaultTab);
-
   const tabs: {
-    id: CheckTab;
+    id: AssessmentTab;
     label: string;
     hint: string;
     icon: React.ReactNode;
@@ -66,54 +58,57 @@ export const CheckPicker: React.FC = () => {
     badge?: string;
     gradient: string;
   }[] = [
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
-    {
-      id: 'pbac',
-      label: 'Period flow',
-      hint: 'Pads & clots · 1 min',
-      icon: <Droplets className="w-6 h-6" />,
-      done: !!inputs.pbac && (inputs.pbac.pad.light + inputs.pbac.pad.moderate + inputs.pbac.pad.saturated > 0),
-      gradient: 'from-plum to-plum',
-    },
-    {
-      id: 'hb',
-      label: 'Blood (Hb)',
-      hint: 'From a lab report',
-      icon: <ClipboardList className="w-6 h-6" />,
-      done: !!inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0,
-      badge: inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
-      gradient: 'from-teal to-teal',
-    },
-    {
-      id: 'epds',
-      label: 'Mood',
-      hint: '10 quick cards',
-      icon: <Brain className="w-6 h-6" />,
-      done: !!inputs.epds && inputs.epds.answers.some((a) => a > 0),
-      badge: profile.lifeStage === 'postpartum' ? 'Suggested' : undefined,
-      gradient: 'from-plum to-plum',
-    },
-    {
-      id: 'symptoms',
-      label: 'Symptoms',
-      hint: 'Pain & danger signs',
-      icon: <Siren className="w-6 h-6" />,
-      done: !!inputs.dangerSigns?.selectedSigns?.length,
-      badge: inputs.dangerSigns?.selectedSigns?.length ? 'Alert' : undefined,
-      gradient: 'from-coral to-coral',
-    },
-    {
-      id: 'pain',
-      label: 'Body Pain Map (Painter)',
-      icon: <Activity className="w-4 h-4" />,
-      badge: inputs.symptoms?.painLocations?.length ? `${inputs.symptoms.painLocations.length} areas` : undefined,
-    },
-  ];
+      {
+        id: 'pbac',
+        label: 'Period flow',
+        hint: 'Pads & clots · 1 min',
+        icon: <Droplets className="w-6 h-6" />,
+        done: !!inputs.pbac && (inputs.pbac.pad.light + inputs.pbac.pad.moderate + inputs.pbac.pad.saturated > 0),
+        gradient: 'from-plum to-plum',
+      },
+      {
+        id: 'hb',
+        label: 'Blood (Hb)',
+        hint: 'From a lab report',
+        icon: <ClipboardList className="w-6 h-6" />,
+        done: !!inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0,
+        badge: inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
+        gradient: 'from-teal to-teal',
+      },
+      {
+        id: 'epds',
+        label: 'Mood',
+        hint: '10 quick cards',
+        icon: <Brain className="w-6 h-6" />,
+        done: !!inputs.epds && inputs.epds.answers.some((a) => a > 0),
+        badge: profile.lifeStage === 'postpartum' ? 'Suggested' : undefined,
+        gradient: 'from-plum to-plum',
+      },
+      {
+        id: 'symptoms',
+        label: 'Symptoms',
+        hint: 'Pain & danger signs',
+        icon: <Siren className="w-6 h-6" />,
+        done: !!inputs.dangerSigns?.selectedSigns?.length,
+        badge: inputs.dangerSigns?.selectedSigns?.length ? 'Alert' : undefined,
+        gradient: 'from-coral to-coral',
+      },
+      {
+        id: 'pain',
+        label: 'Body pain map',
+        hint: 'Tap where it hurts',
+        icon: <Activity className="w-6 h-6" />,
+        done: !!inputs.symptoms?.painLocations?.length,
+        badge: inputs.symptoms?.painLocations?.length ? `${inputs.symptoms.painLocations.length} areas` : undefined,
+        gradient: 'from-coral to-coral',
+      },
+    ];
 
-<<<<<<< HEAD
+  const doneCount = tabs.filter((t) => t.done).length;
+
   return (
-    <div className="space-y-6 max-w-4xl mx-auto py-4">
-      {/* Urgent Warning Sign Takeover Banner (runs inside stage 6) */}
+    <div className="space-y-6">
+      {/* Urgent warning banner */}
       {(hasUrgentDangerSigns || hasSelfHarmRisk) && (
         <div className="p-4 rounded-2xl bg-emergency text-white flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lifted animate-pulse">
           <div className="flex items-center gap-3">
@@ -121,98 +116,26 @@ export const CheckPicker: React.FC = () => {
               <AlertTriangle className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
-              <h4 className="font-heading font-bold text-sm sm:text-base">
-                Immediate Clinical Danger Sign Detected
-              </h4>
+              <h4 className="font-heading font-bold text-sm sm:text-base">Immediate danger sign detected</h4>
               <p className="text-xs text-red-100">
                 {hasSelfHarmRisk
                   ? 'Urgent perinatal crisis flag recorded. Free confidential support is available 24/7.'
-                  : 'Emergency symptoms (heavy acute blood loss, fainting, or severe pelvic pain) require immediate care.'}
+                  : 'Emergency symptoms (heavy acute blood loss, fainting, or severe pelvic pain) need immediate care.'}
               </p>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => navigate(hasSelfHarmRisk ? '/crisis-support' : '/emergency')}
-              className="bg-white text-emergency-dark hover:bg-red-50 font-bold border-none shadow-md"
-              icon={<PhoneCall className="w-4 h-4" />}
-            >
-              {hasSelfHarmRisk ? 'Support Helpline (14416)' : 'Open Emergency Screen (108)'}
-            </Button>
-          </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => navigate(hasSelfHarmRisk ? '/crisis-support' : '/emergency')}
+            className="bg-white text-emergency-dark hover:bg-red-50 font-bold border-none shadow-md flex-shrink-0"
+            icon={<PhoneCall className="w-4 h-4" />}
+          >
+            {hasSelfHarmRisk ? 'Support helpline (14416)' : 'Open emergency screen (108)'}
+          </Button>
         </div>
       )}
 
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink">
-            Health Check Navigation
-          </h1>
-          <p className="text-sm text-ink-muted mt-1">
-            Life Stage: <strong className="text-plum capitalize">{profile.lifeStage}</strong>. Select an instrument to record your observations.
-          </p>
-        </div>
-
-        {/* Quick Demo Preset Selector */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold text-ink-subtle mr-1">Demo Scenarios:</span>
-          <button
-            type="button"
-            onClick={load90SecondDemo}
-            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-plum-soft text-plum hover:bg-plum hover:text-white transition-colors border border-plum/20"
-            title="Pre-fills heavy flow PBAC (134 pts) and Hb 9.8 g/dL for the 90-second demo"
-          >
-            90s Hackathon Demo
-          </button>
-          <button
-            type="button"
-            onClick={loadPostpartumMoodDemo}
-            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-teal-soft text-teal-dark hover:bg-teal hover:text-white transition-colors border border-teal/20"
-            title="Pre-fills EPDS score 14/30"
-          >
-            Postpartum EPDS
-          </button>
-          <button
-            type="button"
-            onClick={loadEmergencyDemo}
-            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-emergency-soft text-emergency-dark hover:bg-emergency hover:text-white transition-colors border border-emergency/20"
-            title="Triggers emergency soaking & fainting warning signs"
-          >
-            Emergency Sign
-          </button>
-          <button
-            type="button"
-            onClick={resetAllInputs}
-            className="text-xs px-2.5 py-1.5 text-ink-subtle hover:text-ink underline"
-          >
-            Reset
-          </button>
-        </div>
-      </div>
-
-      {/* Tabs Navigation */}
-      <div className="flex flex-wrap gap-2 border-b border-plum-soft pb-3">
-        {tabs.map((tab) => {
-          const isActive = activeTab === tab.id;
-=======
-  const doneCount = tabs.filter((t) => t.done).length;
-
-  const handleRunCompass = () => {
-    const evaluation = run(inputs, profile);
-    setResult(evaluation);
-    saveResultToHistory(evaluation);
-    const urgent = evaluation.flags.some(
-      (f) => f.level === 'urgent' && (f.ruleId.startsWith('danger_') || f.ruleId === 'epds_self_harm_risk')
-    );
-    navigate(urgent ? '/emergency' : '/result');
-  };
-
-  return (
-    <div className="space-y-6">
       <PageHeader
         icon={<ClipboardList className="w-7 h-7" />}
         title="Health Check"
@@ -224,19 +147,49 @@ export const CheckPicker: React.FC = () => {
         }
       />
 
+      {/* Demo scenarios */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-semibold text-ink-subtle mr-1">Demo scenarios:</span>
+        <button
+          type="button"
+          onClick={load90SecondDemo}
+          className="text-xs font-semibold px-3 py-1.5 rounded-full bg-plum-soft text-plum hover:bg-plum hover:text-white transition-colors border border-plum/20"
+          title="Pre-fills heavy flow PBAC (134 pts) and Hb 9.8 g/dL"
+        >
+          90s demo
+        </button>
+        <button
+          type="button"
+          onClick={loadPostpartumMoodDemo}
+          className="text-xs font-semibold px-3 py-1.5 rounded-full bg-teal-soft text-teal-dark hover:bg-teal hover:text-white transition-colors border border-teal/20"
+          title="Pre-fills EPDS score 14/30"
+        >
+          Postpartum EPDS
+        </button>
+        <button
+          type="button"
+          onClick={loadEmergencyDemo}
+          className="text-xs font-semibold px-3 py-1.5 rounded-full bg-emergency-soft text-emergency-dark hover:bg-emergency hover:text-white transition-colors border border-emergency/20"
+          title="Triggers emergency warning signs"
+        >
+          Emergency sign
+        </button>
+        <button type="button" onClick={resetAllInputs} className="text-xs px-2.5 py-1.5 text-ink-subtle hover:text-ink underline">
+          Reset
+        </button>
+      </div>
+
       {/* Step cards */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 stagger">
+      <div className="grid grid-cols-2 xl:grid-cols-5 gap-3 stagger">
         {tabs.map((tab, i) => {
           const active = activeTab === tab.id;
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
           return (
             <button
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`tile relative text-left p-4 rounded-card border-2 overflow-hidden ${
-                active ? 'border-plum bg-white shadow-lifted' : 'border-transparent bg-white shadow-soft'
-              }`}
+              className={`tile relative text-left p-4 rounded-card border-2 overflow-hidden ${active ? 'border-plum bg-white shadow-lifted' : 'border-transparent bg-white shadow-soft'
+                }`}
             >
               <div className="flex items-start justify-between">
                 <span className={`tile-icon w-12 h-12 rounded-2xl bg-gradient-to-br ${tab.gradient} text-white flex items-center justify-center`}>
@@ -310,20 +263,13 @@ export const CheckPicker: React.FC = () => {
         <div className="hidden sm:flex items-center gap-2 text-sm text-ink-muted">
           <Shield className="w-4 h-4 text-teal" /> Calculated on your device
         </div>
-<<<<<<< HEAD
-
         <Button
-          variant="primary"
           size="lg"
-          onClick={evaluateAssessment}
-          className="w-full sm:w-auto shadow-lifted hover:scale-[1.01]"
+          onClick={() => evaluateAssessment()}
           icon={<ArrowRight className="w-5 h-5" />}
+          className="shine w-full sm:w-auto"
         >
-          Evaluate Results in Health Compass
-=======
-        <Button size="lg" onClick={handleRunCompass} icon={<ArrowRight className="w-5 h-5" />} className="shine w-full sm:w-auto">
           See my results
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
         </Button>
       </div>
     </div>

@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Flag } from '@sthreecare/shared';
 import { Card } from '../../design/ui/Card';
 import { EvidenceChip } from './EvidenceChip';
-<<<<<<< HEAD
-import { AlertTriangle, Info, ArrowRight, Sparkles } from '../../design/ui/Icon';
-=======
-import { AlertTriangle, Info, ArrowRight, CheckCircle } from '../../design/ui/Icon';
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
+import { AlertTriangle, Info, ArrowRight, CheckCircle, Sparkles } from '../../design/ui/Icon';
 
 export interface FlagCardProps {
   flag: Flag;
@@ -15,25 +11,17 @@ export interface FlagCardProps {
 }
 
 export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
-<<<<<<< HEAD
   const navigate = useNavigate();
-  const isUrgent = flag.level === 'urgent';
-  const isDiscuss = flag.level === 'discuss';
-
-  const cardVariant = isUrgent ? 'emergency' : isDiscuss ? 'coral' : 'default';
-=======
   const urgent = flag.level === 'urgent';
   const discuss = flag.level === 'discuss';
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
 
   return (
     <Card variant={urgent ? 'emergency' : discuss ? 'coral' : 'default'} padding="md" interactive className="space-y-3">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">
           <span
-            className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white ${
-              urgent ? 'bg-emergency' : discuss ? 'bg-coral' : 'bg-teal'
-            }`}
+            className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white ${urgent ? 'bg-emergency' : discuss ? 'bg-coral' : 'bg-teal'
+              }`}
           >
             {urgent ? <AlertTriangle className="w-5 h-5" /> : discuss ? <Info className="w-5 h-5" /> : <CheckCircle className="w-5 h-5" />}
           </span>
@@ -44,56 +32,6 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
             </span>
           </div>
         </div>
-<<<<<<< HEAD
-      </div>
-
-      {/* Explanation paragraph */}
-      <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
-        {flag.why}
-      </p>
-
-      {/* Next Step Action Box */}
-      <div className="p-3.5 rounded-xl bg-white/80 border border-plum-soft/60 space-y-1">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-plum block">
-          Recommended Next Step:
-        </span>
-        <p className="text-xs text-ink font-medium leading-relaxed">
-          {flag.nextStep}
-        </p>
-      </div>
-
-      {/* Bottom Bar: Evidence Chip + Volunteer Request + Why Button */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-black/5">
-        <div className="flex flex-wrap items-center gap-2">
-          <EvidenceChip
-            source={flag.source}
-            ruleId={flag.ruleId}
-            onClick={() => onOpenWhy(flag)}
-          />
-
-          {!isUrgent && flag.nextStep && (
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/support', {
-                  state: {
-                    taskType: 'navigation',
-                    facilityName: 'Healthcare Facility',
-                    logisticsNotes: `${flag.title}: ${flag.nextStep}`,
-                  },
-                })
-              }
-              className="text-xs font-semibold text-teal hover:text-teal-dark inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-soft/60 border border-teal/20 hover:bg-teal-soft transition-colors"
-              title="Request a verified volunteer companion through Healthcare Time Bank"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-teal" />
-              <span>Get Volunteer Help</span>
-            </button>
-          )}
-        </div>
-
-=======
->>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
         <button
           type="button"
           onClick={() => onOpenWhy(flag)}
@@ -108,7 +46,29 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
         <p className="text-sm text-ink font-medium">{flag.nextStep}</p>
       </div>
 
-      <EvidenceChip source={flag.source} ruleId={flag.ruleId} onClick={() => onOpenWhy(flag)} />
+      <div className="flex flex-wrap items-center gap-2">
+        <EvidenceChip source={flag.source} ruleId={flag.ruleId} onClick={() => onOpenWhy(flag)} />
+
+        {!urgent && flag.nextStep && (
+          <button
+            type="button"
+            onClick={() =>
+              navigate('/support', {
+                state: {
+                  taskType: 'navigation',
+                  facilityName: 'Healthcare Facility',
+                  logisticsNotes: `${flag.title}: ${flag.nextStep}`,
+                },
+              })
+            }
+            className="text-xs font-semibold text-teal hover:text-teal-dark inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-soft/60 border border-teal/20 hover:bg-teal-soft transition-colors"
+            title="Request a verified volunteer companion through Healthcare Time Bank"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-teal" />
+            <span>Get Volunteer Help</span>
+          </button>
+        )}
+      </div>
     </Card>
   );
 };
