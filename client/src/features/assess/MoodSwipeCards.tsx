@@ -281,13 +281,13 @@ export const MoodSwipeCards: React.FC<MoodSwipeCardsProps> = ({ value, onChange,
         <Card padding="lg" interactive className="flex xl:flex-col items-center gap-6 text-center">
           <div className="relative w-32 h-32 flex-shrink-0">
             <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              <circle cx="50" cy="50" r="42" fill="none" stroke="#ECEEF5" strokeWidth="9" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#F1EBFF" strokeWidth="9" />
               <circle
                 cx="50"
                 cy="50"
                 r="42"
                 fill="none"
-                stroke={totalScore >= 13 ? '#E4735A' : '#4C1D95'}
+                stroke={totalScore >= 13 ? '#E4735A' : '#7E57C2'}
                 strokeWidth="9"
                 strokeLinecap="round"
                 strokeDasharray={circ}

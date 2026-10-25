@@ -21,12 +21,11 @@ import {
   HandHeart,
   Clock,
   ArrowUpRight,
-  Heart,
-  FileText,
   ArrowRight,
+  FileText,
+  Heart,
 } from '../../design/ui/Icon';
 import { saveResultToDb } from '../../db/historyRepo';
-import { addFollowUpFromFlag } from '../../db/followUpRepo';
 
 const NEXT = [
   { to: '/find-care', label: 'Find a clinic', icon: MapPin, tone: 'bg-teal-soft text-teal' },
@@ -43,14 +42,8 @@ export const ResultScreen: React.FC = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   React.useEffect(() => {
-    if (result) {
-      saveResultToDb(result);
-      result.flags.forEach((f) => {
-        if (f.nextStep) {
-          addFollowUpFromFlag(result.id, f.nextStep).catch(() => {});
-        }
-      });
-    }
+    // saveResultToDb also creates (deduplicated) follow-ups from each flag's next step
+    if (result) saveResultToDb(result);
   }, [result]);
 
   if (!result) {
@@ -102,7 +95,7 @@ export const ResultScreen: React.FC = () => {
         }
       />
 
-      {/* Perinatal Mood / Crisis Support Banner if relevant */}
+      {/* Perinatal mood support banner */}
       {hasPerinatalMoodFlag && (
         <Card variant="plumSoft" padding="md" className="flex flex-col sm:flex-row items-center justify-between gap-4 border border-plum/20 animate-fade-in">
           <div className="flex items-center gap-3">
@@ -110,22 +103,14 @@ export const ResultScreen: React.FC = () => {
               <Heart className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-heading font-semibold text-sm text-ink">
-                Emotional Well-being & Counseling Guide
-              </h4>
+              <h4 className="font-heading font-semibold text-sm text-ink">Emotional well-being &amp; counselling guide</h4>
               <p className="text-xs text-ink-muted">
-                Perinatal mood changes are medical, real, and treatable. Free 24/7 confidential support through Tele-MANAS (14416) and guided calming exercises.
+                Perinatal mood changes are real and treatable. Free 24/7 confidential support through Tele-MANAS (14416).
               </p>
             </div>
           </div>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => navigate('/crisis-support')}
-            icon={<ArrowRight className="w-4 h-4" />}
-            className="flex-shrink-0"
-          >
-            Access Support Guide
+          <Button variant="primary" size="sm" onClick={() => navigate('/crisis-support')} icon={<ArrowRight className="w-4 h-4" />} className="flex-shrink-0">
+            Access support guide
           </Button>
         </Card>
       )}

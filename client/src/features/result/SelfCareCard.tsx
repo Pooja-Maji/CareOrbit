@@ -6,10 +6,10 @@ export interface SelfCareCardProps {
 }
 
 const TIPS = [
-  { icon: Salad, title: 'Iron + Vitamin C', text: 'Dates, lentils, greens with amla or lemon.', tone: 'from-teal to-teal' },
-  { icon: Waves, title: 'Warm compress', text: 'On the lower belly to ease cramps.', tone: 'from-coral to-coral' },
-  { icon: Droplets, title: 'Stay hydrated', text: 'Water, coconut water, warm soups.', tone: 'from-teal to-teal' },
-  { icon: Moon, title: 'Rest well', text: 'Short breaks. Sleep early on heavy days.', tone: 'from-plum to-plum' },
+  { icon: Salad, title: 'Iron + Vitamin C', text: 'Dates, lentils, greens with amla or lemon.' },
+  { icon: Waves, title: 'Warm compress', text: 'On the lower belly to ease cramps.' },
+  { icon: Droplets, title: 'Stay hydrated', text: 'Water, coconut water, warm soups.' },
+  { icon: Moon, title: 'Rest well', text: 'Short breaks. Sleep early on heavy days.' },
 ];
 
 /** Flip cards: hover or tap to reveal the tip. */
@@ -31,12 +31,12 @@ export const SelfCareCard: React.FC<SelfCareCardProps> = () => (
           onClick={(e) => e.currentTarget.classList.toggle('flipped')}
         >
           <div className="flip-inner">
-            <div className={`flip-face bg-gradient-to-br ${t.tone} text-white p-4 flex flex-col justify-between shadow-soft`}>
+            <div className="flip-face tip-front grad-a p-4 flex flex-col justify-between">
               <t.icon className="w-8 h-8" />
               <div className="font-heading font-bold text-lg leading-tight">{t.title}</div>
             </div>
-            <div className="flip-face flip-back bg-white border border-plum-soft p-4 flex items-center shadow-soft">
-              <p className="text-sm text-ink font-medium">{t.text}</p>
+            <div className="flip-face flip-back tip-back grad-a p-4 flex items-center">
+              <p className="text-sm font-semibold">{t.text}</p>
             </div>
           </div>
         </button>

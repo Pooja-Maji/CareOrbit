@@ -45,7 +45,7 @@ export const FacilityMap: React.FC<FacilityMapProps> = ({
           <path d="M 50 260 Q 150 140 280 20" stroke="#CBD8D3" strokeWidth="6" fill="none" />
           <path d="M 40 100 Q 180 180 320 220" stroke="#CBD8D3" strokeWidth="4" fill="none" />
           {/* Arabian Sea Coastline */}
-          <path d="M 0 30 Q 30 140 10 260 L 0 260 Z" fill="#CFEFF6" />
+          <path d="M 0 30 Q 30 140 10 260 L 0 260 Z" fill="#FBD5E8" />
         </svg>
 
         {/* Facility Pins */}

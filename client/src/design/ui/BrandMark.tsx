@@ -7,7 +7,7 @@ export const BrandMark: React.FC<{ size?: number; className?: string; tone?: 'da
   tone = 'dark',
 }) => {
   const bg = tone === 'dark' ? 'rgb(var(--c-plum))' : '#FFFFFF';
-  const needle = tone === 'dark' ? '#FFFFFF' : '#4C1D95';
+  const needle = tone === 'dark' ? '#FFFFFF' : '#7E57C2';
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none" className={className} aria-hidden="true">
       <rect width="40" height="40" rx="11" fill={bg} />

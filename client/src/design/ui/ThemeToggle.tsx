@@ -9,7 +9,7 @@ export const ThemeToggle: React.FC<{ className?: string; onBar?: boolean }> = ({
   const { theme, toggle } = useTheme();
   const dark = theme === 'dark';
   const track = onBar
-    ? 'bg-white/15 border-white/25 hover:bg-white/25'
+    ? 'bg-bar/10 border-bar/25 hover:bg-bar/20'
     : 'bg-plum-soft border-plum/25 hover:border-plum/50';
   return (
     <button
@@ -23,7 +23,7 @@ export const ThemeToggle: React.FC<{ className?: string; onBar?: boolean }> = ({
     >
       <span
         className={`absolute top-[3px] left-[3px] w-8 h-8 rounded-full grid place-items-center shadow-soft transition-transform duration-300 ease-out ${
-          dark ? 'translate-x-5 bg-[#22D3EE] text-[#0E0B1A]' : 'bg-marigold text-[#26102F]'
+          dark ? 'translate-x-5 bg-[#C4B5FD] text-[#2B1B4D]' : 'bg-marigold text-[#26102F]'
         }`}
       >
         {dark ? <Moon key="m" className="w-4 h-4 animate-spin-in" /> : <Sun key="s" className="w-4 h-4 animate-spin-in" />}

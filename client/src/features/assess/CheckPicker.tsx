@@ -22,10 +22,10 @@ import {
   Droplets,
   Brain,
   Siren,
+  Activity,
   Check,
   ArrowRight,
   Shield,
-  Activity,
   AlertTriangle,
   PhoneCall,
 } from '../../design/ui/Icon';
@@ -71,14 +71,14 @@ export const CheckPicker: React.FC = () => {
       label: 'Haemoglobin',
       hint: 'Lab value · 30 sec',
       icon: <Activity className="w-6 h-6" />,
-      done: typeof inputs.hb?.hbValue === 'number' && inputs.hb.hbValue > 0,
-      badge: typeof inputs.hb?.hbValue === 'number' && inputs.hb.hbValue > 0 ? `${inputs.hb.hbValue} g/dL` : undefined,
+      done: typeof inputs.hb?.hbValue === 'number' && inputs.hb.hbValue > 0 && inputs.hb.hbValue !== 12.0,
+      badge: typeof inputs.hb?.hbValue === 'number' && inputs.hb.hbValue > 0 && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
       gradient: 'from-teal to-teal-dark',
     },
     {
       id: 'epds',
       label: 'Postpartum mood',
-      hint: '10 quick swipes · 2 min',
+      hint: '10 quick cards · 2 min',
       icon: <Brain className="w-6 h-6" />,
       done: !!inputs.epds && (inputs.epds.answers?.length || 0) > 0,
       badge: inputs.epds?.answers?.length ? `${inputs.epds.answers.length}/10` : undefined,
@@ -116,28 +116,23 @@ export const CheckPicker: React.FC = () => {
               <AlertTriangle className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
-              <h4 className="font-heading font-bold text-sm sm:text-base">
-                Immediate Clinical Danger Sign Detected
-              </h4>
+              <h4 className="font-heading font-bold text-sm sm:text-base">Immediate danger sign detected</h4>
               <p className="text-xs text-red-100">
                 {hasSelfHarmRisk
                   ? 'Urgent perinatal crisis flag recorded. Free confidential support is available 24/7.'
-                  : 'Emergency symptoms (heavy acute blood loss, fainting, or severe pelvic pain) require immediate care.'}
+                  : 'Emergency symptoms (heavy acute blood loss, fainting, or severe pelvic pain) need immediate care.'}
               </p>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => navigate(hasSelfHarmRisk ? '/crisis-support' : '/emergency')}
-              className="bg-white text-emergency-dark hover:bg-red-50 font-bold border-none shadow-md"
-              icon={<PhoneCall className="w-4 h-4" />}
-            >
-              {hasSelfHarmRisk ? 'Support Helpline (14416)' : 'Open Emergency Screen (108)'}
-            </Button>
-          </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => navigate(hasSelfHarmRisk ? '/crisis-support' : '/emergency')}
+            className="bg-white text-emergency-dark hover:bg-red-50 font-bold border-none shadow-md flex-shrink-0"
+            icon={<PhoneCall className="w-4 h-4" />}
+          >
+            {hasSelfHarmRisk ? 'Support helpline (14416)' : 'Open emergency screen (108)'}
+          </Button>
         </div>
       )}
 
@@ -157,7 +152,7 @@ export const CheckPicker: React.FC = () => {
 
       {/* Quick Demo Preset Selector */}
       <div className="flex flex-wrap items-center gap-2 p-3 bg-plum-soft/40 rounded-xl border border-plum-soft/60">
-        <span className="text-xs font-semibold text-ink-subtle mr-1">Demo Scenarios:</span>
+        <span className="text-xs font-semibold text-ink-subtle mr-1">Demo scenarios:</span>
         <button
           type="button"
           onClick={load90SecondDemo}
@@ -280,11 +275,10 @@ export const CheckPicker: React.FC = () => {
         </div>
 
         <Button
-          variant="primary"
           size="lg"
-          onClick={evaluateAssessment}
-          className="w-full sm:w-auto shadow-lifted hover:scale-[1.01]"
+          onClick={() => evaluateAssessment()}
           icon={<ArrowRight className="w-5 h-5" />}
+          className="shine w-full sm:w-auto"
         >
           Evaluate Results in Health Compass
         </Button>

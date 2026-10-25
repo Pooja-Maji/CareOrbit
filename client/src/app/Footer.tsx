@@ -11,11 +11,11 @@ export const Footer: React.FC = () => {
   const tabs = MOBILE_TABS.map((to) => NAV_ITEMS.find((n) => n.to === to)!).filter(Boolean);
 
   return (
-    <footer className="bar-surface fixed bottom-0 inset-x-0 z-40 border-t border-white/10">
+    <footer className="bar-surface bar-dark fixed bottom-0 inset-x-0 z-40 border-t border-bar/15">
       {/* Desktop */}
       <div className="hidden md:flex h-full items-center justify-between gap-6 px-4 sm:px-6 lg:px-10">
-        <div className="flex items-center gap-3 text-sm text-white/85 min-w-0">
-          <Shield className="w-4 h-4 text-white flex-shrink-0" />
+        <div className="flex items-center gap-3 text-sm text-bar/85 min-w-0">
+          <Shield className="w-4 h-4 text-bar flex-shrink-0" />
           <span className="truncate">Screening aid, not a diagnosis. Always confirm with a doctor.</span>
         </div>
 
@@ -31,7 +31,7 @@ export const Footer: React.FC = () => {
           </a>
           <a
             href="tel:108"
-            className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-[#fff] text-[#B3261E] text-sm font-bold hover:scale-105 transition-transform"
+            className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-[#fff] text-[#B3261E] text-sm font-bold shadow-soft transition-shadow"
           >
             <PhoneCall className="w-4 h-4" /> Ambulance 108
           </a>
@@ -46,7 +46,7 @@ export const Footer: React.FC = () => {
             to={t.to}
             className={({ isActive }) =>
               `flex flex-col items-center justify-center gap-0.5 text-[11px] font-semibold transition-all ${
-                isActive ? 'text-white bg-white/15' : 'text-white/70 active:scale-90'
+                isActive ? 'text-bar bg-bar/10' : 'text-bar/70 active:scale-90'
               }`
             }
           >

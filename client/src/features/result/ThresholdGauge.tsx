@@ -34,7 +34,7 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
 
   const isCrossed = lowIsConcern ? score < threshold : score >= threshold;
 
-  const strokeColor = isCrossed ? '#E4735A' : '#0E7490';
+  const strokeColor = isCrossed ? '#E4735A' : '#B04A7C';
   const radius = 70;
   const circumference = Math.PI * radius; // Half circle
   const strokeDashoffset = mounted ? circumference - (pct / 100) * circumference : circumference;
@@ -55,7 +55,7 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
           <path
             d="M 10 80 A 70 70 0 0 1 150 80"
             fill="none"
-            stroke="#ECEEF5"
+            stroke="#F1EBFF"
             strokeWidth="12"
             strokeLinecap="round"
           />
@@ -78,7 +78,7 @@ export const ThresholdGauge: React.FC<ThresholdGaugeProps> = ({
               cx={80 - 70 * Math.cos((thresholdPct / 100) * Math.PI)}
               cy={80 - 70 * Math.sin((thresholdPct / 100) * Math.PI)}
               r="4"
-              fill="#4C1D95"
+              fill="#7E57C2"
             />
           )}
         </svg>
