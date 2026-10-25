@@ -118,6 +118,7 @@ export interface CycleSymptomInputs {
   painLevel?: number; // 0-10
   disruptivePainCycles?: number;
   heavyBleedingCycles?: number;
+  painLocations?: string[];
 }
 
 export interface AssessmentInputs {

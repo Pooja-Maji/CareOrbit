@@ -1,8 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Flag } from '@sthreecare/shared';
 import { Card } from '../../design/ui/Card';
 import { EvidenceChip } from './EvidenceChip';
-import { AlertTriangle, Info, ArrowRight } from '../../design/ui/Icon';
+import { AlertTriangle, Info, ArrowRight, Sparkles } from '../../design/ui/Icon';
 
 export interface FlagCardProps {
   flag: Flag;
@@ -10,6 +11,7 @@ export interface FlagCardProps {
 }
 
 export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
+  const navigate = useNavigate();
   const isUrgent = flag.level === 'urgent';
   const isDiscuss = flag.level === 'discuss';
 
@@ -60,13 +62,35 @@ export const FlagCard: React.FC<FlagCardProps> = ({ flag, onOpenWhy }) => {
         </p>
       </div>
 
-      {/* Bottom Bar: Evidence Chip + Why Button */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-black/5">
-        <EvidenceChip
-          source={flag.source}
-          ruleId={flag.ruleId}
-          onClick={() => onOpenWhy(flag)}
-        />
+      {/* Bottom Bar: Evidence Chip + Volunteer Request + Why Button */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-black/5">
+        <div className="flex flex-wrap items-center gap-2">
+          <EvidenceChip
+            source={flag.source}
+            ruleId={flag.ruleId}
+            onClick={() => onOpenWhy(flag)}
+          />
+
+          {!isUrgent && flag.nextStep && (
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/support', {
+                  state: {
+                    taskType: 'navigation',
+                    facilityName: 'Healthcare Facility',
+                    logisticsNotes: `${flag.title}: ${flag.nextStep}`,
+                  },
+                })
+              }
+              className="text-xs font-semibold text-teal hover:text-teal-dark inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-soft/60 border border-teal/20 hover:bg-teal-soft transition-colors"
+              title="Request a verified volunteer companion through Healthcare Time Bank"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-teal" />
+              <span>Get Volunteer Help</span>
+            </button>
+          )}
+        </div>
 
         <button
           type="button"

@@ -1,26 +1,44 @@
-import React, { useState } from 'react';
+/**
+ * SthreeCare - Health Assessment Navigation (Stage 5 & 6)
+ * Owner: Person A
+ * 
+ * Life-stage adaptive assessment hub integrating validated instruments:
+ * PBAC flow, WHO Hb entry, EPDS perinatal mood cards, danger signs,
+ * and the interactive Body Pain Painter.
+ */
+
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../lib/store';
-import { run } from '@sthreecare/compass';
+import { useAssessment, type AssessmentTab } from './useAssessment';
 import { PadPicker } from './PadPicker';
 import { HbEntry } from './HbEntry';
 import { MoodSwipeCards } from './MoodSwipeCards';
 import { SymptomLog } from './SymptomLog';
+import { BodyPainPainter } from './BodyPainPainter';
 import { Button } from '../../design/ui/Button';
-import { Activity, Heart, Shield, AlertTriangle, ArrowRight, Sparkles } from '../../design/ui/Icon';
+import { Activity, Heart, Shield, AlertTriangle, ArrowRight, Sparkles, PhoneCall } from '../../design/ui/Icon';
 import { Card } from '../../design/ui/Card';
-
-export type CheckTab = 'pbac' | 'hb' | 'epds' | 'symptoms';
 
 export const CheckPicker: React.FC = () => {
   const navigate = useNavigate();
-  const { profile, inputs, updateInputs, setResult, saveResultToHistory } = useAppStore();
+  const { updateInputs } = useAppStore();
 
-  // Pick default tab based on life stage
-  const defaultTab: CheckTab = profile.lifeStage === 'postpartum' ? 'epds' : 'pbac';
-  const [activeTab, setActiveTab] = useState<CheckTab>(defaultTab);
+  const {
+    activeTab,
+    setActiveTab,
+    hasUrgentDangerSigns,
+    hasSelfHarmRisk,
+    evaluateAssessment,
+    load90SecondDemo,
+    loadPostpartumMoodDemo,
+    loadEmergencyDemo,
+    resetAllInputs,
+    inputs,
+    profile,
+  } = useAssessment();
 
-  const tabs: { id: CheckTab; label: string; icon: React.ReactNode; badge?: string }[] = [
+  const tabs: { id: AssessmentTab; label: string; icon: React.ReactNode; badge?: string }[] = [
     {
       id: 'pbac',
       label: 'Menstrual Flow (PBAC)',
@@ -45,44 +63,49 @@ export const CheckPicker: React.FC = () => {
       icon: <AlertTriangle className="w-4 h-4" />,
       badge: inputs.dangerSigns?.selectedSigns?.length ? 'Danger Sign' : undefined,
     },
+    {
+      id: 'pain',
+      label: 'Body Pain Map (Painter)',
+      icon: <Activity className="w-4 h-4" />,
+      badge: inputs.symptoms?.painLocations?.length ? `${inputs.symptoms.painLocations.length} areas` : undefined,
+    },
   ];
-
-  const handleRunCompass = () => {
-    // Run deterministic engine
-    const evaluation = run(inputs, profile);
-    setResult(evaluation);
-    saveResultToHistory(evaluation);
-
-    // If an urgent danger sign was triggered, route immediately to emergency takeover!
-    const hasUrgentDanger = evaluation.flags.some(
-      (f) => f.level === 'urgent' && (f.ruleId.startsWith('danger_') || f.ruleId === 'epds_self_harm_risk')
-    );
-
-    if (hasUrgentDanger) {
-      navigate('/emergency');
-    } else {
-      navigate('/result');
-    }
-  };
-
-  const load90SecondDemo = () => {
-    // 90-second demo path from project plan Page 16:
-    // "Run a heavy-bleeding check with the Pad Picker and enter Hb (9.8 g/dL).
-    // Show the gauge crossing the threshold and a flag with its source and the doctor script."
-    updateInputs({
-      pbac: {
-        pad: { light: 2, moderate: 4, saturated: 5 }, // 2*1 + 4*5 + 5*20 = 122 pts
-        tampon: { light: 0, moderate: 0, saturated: 0 },
-        clot: { small: 2, large: 1 }, // 2*1 + 5 = 7 pts -> total 129
-        flooding: 1, // 5 pts -> total 134
-      },
-      hb: { hbValue: 9.8 },
-      dangerSigns: { selectedSigns: [] },
-    });
-  };
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto py-4">
+      {/* Urgent Warning Sign Takeover Banner (runs inside stage 6) */}
+      {(hasUrgentDangerSigns || hasSelfHarmRisk) && (
+        <div className="p-4 rounded-2xl bg-emergency text-white flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lifted animate-pulse">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white text-emergency flex items-center justify-center flex-shrink-0 font-bold">
+              <AlertTriangle className="w-5 h-5 stroke-[2.5]" />
+            </div>
+            <div>
+              <h4 className="font-heading font-bold text-sm sm:text-base">
+                Immediate Clinical Danger Sign Detected
+              </h4>
+              <p className="text-xs text-red-100">
+                {hasSelfHarmRisk
+                  ? 'Urgent perinatal crisis flag recorded. Free confidential support is available 24/7.'
+                  : 'Emergency symptoms (heavy acute blood loss, fainting, or severe pelvic pain) require immediate care.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => navigate(hasSelfHarmRisk ? '/crisis-support' : '/emergency')}
+              className="bg-white text-emergency-dark hover:bg-red-50 font-bold border-none shadow-md"
+              icon={<PhoneCall className="w-4 h-4" />}
+            >
+              {hasSelfHarmRisk ? 'Support Helpline (14416)' : 'Open Emergency Screen (108)'}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -94,6 +117,41 @@ export const CheckPicker: React.FC = () => {
           </p>
         </div>
 
+        {/* Quick Demo Preset Selector */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-semibold text-ink-subtle mr-1">Demo Scenarios:</span>
+          <button
+            type="button"
+            onClick={load90SecondDemo}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-plum-soft text-plum hover:bg-plum hover:text-white transition-colors border border-plum/20"
+            title="Pre-fills heavy flow PBAC (134 pts) and Hb 9.8 g/dL for the 90-second demo"
+          >
+            90s Hackathon Demo
+          </button>
+          <button
+            type="button"
+            onClick={loadPostpartumMoodDemo}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-teal-soft text-teal-dark hover:bg-teal hover:text-white transition-colors border border-teal/20"
+            title="Pre-fills EPDS score 14/30"
+          >
+            Postpartum EPDS
+          </button>
+          <button
+            type="button"
+            onClick={loadEmergencyDemo}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-emergency-soft text-emergency-dark hover:bg-emergency hover:text-white transition-colors border border-emergency/20"
+            title="Triggers emergency soaking & fainting warning signs"
+          >
+            Emergency Sign
+          </button>
+          <button
+            type="button"
+            onClick={resetAllInputs}
+            className="text-xs px-2.5 py-1.5 text-ink-subtle hover:text-ink underline"
+          >
+            Reset
+          </button>
+        </div>
       </div>
 
       {/* Tabs Navigation */}
@@ -166,6 +224,13 @@ export const CheckPicker: React.FC = () => {
             onDangerSignsChange={(dangerSigns) => updateInputs({ dangerSigns })}
           />
         )}
+
+        {activeTab === 'pain' && (
+          <BodyPainPainter
+            symptoms={inputs.symptoms || {}}
+            onChange={(symptoms) => updateInputs({ symptoms })}
+          />
+        )}
       </div>
 
       {/* Run Compass Screening Action Bar */}
@@ -178,7 +243,7 @@ export const CheckPicker: React.FC = () => {
         <Button
           variant="primary"
           size="lg"
-          onClick={handleRunCompass}
+          onClick={evaluateAssessment}
           className="w-full sm:w-auto shadow-lifted hover:scale-[1.01]"
           icon={<ArrowRight className="w-5 h-5" />}
         >

@@ -13,6 +13,7 @@ import { Card } from '../../design/ui/Card';
 import { Shield, FileText, ArrowRight, Activity, Heart, Sparkles } from '../../design/ui/Icon';
 
 import { saveResultToDb } from '../../db/historyRepo';
+import { addFollowUpFromFlag } from '../../db/followUpRepo';
 
 export const ResultScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +26,11 @@ export const ResultScreen: React.FC = () => {
   React.useEffect(() => {
     if (result) {
       saveResultToDb(result);
+      result.flags.forEach((f) => {
+        if (f.nextStep) {
+          addFollowUpFromFlag(result.id, f.nextStep).catch(() => {});
+        }
+      });
     }
   }, [result]);
 
@@ -52,6 +58,8 @@ export const ResultScreen: React.FC = () => {
   const hbScore = result.scores['hb'];
   const epdsScore = result.scores['epds'];
 
+  const hasPerinatalMoodFlag = result.flags.some((f) => f.ruleId.startsWith('epds_'));
+
   const handleOpenWhy = (flag: Flag) => {
     setSelectedFlagForWhy(flag);
     setIsWhyDrawerOpen(true);
@@ -78,17 +86,57 @@ export const ResultScreen: React.FC = () => {
           </p>
         </div>
 
-        {/* Doctor Summary Sheet Trigger Button */}
-        <Button
-          variant="teal"
-          size="md"
-          onClick={() => setIsDoctorSheetOpen(true)}
-          icon={<FileText className="w-4 h-4" />}
-          className="self-start sm:self-center shadow-soft"
-        >
-          View Doctor Summary & QR
-        </Button>
+        {/* Doctor Summary Sheet & Print Controls */}
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate('/print-summary')}
+            icon={<FileText className="w-4 h-4" />}
+            className="shadow-xs"
+          >
+            Print Dossier (A4)
+          </Button>
+
+          <Button
+            variant="teal"
+            size="sm"
+            onClick={() => setIsDoctorSheetOpen(true)}
+            icon={<Sparkles className="w-4 h-4" />}
+            className="shadow-soft"
+          >
+            Doctor Summary & QR
+          </Button>
+        </div>
       </div>
+
+      {/* Perinatal Mood / Crisis Support Banner if relevant */}
+      {hasPerinatalMoodFlag && (
+        <Card variant="plumSoft" padding="md" className="flex flex-col sm:flex-row items-center justify-between gap-4 border border-plum/20 animate-fade-in">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-plum text-white flex items-center justify-center flex-shrink-0">
+              <Heart className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="font-heading font-semibold text-sm text-ink">
+                Emotional Well-being & Counseling Guide
+              </h4>
+              <p className="text-xs text-ink-muted">
+                Perinatal mood changes are medical, real, and treatable. Free 24/7 confidential support through Tele-MANAS (14416) and guided calming exercises.
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => navigate('/crisis-support')}
+            icon={<ArrowRight className="w-4 h-4" />}
+            className="flex-shrink-0"
+          >
+            Access Support Guide
+          </Button>
+        </Card>
+      )}
 
       {/* Gauges Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

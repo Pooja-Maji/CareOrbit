@@ -8,6 +8,8 @@ import { ProfileEdit } from '../features/profile/ProfileEdit';
 import { CheckPicker } from '../features/assess/CheckPicker';
 import { ResultScreen } from '../features/result/ResultScreen';
 import { EmergencyTakeover } from '../features/result/EmergencyTakeover';
+import { SupportScreen } from '../features/result/SupportScreen';
+import { PrintableSummary } from '../features/summary/PrintableSummary';
 import { DashboardScreen } from '../features/dashboard/DashboardScreen';
 import { HistoryScreen } from '../features/history/HistoryScreen';
 import { FindCareScreen } from '../features/find-care/FindCareScreen';
@@ -19,11 +21,12 @@ import { LimitsAndSources } from '../features/landing/LimitsAndSources';
 export const AppRoutes: React.FC = () => {
   const { isLoggedIn } = useAppStore();
 
-  // If NOT logged in, show ONLY the Login / Register screen
+  // If NOT logged in, show ONLY the Login / Register screen (emergency and crisis support always available)
   if (!isLoggedIn) {
     return (
       <Routes>
         <Route path="/emergency" element={<EmergencyTakeover />} />
+        <Route path="/crisis-support" element={<SupportScreen />} />
         <Route path="*" element={<AuthScreen />} />
       </Routes>
     );
@@ -42,6 +45,8 @@ export const AppRoutes: React.FC = () => {
         <Route path="/profile" element={<ProfileEdit />} />
         <Route path="/assess" element={<CheckPicker />} />
         <Route path="/result" element={<ResultScreen />} />
+        <Route path="/crisis-support" element={<SupportScreen />} />
+        <Route path="/print-summary" element={<PrintableSummary />} />
         <Route path="/history" element={<HistoryScreen />} />
         <Route path="/find-care" element={<FindCareScreen />} />
         <Route path="/support" element={<RequestSupportScreen />} />

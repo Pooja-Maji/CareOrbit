@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '../../lib/store';
 import { PhoneCall, AlertTriangle, Shield, Heart } from '../../design/ui/Icon';
 import { Button } from '../../design/ui/Button';
 import { Card } from '../../design/ui/Card';
 
 export const EmergencyTakeover: React.FC = () => {
   const navigate = useNavigate();
+  const { profile } = useAppStore();
   const [familyAlerted, setFamilyAlerted] = useState(false);
+
+  const emergencyPhone = profile.emergencyContact?.phone;
+  const emergencyName = profile.emergencyContact?.name || 'Family Emergency Contact';
 
   const handleAlertFamily = () => {
     setFamilyAlerted(true);
-    // In real use, triggers local SMS or shared emergency contact alert
-    setTimeout(() => {
-      alert("Emergency SMS notification simulated: 'SthreeCare Alert: Urgent clinical danger sign recorded. Please check on me immediately.'");
-    }, 200);
+    if (emergencyPhone) {
+      window.location.href = `sms:${emergencyPhone}?body=EMERGENCY%20ALERT:%20SthreeCare%20screening%20detected%20an%20urgent%20clinical%20danger%20sign.%20Please%20assist%20me%20immediately.`;
+    } else {
+      setTimeout(() => {
+        alert("Emergency SMS notification simulated: 'SthreeCare Alert: Urgent clinical danger sign recorded. Please check on me immediately.'");
+      }, 200);
+    }
   };
 
   return (
@@ -58,18 +66,34 @@ export const EmergencyTakeover: React.FC = () => {
         </div>
 
         {/* Secondary Action: Family Alert */}
-        <div className="pt-2">
+        <div className="pt-2 space-y-2">
+          {emergencyPhone && (
+            <a
+              href={`tel:${emergencyPhone}`}
+              className="w-full py-3.5 px-4 rounded-xl bg-white/20 hover:bg-white/30 border border-white/40 text-sm font-bold flex items-center justify-center gap-2 transition-all text-white"
+            >
+              <PhoneCall className="w-4 h-4" />
+              <span>Call {emergencyName} ({emergencyPhone})</span>
+            </a>
+          )}
+
           <button
             type="button"
             onClick={handleAlertFamily}
-            className={`w-full py-3.5 px-4 rounded-xl border border-white/30 text-sm font-semibold flex items-center justify-center gap-2 transition-all ${
+            className={`w-full py-3 px-4 rounded-xl border border-white/30 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all ${
               familyAlerted
                 ? 'bg-white/20 text-white'
                 : 'bg-transparent hover:bg-white/10 text-white'
             }`}
           >
             <span>🚨</span>
-            <span>{familyAlerted ? 'Emergency Alert Sent to Family Contact' : 'Alert My Emergency Family Contact'}</span>
+            <span>
+              {familyAlerted
+                ? `Emergency Alert Sent to ${emergencyName}`
+                : emergencyPhone
+                ? `Send Emergency SMS to ${emergencyName}`
+                : 'Send Emergency SMS to Family Contact'}
+            </span>
           </button>
         </div>
 

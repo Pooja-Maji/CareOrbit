@@ -7,6 +7,7 @@ export {
   ChevronRight,
   ChevronLeft,
   ChevronDown,
+  ArrowLeft,
   Info,
   PhoneCall,
   Share2,
