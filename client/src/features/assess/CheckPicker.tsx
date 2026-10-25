@@ -17,13 +17,27 @@ import { MoodSwipeCards } from './MoodSwipeCards';
 import { SymptomLog } from './SymptomLog';
 import { BodyPainPainter } from './BodyPainPainter';
 import { Button } from '../../design/ui/Button';
+<<<<<<< HEAD
 import { Activity, Heart, Shield, AlertTriangle, ArrowRight, Sparkles, PhoneCall } from '../../design/ui/Icon';
 import { Card } from '../../design/ui/Card';
+=======
+import { PageHeader } from '../../design/ui/PageHeader';
+import {
+  ClipboardList,
+  Droplets,
+  Brain,
+  Siren,
+  Check,
+  ArrowRight,
+  Shield,
+} from '../../design/ui/Icon';
+>>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
 
 export const CheckPicker: React.FC = () => {
   const navigate = useNavigate();
   const { updateInputs } = useAppStore();
 
+<<<<<<< HEAD
   const {
     activeTab,
     setActiveTab,
@@ -39,29 +53,54 @@ export const CheckPicker: React.FC = () => {
   } = useAssessment();
 
   const tabs: { id: AssessmentTab; label: string; icon: React.ReactNode; badge?: string }[] = [
+=======
+  const defaultTab: CheckTab = profile.lifeStage === 'postpartum' ? 'epds' : 'pbac';
+  const [activeTab, setActiveTab] = useState<CheckTab>(defaultTab);
+
+  const tabs: {
+    id: CheckTab;
+    label: string;
+    hint: string;
+    icon: React.ReactNode;
+    done: boolean;
+    badge?: string;
+    gradient: string;
+  }[] = [
+>>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
     {
       id: 'pbac',
-      label: 'Menstrual Flow (PBAC)',
-      icon: <Activity className="w-4 h-4" />,
-      badge: inputs.pbac?.pad.saturated ? `${inputs.pbac.pad.saturated} sat.` : undefined,
+      label: 'Period flow',
+      hint: 'Pads & clots · 1 min',
+      icon: <Droplets className="w-6 h-6" />,
+      done: !!inputs.pbac && (inputs.pbac.pad.light + inputs.pbac.pad.moderate + inputs.pbac.pad.saturated > 0),
+      gradient: 'from-plum to-plum',
     },
     {
       id: 'hb',
-      label: 'Haemoglobin (Hb)',
-      icon: <Heart className="w-4 h-4" />,
-      badge: inputs.hb?.hbValue ? `${inputs.hb.hbValue} g/dL` : undefined,
+      label: 'Blood (Hb)',
+      hint: 'From a lab report',
+      icon: <ClipboardList className="w-6 h-6" />,
+      done: !!inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0,
+      badge: inputs.hb?.hbValue && inputs.hb.hbValue !== 12.0 ? `${inputs.hb.hbValue} g/dL` : undefined,
+      gradient: 'from-teal to-teal',
     },
     {
       id: 'epds',
-      label: 'Mood Check (EPDS)',
-      icon: <Sparkles className="w-4 h-4" />,
-      badge: profile.lifeStage === 'postpartum' ? 'Recommended' : undefined,
+      label: 'Mood',
+      hint: '10 quick cards',
+      icon: <Brain className="w-6 h-6" />,
+      done: !!inputs.epds && inputs.epds.answers.some((a) => a > 0),
+      badge: profile.lifeStage === 'postpartum' ? 'Suggested' : undefined,
+      gradient: 'from-plum to-plum',
     },
     {
       id: 'symptoms',
-      label: 'Symptoms & Warning Signs',
-      icon: <AlertTriangle className="w-4 h-4" />,
-      badge: inputs.dangerSigns?.selectedSigns?.length ? 'Danger Sign' : undefined,
+      label: 'Symptoms',
+      hint: 'Pain & danger signs',
+      icon: <Siren className="w-6 h-6" />,
+      done: !!inputs.dangerSigns?.selectedSigns?.length,
+      badge: inputs.dangerSigns?.selectedSigns?.length ? 'Alert' : undefined,
+      gradient: 'from-coral to-coral',
     },
     {
       id: 'pain',
@@ -71,6 +110,7 @@ export const CheckPicker: React.FC = () => {
     },
   ];
 
+<<<<<<< HEAD
   return (
     <div className="space-y-6 max-w-4xl mx-auto py-4">
       {/* Urgent Warning Sign Takeover Banner (runs inside stage 6) */}
@@ -158,34 +198,73 @@ export const CheckPicker: React.FC = () => {
       <div className="flex flex-wrap gap-2 border-b border-plum-soft pb-3">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
+=======
+  const doneCount = tabs.filter((t) => t.done).length;
+
+  const handleRunCompass = () => {
+    const evaluation = run(inputs, profile);
+    setResult(evaluation);
+    saveResultToHistory(evaluation);
+    const urgent = evaluation.flags.some(
+      (f) => f.level === 'urgent' && (f.ruleId.startsWith('danger_') || f.ruleId === 'epds_self_harm_risk')
+    );
+    navigate(urgent ? '/emergency' : '/result');
+  };
+
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        icon={<ClipboardList className="w-7 h-7" />}
+        title="Health Check"
+        subtitle="Pick any check below. Do one or all."
+        actions={
+          <span className="px-3 py-1.5 rounded-full bg-plum-soft text-plum text-sm font-bold">
+            {doneCount}/{tabs.length} done
+          </span>
+        }
+      />
+
+      {/* Step cards */}
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 stagger">
+        {tabs.map((tab, i) => {
+          const active = activeTab === tab.id;
+>>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
           return (
             <button
               key={tab.id}
+              type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                isActive
-                  ? 'bg-plum text-white shadow-soft ring-2 ring-plum/20'
-                  : 'bg-white text-ink-muted border border-plum-soft hover:bg-plum-soft/40'
+              className={`tile relative text-left p-4 rounded-card border-2 overflow-hidden ${
+                active ? 'border-plum bg-white shadow-lifted' : 'border-transparent bg-white shadow-soft'
               }`}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
-              {tab.badge && (
-                <span
-                  className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-plum-soft text-plum'
-                  }`}
-                >
-                  {tab.badge}
+              <div className="flex items-start justify-between">
+                <span className={`tile-icon w-12 h-12 rounded-2xl bg-gradient-to-br ${tab.gradient} text-white flex items-center justify-center`}>
+                  {tab.icon}
                 </span>
-              )}
+                {tab.done ? (
+                  <span className="w-7 h-7 rounded-full bg-teal text-white flex items-center justify-center animate-pop-in">
+                    <Check className="w-4 h-4" />
+                  </span>
+                ) : (
+                  <span className="w-7 h-7 rounded-full bg-plum-soft text-plum text-xs font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                )}
+              </div>
+              <div className="mt-3 font-heading font-bold text-ink">{tab.label}</div>
+              <div className="text-xs text-ink-muted flex items-center gap-2">
+                {tab.hint}
+                {tab.badge && <span className="px-1.5 py-0.5 rounded bg-plum-soft text-plum font-bold">{tab.badge}</span>}
+              </div>
+              {active && <span className="absolute bottom-0 left-0 h-1 w-full bg-plum bar-grow" />}
             </button>
           );
         })}
       </div>
 
-      {/* Tab Panels */}
-      <div>
+      {/* Active panel */}
+      <div key={activeTab} className="animate-slide-up">
         {activeTab === 'pbac' && (
           <PadPicker
             value={
@@ -199,15 +278,9 @@ export const CheckPicker: React.FC = () => {
             onChange={(pbac) => updateInputs({ pbac })}
           />
         )}
-
         {activeTab === 'hb' && (
-          <HbEntry
-            value={inputs.hb || { hbValue: 9.8 }}
-            isPregnant={profile.isPregnant}
-            onChange={(hb) => updateInputs({ hb })}
-          />
+          <HbEntry value={inputs.hb || { hbValue: 9.8 }} isPregnant={profile.isPregnant} onChange={(hb) => updateInputs({ hb })} />
         )}
-
         {activeTab === 'epds' && (
           <MoodSwipeCards
             value={inputs.epds || { answers: new Array(10).fill(0) }}
@@ -215,7 +288,6 @@ export const CheckPicker: React.FC = () => {
             onComplete={() => setActiveTab('symptoms')}
           />
         )}
-
         {activeTab === 'symptoms' && (
           <SymptomLog
             symptoms={inputs.symptoms || {}}
@@ -233,12 +305,12 @@ export const CheckPicker: React.FC = () => {
         )}
       </div>
 
-      {/* Run Compass Screening Action Bar */}
-      <div className="sticky bottom-4 z-30 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-plum-soft shadow-lifted flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2 text-xs text-ink-muted">
-          <Shield className="w-4 h-4 text-teal" />
-          <span>Screening rules execute deterministically on your device</span>
+      {/* Sticky action bar, sits above the fixed footer */}
+      <div className="sticky bottom-[calc(var(--bar-h)+12px)] z-30 p-3 sm:p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-plum-soft shadow-lifted flex items-center justify-between gap-4">
+        <div className="hidden sm:flex items-center gap-2 text-sm text-ink-muted">
+          <Shield className="w-4 h-4 text-teal" /> Calculated on your device
         </div>
+<<<<<<< HEAD
 
         <Button
           variant="primary"
@@ -248,6 +320,10 @@ export const CheckPicker: React.FC = () => {
           icon={<ArrowRight className="w-5 h-5" />}
         >
           Evaluate Results in Health Compass
+=======
+        <Button size="lg" onClick={handleRunCompass} icon={<ArrowRight className="w-5 h-5" />} className="shine w-full sm:w-auto">
+          See my results
+>>>>>>> 6598d3ba7fb621e4fdd1aff1a8d885477c333023
         </Button>
       </div>
     </div>

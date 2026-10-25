@@ -1,10 +1,10 @@
 import React from 'react';
 import type { Result, Profile } from '@sthreecare/shared';
 import { Sheet } from '../../design/ui/Sheet';
-import { Button } from '../../design/ui/Button';
 import { QrCode } from './QrCode';
 import { buildClinicianSummary } from './buildSummary';
-import { Shield, Share2 } from '../../design/ui/Icon';
+import { PdfReportButton } from './ReportPdf';
+import { CheckCircle, AlertTriangle, Stethoscope } from '../../design/ui/Icon';
 
 export interface DoctorSummarySheetProps {
   isOpen: boolean;
@@ -13,15 +13,9 @@ export interface DoctorSummarySheetProps {
   profile: Profile;
 }
 
-export const DoctorSummarySheet: React.FC<DoctorSummarySheetProps> = ({
-  isOpen,
-  onClose,
-  result,
-  profile,
-}) => {
+export const DoctorSummarySheet: React.FC<DoctorSummarySheetProps> = ({ isOpen, onClose, result, profile }) => {
   const summary = buildClinicianSummary(result, profile);
 
-  // Encode structured summary in QR data
   const qrData = JSON.stringify({
     app: 'SthreeCare',
     date: summary.date,
@@ -29,79 +23,56 @@ export const DoctorSummarySheet: React.FC<DoctorSummarySheetProps> = ({
     flags: summary.flags.map((f) => f.title),
   });
 
-  const handlePrint = () => {
-    window.print();
-  };
-
   return (
-    <Sheet
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Clinician Summary Sheet"
-      subtitle="Designed for rapid doctor review during in-person or teleconsultation"
-    >
-      <div className="space-y-6 text-sm text-ink print:text-black">
-        {/* Large QR Code Display for Instant Scan */}
-        <div className="flex flex-col sm:flex-row items-center gap-6 p-4 rounded-card bg-cream border border-plum-soft">
-          <div className="flex-shrink-0">
-            <QrCode value={qrData} size={150} />
-          </div>
-
-          <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-heading font-bold text-base text-ink">
-              Scan for Structured Summary
-            </h4>
-            <p className="text-xs text-ink-muted">
-              Point your smartphone camera at this QR code to load the screening findings without paper notes.
-            </p>
-            <div className="pt-2">
-              <Button variant="outline" size="sm" onClick={handlePrint}>
-                Print Summary / Save PDF
-              </Button>
-            </div>
+    <Sheet isOpen={isOpen} onClose={onClose} title="Doctor Summary" subtitle={summary.date}>
+      <div className="space-y-5 stagger">
+        {/* QR + PDF */}
+        <div className="flex items-center gap-5 p-4 rounded-card bg-cream border border-plum-soft">
+          <QrCode value={qrData} size={112} />
+          <div className="space-y-3">
+            <p className="font-heading font-bold text-ink">Show or scan</p>
+            <PdfReportButton result={result} profile={profile} label="Download PDF" size="sm" />
           </div>
         </div>
 
-        {/* Screening Scores Table */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-xs uppercase tracking-wider text-ink-subtle">
-            Calculated Screening Scores
-          </h4>
-          <div className="divide-y divide-plum-soft/60 rounded-xl border border-plum-soft overflow-hidden bg-white">
-            {summary.scores.map((sc, i) => (
-              <div key={i} className="flex justify-between items-center p-3 text-xs">
-                <div>
-                  <span className="font-medium text-ink">{sc.label}</span>
-                  <span className="text-[10px] text-ink-subtle block">Threshold: {sc.threshold}</span>
+        {/* Scores */}
+        <div className="grid gap-2">
+          {summary.scores.map((s) => (
+            <div
+              key={s.label}
+              className="tile flex items-center justify-between gap-3 p-3.5 rounded-xl bg-white border border-plum-soft"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <span
+                  className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    s.review ? 'bg-coral-soft text-coral' : 'bg-teal-soft text-teal'
+                  }`}
+                >
+                  {s.review ? <AlertTriangle className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                </span>
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold text-ink truncate">{s.label}</div>
+                  <div className="text-[11px] text-ink-subtle">Range: {s.threshold}</div>
                 </div>
-                <span className="font-bold text-sm text-plum">{sc.value}</span>
+              </div>
+              <span className="font-heading font-bold text-lg text-plum whitespace-nowrap">{s.value}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Ask doctor */}
+        {summary.doctorTalkingPoints.length > 0 && (
+          <div className="space-y-2">
+            <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal">
+              <Stethoscope className="w-4 h-4" /> Ask your doctor
+            </h4>
+            {summary.doctorTalkingPoints.map((pt, i) => (
+              <div key={i} className="p-3 rounded-xl bg-teal-soft/50 border border-teal/20 text-sm text-ink">
+                {pt}
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Clinical Discussion Points */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-xs uppercase tracking-wider text-ink-subtle">
-            Recommended Discussion Points
-          </h4>
-          <ul className="space-y-2">
-            {summary.doctorTalkingPoints.map((pt, i) => (
-              <li key={i} className="p-3 rounded-xl bg-teal-soft/40 border border-teal/20 text-xs text-ink leading-relaxed flex items-start gap-2">
-                <span className="font-bold text-teal">•</span>
-                <span>{pt}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Disclaimer */}
-        <div className="p-3 rounded-xl bg-amber-soft/50 border border-amber/20 text-[11px] text-ink-muted flex items-start gap-2">
-          <Shield className="w-4 h-4 text-amber-dark flex-shrink-0 mt-0.5" />
-          <p>
-            This summary is generated by SthreeCare based on validated self-reported instruments (PBAC, WHO Hb, EPDS). It is designed to assist communication and does not replace medical diagnosis.
-          </p>
-        </div>
+        )}
       </div>
     </Sheet>
   );

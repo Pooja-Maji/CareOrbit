@@ -50,10 +50,10 @@ export const SymptomLog: React.FC<SymptomLogProps> = ({
       <Card variant="emergency" padding="md" className="space-y-3">
         <div className="flex items-center gap-2 text-emergency-dark font-bold text-sm">
           <AlertTriangle className="w-5 h-5 text-emergency" />
-          <span>Emergency Danger Signs Check (Immediate Warning)</span>
+          <span>Danger signs</span>
         </div>
         <p className="text-xs text-ink-muted">
-          Check any symptoms that apply right now. If any of these are present, the Compass immediately directs you to emergency care (108).
+          Tick any that apply right now. We'll point you to emergency care.
         </p>
 
         <div className="space-y-2 pt-1">
@@ -84,9 +84,9 @@ export const SymptomLog: React.FC<SymptomLogProps> = ({
       {/* Cycle & Pain Logging */}
       <Card variant="default" padding="lg" className="space-y-6">
         <div>
-          <h3 className="text-base font-semibold text-ink">Cycle & Pelvic Pain Characteristics</h3>
+          <h3 className="text-base font-semibold text-ink">Cycle & pain</h3>
           <p className="text-xs text-ink-muted">
-            Tracking pain severity and regularity provides important context for doctor discussions.
+            Helps your doctor see the full picture.
           </p>
         </div>
 

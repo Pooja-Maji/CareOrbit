@@ -38,11 +38,11 @@ export const HbEntry: React.FC<HbEntryProps> = ({ value, isPregnant, onChange })
           <div className="flex items-center gap-2">
             <Activity className="w-5 h-5 text-plum" />
             <h3 className="text-lg font-heading font-semibold text-ink">
-              Haemoglobin (Hb) Blood Report Entry
+              Haemoglobin (Hb)
             </h3>
           </div>
           <p className="text-xs text-ink-muted">
-            Enter the haemoglobin value from your Complete Blood Count (CBC) or lab report in grams per decilitre (g/dL).
+            From your blood report, in g/dL.
           </p>
         </div>
 
@@ -85,10 +85,7 @@ export const HbEntry: React.FC<HbEntryProps> = ({ value, isPregnant, onChange })
             </div>
 
             <p className="text-xs text-ink-muted leading-relaxed">
-              According to the World Health Organization table, normal haemoglobin for{' '}
-              {isPregnant ? 'pregnant individuals' : 'non-pregnant women'} is{' '}
-              <strong className="text-ink">≥ {classification.normalMin} g/dL</strong>. Your recorded value is{' '}
-              <strong className="text-ink">{hbNum} g/dL</strong>.
+              Normal is <strong className="text-ink">≥ {classification.normalMin} g/dL</strong>. You entered <strong className="text-ink">{hbNum} g/dL</strong>.
             </p>
           </div>
         )}
@@ -133,7 +130,7 @@ export const HbEntry: React.FC<HbEntryProps> = ({ value, isPregnant, onChange })
         <div className="p-3.5 rounded-xl bg-plum-soft/30 border border-plum/10 text-xs text-ink-muted flex items-start gap-2.5">
           <Info className="w-4 h-4 text-plum flex-shrink-0 mt-0.5" />
           <p>
-            Haemoglobin thresholds are defined by the WHO (2011). Anaemia cut-offs are: Non-pregnant normal ≥ 12.0 g/dL, mild 11.0–11.9, moderate 8.0–10.9, severe &lt; 8.0. Pregnant normal ≥ 11.0 g/dL.
+            WHO 2011 · Normal ≥ 12 · Mild 11–11.9 · Moderate 8–10.9 · Severe &lt; 8 (pregnant: normal ≥ 11).
           </p>
         </div>
       </Card>

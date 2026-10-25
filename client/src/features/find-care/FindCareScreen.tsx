@@ -6,6 +6,8 @@
  * with filters and support request links.
  */
 
+import { PageHeader } from '../../design/ui/PageHeader';
+import { MapPin as HdrIcon } from '../../design/ui/Icon';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FacilityCard } from './FacilityCard';
@@ -55,26 +57,9 @@ export const FindCareScreen: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto py-4">
+    <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-teal bg-teal-soft px-2.5 py-0.5 rounded-full border border-teal/20">
-              Stage 11 • Care Directory
-            </span>
-            <span className="text-xs text-ink-subtle">
-              Verified Public & Community Health Facilities
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink mt-1">
-            Find Nearby Healthcare
-          </h1>
-          <p className="text-xs sm:text-sm text-ink-muted">
-            Locate trusted Primary Health Centres, diagnostic labs, and gynaecology consultation services.
-          </p>
-        </div>
-
+      <PageHeader icon={<HdrIcon className="w-7 h-7" />} title="Find Care" subtitle="Clinics, labs and doctors near you" tone="teal" actions={<>
         <div className="flex items-center gap-2 self-start sm:self-center">
           <Button
             variant="secondary"
@@ -82,19 +67,18 @@ export const FindCareScreen: React.FC = () => {
             onClick={() => setShowMap(!showMap)}
             className="text-xs"
           >
-            {showMap ? 'Show Cards List' : 'Toggle Visual Map'}
+            {showMap ? 'List view' : 'Map view'}
           </Button>
-
           <Button
             variant="teal"
             size="sm"
             onClick={() => navigate('/support')}
             className="text-xs"
           >
-            Request Volunteer Help
+            Get a volunteer
           </Button>
         </div>
-      </div>
+      </>} />
 
       {/* Search and Category Filters */}
       <Card variant="default" padding="md" className="space-y-3 border border-plum-soft shadow-soft">

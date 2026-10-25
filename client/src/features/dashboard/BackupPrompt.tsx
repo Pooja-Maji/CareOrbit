@@ -73,11 +73,11 @@ export const BackupPrompt: React.FC = () => {
           <div className="flex items-center gap-2">
             <Shield className="w-4 h-4 text-teal" />
             <h4 className="font-heading font-semibold text-sm text-ink">
-              On-Device Data Portability & Backup
+              Backup
             </h4>
           </div>
           <p className="text-xs text-ink-muted leading-relaxed">
-            Because your health checks stay strictly inside this browser, downloading an encrypted/JSON backup ensures you never lose your records if you change devices.
+            Data lives only on this device. Save a copy.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export const BackupPrompt: React.FC = () => {
             disabled={isExporting}
             className="text-xs"
           >
-            {isExporting ? 'Preparing...' : 'Export Backup (JSON)'}
+            {isExporting ? 'Preparing...' : 'Export backup'}
           </Button>
 
           <input

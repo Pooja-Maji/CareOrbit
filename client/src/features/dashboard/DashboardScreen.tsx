@@ -1,11 +1,7 @@
 /**
- * SthreeCare - Dashboard Screen
- * Owner: Person B (Stage 4)
- * 
- * Today card, trend sparklines, stage summary, Care Thread summary,
- * backup and storage privacy notice.
+ * SthreeCare - Dashboard (Home)
+ * Hero → quick actions → today / trends / stage → tips.
  */
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../lib/store';
@@ -14,36 +10,31 @@ import { TrendStrip } from './TrendStrip';
 import { StageSummary } from './StageSummary';
 import { BackupPrompt } from './BackupPrompt';
 import { StorageNotice } from './StorageNotice';
+import { TipFlashcards } from './TipFlashcards';
 import { Button } from '../../design/ui/Button';
-import { Activity, Sparkles, Calendar, ArrowRight, Shield, Heart, FileText } from '../../design/ui/Icon';
+import { ClipboardList, FileText, AlertTriangle, CalendarCheck, Sparkles } from '../../design/ui/Icon';
 import { getAllResultsFromDb } from '../../db/historyRepo';
 import { getAllFollowUpsFromDb, updateFollowUpStatus } from '../../db/followUpRepo';
 import type { ExtendedFollowUp } from '../../db/schema';
 import type { Result } from '@sthreecare/shared';
-import { seedDemoPersonaIfEmpty } from '../../lib/seedDemo';
 import { useUiStore } from '../../state/uiStore';
+import { COPY } from '../../copy';
 
 export const DashboardScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { profile, result, history, saveResultToHistory } = useAppStore();
+  const { profile, result, history } = useAppStore();
   const { showToast } = useUiStore();
 
   const [dbResults, setDbResults] = useState<Result[]>(history);
   const [followUps, setFollowUps] = useState<ExtendedFollowUp[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
     try {
-      const [resList, folList] = await Promise.all([
-        getAllResultsFromDb(),
-        getAllFollowUpsFromDb(),
-      ]);
+      const [resList, folList] = await Promise.all([getAllResultsFromDb(), getAllFollowUpsFromDb()]);
       setDbResults(resList.length > 0 ? resList : history);
       setFollowUps(folList);
     } catch (e) {
       console.warn('Error loading dashboard data', e);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -51,162 +42,80 @@ export const DashboardScreen: React.FC = () => {
     loadData();
   }, [history]);
 
-  const handleSeedDemo = async () => {
-    await seedDemoPersonaIfEmpty();
-    await loadData();
-    showToast({
-      type: 'success',
-      title: 'Demo Persona Loaded',
-      message: 'Populated 3-cycle PBAC trend and lab Hb 9.8 g/dL for review.',
-    });
-    // reload state
-    setTimeout(() => window.location.reload(), 600);
-  };
-
   const handleMarkFollowUpDone = async (id: string) => {
     await updateFollowUpStatus(id, 'done');
     await loadData();
-    showToast({
-      type: 'success',
-      title: 'Action Completed',
-      message: 'Follow-up marked done on your Care Thread.',
-    });
+    showToast({ type: 'success', title: 'Done', message: 'Follow-up marked complete.' });
   };
 
   const latestResult = dbResults[0] || result || null;
-  const activeFollowUp = followUps.find((f) => f.status === 'open') || null;
-  const userName = profile.name || 'Patient';
+  const openFollowUps = followUps.filter((f) => f.status === 'open');
+  const activeFollowUp = openFollowUps[0] || null;
+  const name = profile.name || 'there';
+  const stage = COPY.lifeStages[profile.lifeStage]?.label || profile.lifeStage;
+  const flagCount = latestResult?.flags?.length ?? 0;
+
+  const stats = [
+    { icon: FileText, label: 'Reports', value: dbResults.length, to: '/profile' },
+    { icon: AlertTriangle, label: 'Flags', value: flagCount, to: '/result' },
+    { icon: CalendarCheck, label: 'To do', value: openFollowUps.length, to: '/follow-up' },
+  ];
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto py-4 animate-fade-in">
-      {/* Top Header / Welcome Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-plum bg-plum-soft px-2.5 py-0.5 rounded-full border border-plum/20">
-              {profile.lifeStage} Life Stage
-            </span>
-            <span className="text-xs text-ink-subtle">
-              On-Device Health Record
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-ink mt-1">
-            Welcome back, {userName}
-          </h1>
-          <p className="text-xs sm:text-sm text-ink-muted">
-            Tracking your health trajectory for life stage: <strong className="text-plum capitalize">{profile.lifeStage}</strong>.
-          </p>
-        </div>
+    <div className="space-y-8">
+      {/* HERO */}
+      <section className="hero-gradient relative overflow-hidden rounded-[28px] text-white p-6 sm:p-8 lg:p-10 shadow-lifted">
+        <div className="absolute -bottom-24 -right-16 w-72 h-72 rounded-full border-[3px] border-[#2E1065]/60" />
 
-        <div className="flex items-center gap-2 self-start sm:self-center">
+        <div className="relative flex flex-wrap items-center justify-between gap-6">
+          <div className="space-y-3 min-w-0">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#22D3EE] text-[#1E0B4D] text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" /> {stage}
+            </span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold leading-tight">Hi, {name} 👋</h1>
+            <div className="flex flex-wrap gap-3 pt-1">
+              {stats.map((s) => (
+                <button
+                  key={s.label}
+                  type="button"
+                  onClick={() => navigate(s.to)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/12 backdrop-blur border border-white/15 hover:bg-white/20 transition-colors"
+                >
+                  <s.icon className="w-4 h-4" />
+                  <span className="text-2xl font-heading font-bold leading-none">{s.value}</span>
+                  <span className="text-xs text-white/80">{s.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           <Button
-            variant="primary"
-            size="md"
+            size="lg"
             onClick={() => navigate('/assess')}
-            icon={<Activity className="w-4 h-4" />}
-            className="shadow-soft"
+            icon={<ClipboardList className="w-5 h-5" />}
+            className="shine !bg-[#fff] !text-[#2E1065] hover:!bg-[#fff] hover:scale-105 shadow-lifted"
           >
-            Start Health Check
+            Start health check
           </Button>
         </div>
+      </section>
+
+      {/* Moving flashcards: right under the banner so they are seen first */}
+      <TipFlashcards />
+
+      {/* MAIN GRID — fills the width */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        <div className="xl:col-span-7 space-y-6">
+          <TodayCard latestResult={latestResult} pendingFollowUp={activeFollowUp} onMarkFollowUpDone={handleMarkFollowUpDone} />
+          <TrendStrip history={dbResults} isPregnant={profile.isPregnant} />
+        </div>
+        <div className="xl:col-span-5 space-y-6">
+          <StageSummary profile={profile} />
+          <BackupPrompt />
+          <StorageNotice />
+        </div>
       </div>
 
-      {/* 1. Today Card: One next best step */}
-      <TodayCard
-        latestResult={latestResult}
-        pendingFollowUp={activeFollowUp}
-        onMarkFollowUpDone={handleMarkFollowUpDone}
-      />
-
-      {/* 2. Longitudinal Trend Sparklines (PBAC & Hb) */}
-      <TrendStrip
-        history={dbResults}
-        isPregnant={profile.isPregnant}
-      />
-
-      {/* 3. Life-Stage Preventive Screening Schedule */}
-      <StageSummary profile={profile} />
-
-      {/* Quick Navigation to Key Features */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <button
-          type="button"
-          onClick={() => navigate('/profile')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-plum hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
-        >
-          <div className="w-9 h-9 rounded-full bg-plum-soft flex items-center justify-center text-plum group-hover:scale-105 transition-transform flex-shrink-0">
-            <FileText className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-ink group-hover:text-plum transition-colors">
-              Saved Reports ({dbResults.length})
-            </h4>
-            <p className="text-xs text-ink-muted mt-0.5">
-              Dossier, QR codes & doctor sheets
-            </p>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate('/history')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-plum hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
-        >
-          <div className="w-9 h-9 rounded-full bg-plum-soft flex items-center justify-center text-plum group-hover:scale-105 transition-transform flex-shrink-0">
-            <Activity className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-ink group-hover:text-plum transition-colors">
-              Care Thread Timeline
-            </h4>
-            <p className="text-xs text-ink-muted mt-0.5">
-              Longitudinal tracking & cycle comparison
-            </p>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate('/find-care')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-teal hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
-        >
-          <div className="w-9 h-9 rounded-full bg-teal-soft flex items-center justify-center text-teal group-hover:scale-105 transition-transform flex-shrink-0">
-            <Heart className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-ink group-hover:text-teal transition-colors">
-              Find Listed Care
-            </h4>
-            <p className="text-xs text-ink-muted mt-0.5">
-              PHCs, labs & teleconsultations
-            </p>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate('/time-bank')}
-          className="p-4 rounded-card bg-white border border-plum-soft hover:border-teal hover:shadow-soft transition-all text-left flex items-start gap-3 group hover-lift"
-        >
-          <div className="w-9 h-9 rounded-full bg-teal-soft flex items-center justify-center text-teal group-hover:scale-105 transition-transform flex-shrink-0">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-ink group-hover:text-teal transition-colors">
-              Healthcare Time Bank
-            </h4>
-            <p className="text-xs text-ink-muted mt-0.5">
-              Verified volunteer support & credits
-            </p>
-          </div>
-        </button>
-      </div>
-
-      {/* 4. On-Device Backup & Export Prompt */}
-      <BackupPrompt />
-
-      {/* 5. Storage Persistence & Zero Cloud Notice */}
-      <StorageNotice />
     </div>
   );
 };

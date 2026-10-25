@@ -5,19 +5,20 @@ export interface FormattedSummary {
   date: string;
   lifeStage: string;
   ageBand: string;
-  scores: { label: string; value: string; threshold: string }[];
+  scores: { label: string; value: string; threshold: string; review: boolean }[];
   flags: { title: string; why: string; nextStep: string; source: string }[];
   doctorTalkingPoints: string[];
 }
 
 export function buildClinicianSummary(result: Result, profile: Profile): FormattedSummary {
-  const scores: { label: string; value: string; threshold: string }[] = [];
+  const scores: { label: string; value: string; threshold: string; review: boolean }[] = [];
 
   if (typeof result.scores['pbac'] === 'number') {
     scores.push({
       label: 'Menstrual Flow (PBAC)',
       value: `${result.scores['pbac']} pts`,
       threshold: '≥ 100 points (~80 mL)',
+      review: result.scores['pbac'] >= 100,
     });
   }
 
@@ -26,6 +27,7 @@ export function buildClinicianSummary(result: Result, profile: Profile): Formatt
       label: 'Haemoglobin (Hb)',
       value: `${result.scores['hb']} g/dL`,
       threshold: profile.isPregnant ? '≥ 11.0 g/dL' : '≥ 12.0 g/dL',
+      review: result.scores['hb'] < (profile.isPregnant ? 11.0 : 12.0),
     });
   }
 
@@ -33,7 +35,8 @@ export function buildClinicianSummary(result: Result, profile: Profile): Formatt
     scores.push({
       label: 'Edinburgh Mood Scale (EPDS)',
       value: `${result.scores['epds']} / 30`,
-      threshold: '≥ 13 points',
+      threshold: '< 13 points',
+      review: result.scores['epds'] >= 13,
     });
   }
 

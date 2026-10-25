@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { Result } from '@sthreecare/shared';
 import { Card } from '../../design/ui/Card';
 import { Button } from '../../design/ui/Button';
-import { Copy, Volume2, CheckCircle, FileText } from '../../design/ui/Icon';
+import { Copy, Volume2, CheckCircle, Quote } from '../../design/ui/Icon';
 import { copyToClipboard } from '../../lib/format';
 import { speakText, stopSpeech } from '../../lib/a11y';
 
@@ -14,42 +14,20 @@ export const DoctorScriptCard: React.FC<DoctorScriptCardProps> = ({ result }) =>
   const [copied, setCopied] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // Generate doctor conversation script dynamically based on flags and scores
-  const pbacScore = result.scores['pbac'];
-  const hbScore = result.scores['hb'];
-  const epdsScore = result.scores['epds'];
+  const pbac = result.scores['pbac'];
+  const hb = result.scores['hb'];
+  const epds = result.scores['epds'];
 
-  const scriptParts: string[] = [];
-
-  scriptParts.push("Hello Doctor, I used a validated life-stage screening tool to prepare for our visit today.");
-
-  if (typeof pbacScore === 'number' && pbacScore >= 100) {
-    scriptParts.push(`My menstrual bleeding assessment (PBAC score: ${pbacScore}) is above the clinical threshold for heavy periods.`);
-  }
-
-  if (typeof hbScore === 'number' && hbScore < 12.0) {
-    scriptParts.push(`My recent blood report recorded a haemoglobin level of ${hbScore} g/dL.`);
-  }
-
-  if (typeof epdsScore === 'number' && epdsScore >= 13) {
-    scriptParts.push(`My mood screening score on the EPDS is ${epdsScore}/30, and I would like to discuss emotional well-being support.`);
-  }
-
-  // Next steps recommendations from flags
-  const nextSteps = result.flags
-    .map((f) => f.nextStep)
-    .filter(Boolean)
-    .slice(0, 2);
-
-  if (nextSteps.length > 0) {
-    scriptParts.push(`Specifically, I would like to ask: ${nextSteps.join(' Also, ')}`);
-  }
-
-  const scriptText = scriptParts.join(' ');
+  const lines: string[] = ['Hello Doctor, I did a screening before our visit.'];
+  if (typeof pbac === 'number' && pbac >= 100) lines.push(`My period bleeding score is ${pbac}, which is heavy.`);
+  if (typeof hb === 'number' && hb < 12.0) lines.push(`My haemoglobin is ${hb} g/dL.`);
+  if (typeof epds === 'number' && epds >= 13) lines.push(`My mood score is ${epds}/30 and I would like support.`);
+  const asks = result.flags.map((f) => f.nextStep).filter(Boolean).slice(0, 2);
+  if (asks.length) lines.push(`I would like to ask: ${asks.join(' Also, ')}`);
+  const scriptText = lines.join(' ');
 
   const handleCopy = async () => {
-    const ok = await copyToClipboard(scriptText);
-    if (ok) {
+    if (await copyToClipboard(scriptText)) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     }
@@ -59,65 +37,36 @@ export const DoctorScriptCard: React.FC<DoctorScriptCardProps> = ({ result }) =>
     if (isSpeaking) {
       stopSpeech();
       setIsSpeaking(false);
-    } else {
-      const ok = speakText(scriptText);
-      if (ok) {
-        setIsSpeaking(true);
-        setTimeout(() => setIsSpeaking(false), 12000);
-      }
+    } else if (speakText(scriptText)) {
+      setIsSpeaking(true);
+      setTimeout(() => setIsSpeaking(false), 12000);
     }
   };
 
   return (
-    <Card variant="default" padding="lg" className="space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-teal-soft flex items-center justify-center text-teal">
-            <FileText className="w-4 h-4" />
-          </div>
-          <div>
-            <h3 className="font-heading font-semibold text-base sm:text-lg text-ink">
-              Doctor Discussion Script
-            </h3>
-            <p className="text-xs text-ink-muted">
-              Ready-to-say talking points for your doctor's appointment
-            </p>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleSpeak}
-            icon={<Volume2 className="w-4 h-4" />}
-          >
-            {isSpeaking ? 'Stop Reading' : 'Listen'}
+    <Card padding="lg" interactive className="space-y-4">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <h3 className="flex items-center gap-2 font-heading font-semibold text-lg text-ink">
+          <span className="w-9 h-9 rounded-xl bg-teal-soft text-teal flex items-center justify-center">
+            <Quote className="w-4 h-4" />
+          </span>
+          What to say
+        </h3>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={handleSpeak} icon={<Volume2 className="w-4 h-4" />}>
+            {isSpeaking ? 'Stop' : 'Listen'}
           </Button>
-
           <Button
             variant="primary"
             size="sm"
             onClick={handleCopy}
-            icon={copied ? <CheckCircle className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4" />}
+            icon={copied ? <CheckCircle className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
           >
-            {copied ? 'Copied to Clipboard!' : 'Copy Script'}
+            {copied ? 'Copied' : 'Copy'}
           </Button>
         </div>
       </div>
-
-      {/* Script block quote */}
-      <div className="p-4 rounded-xl bg-cream border border-plum-soft/60 relative">
-        <p className="text-xs sm:text-sm text-ink leading-relaxed italic font-serif">
-          "{scriptText}"
-        </p>
-      </div>
-
-      <div className="text-[11px] text-ink-subtle flex items-center gap-1.5">
-        <span>💡</span>
-        <span>You can read this directly, show the screen, or copy and paste into a consultation message.</span>
-      </div>
+      <p className="p-4 rounded-xl bg-cream border border-plum-soft/60 text-sm text-ink font-serif italic">“{scriptText}”</p>
     </Card>
   );
 };

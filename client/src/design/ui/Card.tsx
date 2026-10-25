@@ -3,16 +3,19 @@ import React from 'react';
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'elevated' | 'plumSoft' | 'coral' | 'emergency' | 'teal';
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  /** Adds hover-lift + glow. Use on anything clickable or scannable. */
+  interactive?: boolean;
 }
 
 export const Card: React.FC<CardProps> = ({
   children,
   variant = 'default',
   padding = 'md',
+  interactive = false,
   className = '',
   ...props
 }) => {
-  const baseStyles = 'rounded-card transition-all duration-200 border';
+  const baseStyles = `rounded-card border ${interactive ? 'tile' : 'transition-all duration-200'}`;
 
   const paddingStyles = {
     none: '',

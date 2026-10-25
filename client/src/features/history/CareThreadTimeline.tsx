@@ -114,7 +114,7 @@ export const CareThreadTimeline: React.FC<CareThreadTimelineProps> = ({
   return (
     <div className="relative pl-6 sm:pl-8 py-2">
       {/* The Signature Continuous Plum Care Thread */}
-      <div className="absolute left-[13px] sm:left-[17px] top-4 bottom-4 w-[3px] bg-gradient-to-b from-plum via-plum/70 to-teal rounded-full" />
+      <div className="absolute left-[13px] sm:left-[17px] top-4 bottom-4 w-[3px] bg-gradient-to-b from-teal via-teal to-teal rounded-full" />
 
       <div className="space-y-6">
         {events.map((evt) => {
