@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Assessment Check Picker
+ * Care Orbit - Assessment Check Picker
  * 
  * Life-stage adaptive assessment hub integrating validated instruments:
  * PBAC flow, WHO Hb entry, EPDS perinatal mood cards, danger signs,

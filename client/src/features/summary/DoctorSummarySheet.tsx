@@ -17,7 +17,7 @@ export const DoctorSummarySheet: React.FC<DoctorSummarySheetProps> = ({ isOpen, 
   const summary = buildClinicianSummary(result, profile);
 
   const qrData = JSON.stringify({
-    app: 'SthreeCare',
+    app: 'Care Orbit',
     date: summary.date,
     scores: summary.scores.map((s) => `${s.label}: ${s.value}`),
     flags: summary.flags.map((f) => f.title),

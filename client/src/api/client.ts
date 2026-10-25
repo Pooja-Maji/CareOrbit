@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Zero-Health API Client
+ * Care Orbit - Zero-Health API Client
  * Owner: Person B
  * 
  * STRICT PRIVACY CONTRACT:

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Facility Map Locator (Stretch)
+ * Care Orbit - Facility Map Locator (Stretch)
  * Owner: Person B (Stage 11)
  * 
  * Interactive location-based visual locator highlighting public health facilities,

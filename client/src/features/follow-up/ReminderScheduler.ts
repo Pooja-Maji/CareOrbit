@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Reminder Scheduler
+ * Care Orbit - Reminder Scheduler
  * Owner: Person B (Stage 12)
  * 
  * Schedules follow-up calendar links (.ics) and on-device alerts.
@@ -17,7 +17,7 @@ export function generateIcsCalendarFile(event: CalendarEvent): string {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//SthreeCare//Health Compass//EN',
+    'PRODID:-//Care Orbit//Health Compass//EN',
     'BEGIN:VEVENT',
     `SUMMARY:${event.title}`,
     `DESCRIPTION:${event.description}`,

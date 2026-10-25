@@ -1,5 +1,5 @@
 /**
- * SthreeCare - History Repository
+ * Care Orbit - History Repository
  * Owner: Person B
  * 
  * Auto-saves and retrieves screening records for the Care Thread timeline.

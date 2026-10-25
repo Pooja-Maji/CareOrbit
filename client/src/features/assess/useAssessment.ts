@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Assessment Workflow Hook (Stage 5 & 6)
+ * Care Orbit - Assessment Workflow Hook (Stage 5 & 6)
  * Owner: Person A
  * 
  * Encapsulates assessment state, instrument switching, life-stage adaptivity,

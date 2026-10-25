@@ -28,7 +28,7 @@ const PrintableReport: React.FC<{ result: Result; profile: Profile; qrUrl: strin
       >
         <div>
           <div className="text-2xl font-bold" style={{ fontFamily: 'Fraunces, Georgia, serif' }}>
-            SthreeCare
+            Care Orbit
           </div>
           <div className="text-[11px] opacity-80">Health Screening Report</div>
         </div>
@@ -179,7 +179,7 @@ export const PdfReportButton: React.FC<PdfReportButtonProps> = ({
   const handleClick = async () => {
     const summary = buildClinicianSummary(result, profile);
     const qrData = JSON.stringify({
-      app: 'SthreeCare',
+      app: 'Care Orbit',
       date: summary.date,
       scores: summary.scores.map((s) => `${s.label}: ${s.value}`),
       flags: summary.flags.map((f) => f.title),
@@ -197,7 +197,7 @@ export const PdfReportButton: React.FC<PdfReportButtonProps> = ({
     if (!printing) return;
     const prevTitle = document.title;
     const stamp = new Date(result.date).toISOString().slice(0, 10);
-    document.title = `SthreeCare-Report-${stamp}`;
+    document.title = `CareOrbit-Report-${stamp}`;
     const done = () => setPrinting(false);
     window.addEventListener('afterprint', done, { once: true });
     const raf = requestAnimationFrame(() => requestAnimationFrame(() => window.print()));

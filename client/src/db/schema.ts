@@ -1,5 +1,5 @@
 /**
- * SthreeCare - On-Device Database Schema
+ * Care Orbit - On-Device Database Schema
  * Owner: Person B
  * 
  * Strict On-Device rule: All health data (profile, results, follow-ups)

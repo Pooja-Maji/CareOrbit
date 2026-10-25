@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Follow-Up Repository
+ * Care Orbit - Follow-Up Repository
  * Owner: Person B
  * 
  * Tracks clinician-recommended next steps, appointment statuses,

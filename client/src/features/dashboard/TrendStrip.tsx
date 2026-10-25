@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Trend Strip
+ * Care Orbit - Trend Strip
  * Owner: Person B (Stage 4)
  * 
  * Signature visual: Sparklines of Menstrual Bleeding Score (PBAC) and

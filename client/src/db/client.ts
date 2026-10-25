@@ -1,5 +1,5 @@
 /**
- * SthreeCare - On-Device IndexedDB Client (Dexie-compatible layer)
+ * Care Orbit - On-Device IndexedDB Client (Dexie-compatible layer)
  * Owner: Person B
  * 
  * Provides robust asynchronous storage for local medical screening data

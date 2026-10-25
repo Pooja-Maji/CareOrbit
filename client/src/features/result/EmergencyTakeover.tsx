@@ -16,10 +16,10 @@ export const EmergencyTakeover: React.FC = () => {
   const handleAlertFamily = () => {
     setFamilyAlerted(true);
     if (emergencyPhone) {
-      window.location.href = `sms:${emergencyPhone}?body=EMERGENCY%20ALERT:%20SthreeCare%20screening%20detected%20an%20urgent%20clinical%20danger%20sign.%20Please%20assist%20me%20immediately.`;
+      window.location.href = `sms:${emergencyPhone}?body=EMERGENCY%20ALERT:%20Care%20Orbit%20screening%20detected%20an%20urgent%20clinical%20danger%20sign.%20Please%20assist%20me%20immediately.`;
     } else {
       setTimeout(() => {
-        alert("Emergency SMS notification simulated: 'SthreeCare Alert: Urgent clinical danger sign recorded. Please check on me immediately.'");
+        alert("Emergency SMS notification simulated: 'Care Orbit Alert: Urgent clinical danger sign recorded. Please check on me immediately.'");
       }, 200);
     }
   };

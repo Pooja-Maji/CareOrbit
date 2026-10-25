@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Home
+ * Care Orbit - Home
  * Layout follows the approved homepage design:
  * hero → quick access → life stages → validated tools / community → trust strip → CTA.
  * A "Your health at a glance" block (today, trends, backup) appears only once the person has data.

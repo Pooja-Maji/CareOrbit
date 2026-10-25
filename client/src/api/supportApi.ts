@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Volunteer Support Request API
+ * Care Orbit - Volunteer Support Request API
  * Owner: Person B
  * 
  * Strict Privacy:

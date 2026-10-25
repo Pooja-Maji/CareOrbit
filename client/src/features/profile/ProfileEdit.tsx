@@ -114,7 +114,7 @@ export const ProfileEdit: React.FC = () => {
       profile,
       history: savedReports,
       exportedAt: new Date().toISOString(),
-      app: 'SthreeCare Life-Stage Health Compass',
+      app: 'Care Orbit Life-Stage Health Compass',
     };
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -680,7 +680,7 @@ export const ProfileEdit: React.FC = () => {
               On-Device Privacy & Data Ownership
             </h2>
             <p className="text-xs text-ink-muted mt-0.5">
-              SthreeCare operates on a zero-health-data backend boundary. You maintain complete control over your records.
+              Care Orbit operates on a zero-health-data backend boundary. You maintain complete control over your records.
             </p>
           </div>
 

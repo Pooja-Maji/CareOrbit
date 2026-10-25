@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Task Stepper
+ * Care Orbit - Task Stepper
  * Owner: Person B (Stage 11)
  * 
  * Signature Visual: Stepper drawn along the signature plum thread.

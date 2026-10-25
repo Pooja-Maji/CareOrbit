@@ -1,5 +1,5 @@
 /**
- * SthreeCare - UI State Store
+ * Care Orbit - UI State Store
  * Owner: Person B
  * 
  * Manages privacy controls (Discreet Mode), persistent storage status,

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Find Care Screen
+ * Care Orbit - Find Care Screen
  * Owner: Person B (Stage 11)
  * 
  * Lists verified public health centres (PHCs, CHCs, District Hospitals, Labs)

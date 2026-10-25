@@ -83,7 +83,7 @@ export const RegisterScreen: React.FC = () => {
           <span>Patient Registration</span>
         </div>
         <h1 className="text-3xl font-heading font-bold text-ink">
-          Create Your SthreeCare Account
+          Create Your Care Orbit Account
         </h1>
         <p className="text-sm text-ink-muted max-w-sm mx-auto">
           Set up your private account. All health records and screening history will be stored safely on your device.

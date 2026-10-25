@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Data Export & Import Service
+ * Care Orbit - Data Export & Import Service
  * Owner: Person B
  * 
  * Allows users to own and backup their health data as a JSON file,

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Formatting and Clipboard Helpers
+ * Care Orbit - Formatting and Clipboard Helpers
  */
 
 export function formatDate(isoString: string): string {

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Immediate Emotional & Crisis Support Screen (Stage 7)
+ * Care Orbit - Immediate Emotional & Crisis Support Screen (Stage 7)
  * Owner: Person A
  * 
  * Displayed when an EPDS self-harm item is positive or when the user

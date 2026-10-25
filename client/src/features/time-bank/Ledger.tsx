@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Credit Ledger
+ * Care Orbit - Credit Ledger
  * Owner: Person B (Stage 11)
  * 
  * Transparent accounting ledger of Time Bank hours earned, redeemed,

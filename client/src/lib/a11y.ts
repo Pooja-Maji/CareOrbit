@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Accessibility and Speech Synthesis Helper
+ * Care Orbit - Accessibility and Speech Synthesis Helper
  */
 
 export function speakText(text: string): boolean {

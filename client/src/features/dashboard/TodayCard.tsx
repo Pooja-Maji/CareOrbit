@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Today Card
+ * Care Orbit - Today Card
  * One next best step instead of a wall of widgets.
  */
 import React from 'react';

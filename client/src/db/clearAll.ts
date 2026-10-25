@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Clear All On-Device Data
+ * Care Orbit - Clear All On-Device Data
  * Owner: Person B
  * 
  * Strict Privacy guarantee: Instant full wipe of on-device IndexedDB

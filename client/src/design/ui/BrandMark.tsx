@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** SthreeCare mark: a compass needle with a marigold thread running through it. */
+/** Care Orbit mark: a compass needle with a marigold thread running through it. */
 export const BrandMark: React.FC<{ size?: number; className?: string; tone?: 'dark' | 'light' }> = ({
   size = 36,
   className = '',

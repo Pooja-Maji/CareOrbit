@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Stage Summary & Preventive Schedule
+ * Care Orbit - Stage Summary & Preventive Schedule
  * Owner: Person B (Stage 4)
  * 
  * Displays life-stage guidance and age-based cancer & metabolic screening

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Body Pain Painter (Stage 6 Stretch Component)
+ * Care Orbit - Body Pain Painter (Stage 6 Stretch Component)
  * Owner: Person A
  * 
  * Interactive body pain mapping tool allowing women to tap and highlight

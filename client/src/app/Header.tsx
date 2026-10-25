@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAppStore } from '../lib/store';
-import { Heart, Menu, X, LogOut, PhoneCall, Shield, Sparkles, Info, ArrowRight, ChevronRight } from '../design/ui/Icon';
+import { Menu, X, LogOut, PhoneCall, Shield, Sparkles, Info, ArrowRight, ChevronRight } from '../design/ui/Icon';
 import { ThemeToggle } from '../design/ui/ThemeToggle';
 import { NAV_ITEMS, NAV_GROUPS } from './navItems';
 import { COPY } from '../copy';
@@ -50,11 +50,11 @@ export const Header: React.FC = () => {
       <header className="bar-surface bar-dark sticky top-0 z-40 border-b border-bar/15">
         <div className="h-full w-full px-4 sm:px-6 lg:px-10 flex items-center gap-3 lg:gap-6">
           <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative w-10 h-10 rounded-2xl bg-[#fff] text-plum flex items-center justify-center shadow-lifted transition-transform duration-300">
-              <Heart className="w-5 h-5 fill-plum/20 text-plum" />
+            <div className="relative w-12 h-12 rounded-2xl bg-[#fff] flex items-center justify-center shadow-lifted transition-transform duration-300 group-hover:scale-105">
+              <img src="/brand/care-orbit-mark.png" alt="Care Orbit logo" width={512} height={512} className="w-10 h-10 object-contain" draggable={false} />
             </div>
             <div className="leading-tight">
-              <div className="font-heading font-bold text-xl tracking-tight">SthreeCare</div>
+              <div className="font-heading font-bold text-xl tracking-tight">Care Orbit</div>
               <div className="hidden sm:block text-[11px] text-bar/70 font-medium">Life-stage health compass</div>
             </div>
           </Link>

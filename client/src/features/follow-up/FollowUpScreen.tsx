@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Follow-Up & Care Gap Resolution Screen
+ * Care Orbit - Follow-Up & Care Gap Resolution Screen
  * Owner: Person B (Stage 12)
  * 
  * Closes the healthcare loop: tracks clinician-recommended next steps,
@@ -53,7 +53,7 @@ export const FollowUpScreen: React.FC = () => {
   const handleCalendarDownload = (item: ExtendedFollowUp) => {
     downloadCalendarEvent({
       title: item.step,
-      description: 'SthreeCare health follow-up consultation / test appointment',
+      description: 'Care Orbit health follow-up consultation / test appointment',
       startDate: item.dueDate || new Date().toISOString().split('T')[0],
     });
     showToast({

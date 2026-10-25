@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Backup & Export Card
+ * Care Orbit - Backup & Export Card
  * Owner: Person B (Stage 4 & Privacy Boundary)
  * 
  * Allows users to own their health record: export local data as JSON
@@ -23,7 +23,7 @@ export const BackupPrompt: React.FC = () => {
     try {
       const json = await exportAllDataToJson();
       const dateStr = new Date().toISOString().split('T')[0];
-      downloadBackupFile(json, `SthreeCare_Health_Backup_${dateStr}.json`);
+      downloadBackupFile(json, `CareOrbit_Health_Backup_${dateStr}.json`);
       showToast({
         type: 'success',
         title: 'Health Backup Downloaded',

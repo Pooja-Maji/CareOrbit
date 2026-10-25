@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Settings Repository
+ * Care Orbit - Settings Repository
  * Owner: Person B
  */
 

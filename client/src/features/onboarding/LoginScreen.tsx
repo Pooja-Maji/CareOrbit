@@ -61,7 +61,7 @@ export const LoginScreen: React.FC = () => {
           <span>Patient Portal Authentication</span>
         </div>
         <h1 className="text-3xl font-heading font-bold text-ink">
-          Sign In to SthreeCare
+          Sign In to Care Orbit
         </h1>
         <p className="text-sm text-ink-muted max-w-xs mx-auto">
           Enter your registered mobile phone number and password to access your private health compass.

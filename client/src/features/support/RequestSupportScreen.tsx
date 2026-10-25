@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Request Support & Volunteer Companion Screen
+ * Care Orbit - Request Support & Volunteer Companion Screen
  * Owner: Person B (Stage 11)
  * 
  * Enables practical community assistance without compromising health privacy.

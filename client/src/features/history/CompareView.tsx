@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Multi-Cycle Compare View (Stretch)
+ * Care Orbit - Multi-Cycle Compare View (Stretch)
  * Owner: Person B (Stage 9)
  * 
  * Side-by-side comparative analysis of two screening results to assess

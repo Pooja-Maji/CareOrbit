@@ -13,7 +13,6 @@ import {
   UserPlus,
   AlertTriangle,
   CheckCircle,
-  Heart,
 } from '../../design/ui/Icon';
 
 export const AuthScreen: React.FC = () => {
@@ -104,7 +103,7 @@ export const AuthScreen: React.FC = () => {
       return;
     }
 
-    setSuccessMessage('Account created successfully! Welcome to SthreeCare.');
+    setSuccessMessage('Account created successfully! Welcome to Care Orbit.');
     setTimeout(() => {
       navigate('/dashboard');
     }, 600);
@@ -119,11 +118,11 @@ export const AuthScreen: React.FC = () => {
       <div className="w-full max-w-md z-10 space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-plum text-white shadow-lifted mb-2">
-            <Heart className="w-7 h-7" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white shadow-lifted mb-2">
+            <img src="/brand/care-orbit-mark.png" alt="Care Orbit logo" width={512} height={512} className="w-12 h-12 object-contain" draggable={false} />
           </div>
           <h1 className="text-3xl sm:text-4xl font-heading font-bold text-[#1B1530] tracking-tight">
-            SthreeCare
+            Care Orbit
           </h1>
           <p className="text-xs sm:text-sm text-[#5B5470] max-w-xs mx-auto">
             Life-Stage Health Compass • On-Device Privacy

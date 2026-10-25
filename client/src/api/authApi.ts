@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Auth Demo API
+ * Care Orbit - Auth Demo API
  * Owner: Person B
  */
 

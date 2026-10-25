@@ -1,5 +1,5 @@
 /**
- * SthreeCare - History & Care Thread Screen
+ * Care Orbit - History & Care Thread Screen
  * Owner: Person B (Stages 8-9)
  */
 

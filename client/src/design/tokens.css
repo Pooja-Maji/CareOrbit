@@ -347,3 +347,14 @@ body, .bg-cream { transition: background-color .3s, color .3s; }
           mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
 }
 .dark .home-fade-round { filter: brightness(.85) saturate(.9); }
+
+/* ── Care Orbit splash ─────────────────────────────────────── */
+@keyframes splash-in { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+@keyframes splash-progress { from { width: 0%; } to { width: 100%; } }
+.splash-logo { animation: splash-in .9s cubic-bezier(.2,.8,.2,1) both; }
+.splash-bar { animation: splash-in .9s .2s ease-out both; }
+.splash-bar-fill { animation-name: splash-progress; animation-timing-function: linear; animation-fill-mode: both; }
+@media (prefers-reduced-motion: reduce) {
+  .splash-logo, .splash-bar { animation: none; }
+  .splash-bar-fill { animation: none; width: 100%; }
+}

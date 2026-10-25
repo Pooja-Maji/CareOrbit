@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Credit Ring
+ * Care Orbit - Credit Ring
  * Owner: Person B (Stage 11)
  * 
  * Signature Visual: Multi-segment circular ring visualizing Earned,

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Result Detail Modal/Viewer
+ * Care Orbit - Result Detail Modal/Viewer
  * Owner: Person B (Stage 9)
  * 
  * Inspects a past saved result from the Care Thread with scores,

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Healthcare Time Bank Screen
+ * Care Orbit - Healthcare Time Bank Screen
  * Owner: Person B (Stage 11)
  * 
  * Community mutual-aid mechanism providing practical non-medical support.

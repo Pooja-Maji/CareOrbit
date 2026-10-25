@@ -36,7 +36,7 @@ export const ConsentScreen: React.FC = () => {
             Your Privacy & Safety First
           </h1>
           <p className="text-sm text-ink-muted">
-            Before we begin your health checks, please confirm your understanding of how SthreeCare safeguards your data.
+            Before we begin your health checks, please confirm your understanding of how Care Orbit safeguards your data.
           </p>
         </div>
 
@@ -73,7 +73,7 @@ export const ConsentScreen: React.FC = () => {
                 Screening, Not Medical Diagnosis
               </span>
               <p className="text-xs text-ink-muted leading-relaxed">
-                I understand that SthreeCare uses published, deterministic clinical guidelines to prepare structured doctor discussion summaries. It does not provide medical diagnoses or replace a physician's exam.
+                I understand that Care Orbit uses published, deterministic clinical guidelines to prepare structured doctor discussion summaries. It does not provide medical diagnoses or replace a physician's exam.
               </p>
             </div>
           </label>

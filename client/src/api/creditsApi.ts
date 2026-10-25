@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Healthcare Time Bank Credits API
+ * Care Orbit - Healthcare Time Bank Credits API
  * Owner: Person B
  * 
  * CORE PRINCIPLE:

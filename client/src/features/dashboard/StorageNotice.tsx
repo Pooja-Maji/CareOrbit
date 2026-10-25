@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Storage Notice & Privacy Controls
+ * Care Orbit - Storage Notice & Privacy Controls
  * Owner: Person B (Stage 4 & Privacy Boundary)
  * 
  * Verifies navigator.storage.persist() status and provides discreet mode

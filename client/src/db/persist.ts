@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Storage Persistence Service
+ * Care Orbit - Storage Persistence Service
  * Owner: Person B
  * 
  * Requests persistent storage via navigator.storage.persist() so that

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Printable Clinician Summary (Stage 7 & 10)
+ * Care Orbit - Printable Clinician Summary (Stage 7 & 10)
  * Owner: Person A
  * 
  * Clean, high-contrast, print-optimized document for physical printing
@@ -32,7 +32,7 @@ export const PrintableSummary: React.FC = () => {
   const summary = buildClinicianSummary(result, profile);
 
   const qrPayload = JSON.stringify({
-    system: 'SthreeCare-Compass',
+    system: 'CareOrbit-Compass',
     id: result.id,
     date: summary.date,
     stage: summary.lifeStage,
@@ -79,7 +79,7 @@ export const PrintableSummary: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-2xl font-serif font-bold tracking-tight text-gray-900">
-                SthreeCare
+                Care Orbit
               </span>
               <span className="text-xs font-semibold uppercase px-2 py-0.5 border border-gray-800 rounded">
                 Life-Stage Health Compass

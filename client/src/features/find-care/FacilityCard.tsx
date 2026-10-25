@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Facility Card
+ * Care Orbit - Facility Card
  * Owner: Person B (Stage 11)
  * 
  * Displays healthcare facility details with services, phone, address,

@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Follow-up and Screening Reminder Service
+ * Care Orbit - Follow-up and Screening Reminder Service
  * Owner: Person B
  */
 

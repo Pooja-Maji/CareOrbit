@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Inactivity Auto-Lock & Privacy Protector
+ * Care Orbit - Inactivity Auto-Lock & Privacy Protector
  * Owner: Person B
  * 
  * Automatically activates Discreet Mode if the device is left idle for

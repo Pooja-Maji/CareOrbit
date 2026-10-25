@@ -1,7 +1,8 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '../lib/store';
 import { Shell } from './Shell';
+import { SplashScreen } from '../features/onboarding/SplashScreen';
 import { AuthScreen } from '../features/onboarding/AuthScreen';
 import { ConsentScreen } from '../features/onboarding/ConsentScreen';
 import { ProfileEdit } from '../features/profile/ProfileEdit';
@@ -20,6 +21,16 @@ import { LimitsAndSources } from '../features/landing/LimitsAndSources';
 
 export const AppRoutes: React.FC = () => {
   const { isLoggedIn } = useAppStore();
+  const { pathname } = useLocation();
+  const [splashDone, setSplashDone] = useState(false);
+  const finishSplash = useCallback(() => setSplashDone(true), []);
+
+  // Care Orbit splash for 5s on every app load: logo -> login -> home when logged out, logo -> home when already logged in.
+  // Emergency / crisis routes are never delayed.
+  const isSafetyRoute = pathname === '/emergency' || pathname === '/crisis-support';
+  if (!splashDone && !isSafetyRoute) {
+    return <SplashScreen onDone={finishSplash} />;
+  }
 
   // If NOT logged in, show ONLY the Login / Register screen (emergency and crisis support always available)
   if (!isLoggedIn) {

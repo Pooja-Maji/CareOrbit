@@ -1,14 +1,14 @@
 /**
- * SthreeCare - Clinician-Reviewable Copy and Content
+ * Care Orbit - Clinician-Reviewable Copy and Content
  * All user-facing strings are centralized here for easy auditing,
  * localization, and medical professional review.
  */
 
 export const COPY = {
-  appName: 'SthreeCare',
+  appName: 'Care Orbit',
   tagline: 'Life-Stage Health Compass',
   nonDiagnosticDisclaimer:
-    'SthreeCare is a validated screening and care-navigation platform, not a diagnostic medical device. It does not replace professional clinical evaluation. Please discuss all findings with a qualified doctor.',
+    'Care Orbit is a validated screening and care-navigation platform, not a diagnostic medical device. It does not replace professional clinical evaluation. Please discuss all findings with a qualified doctor.',
 
   emergencyNotice:
     'If you are experiencing severe pain, excessive sudden bleeding, fainting, or acute emotional distress, please seek emergency medical attention immediately.',

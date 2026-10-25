@@ -1,5 +1,5 @@
 /**
- * SthreeCare - Session State Store
+ * Care Orbit - Session State Store
  * Owner: Person B (Stage 2 & Stage 11 integration)
  * 
  * Manages authentication and the zero-knowledge anonymous reference.
